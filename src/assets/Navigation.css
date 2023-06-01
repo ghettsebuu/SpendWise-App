@@ -1,0 +1,278 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800.900');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif ;
+}
+.cajonbody{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+background:  #191924 ;
+
+}
+
+.cajasection{
+    width: 1000px;
+    height: 570px;
+    background:  #1ec87a ;
+    border-radius: 8px;
+    position: fixed;
+    top: 0;
+    box-shadow: 0px -3px 6px rgba(77, 76, 76, 0.1);
+   
+}
+
+/* fecha */
+
+
+.date {
+    display: flex;
+    color: #191924;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    height:100px ;
+    margin: 20px;
+
+   
+  }
+  
+  .dateRight {
+    display: flex;
+    align-items: center;
+  }
+  
+  .dateNumber {
+    font-size: 68px;
+    font-weight: 700;
+  }
+  
+  .dateMonth {
+    font-size: 24px;
+    font-weight: 700;
+    margin-left: 8px;
+    text-transform: uppercase;
+  }
+  
+  .dateYear {
+    margin-left: 8px;
+    font-size: 25px;
+  }
+  
+  .dateText {
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+/* barra de navegacion  */
+
+.navigat {
+    position: fixed;
+    bottom: 0;
+    /* left: 0; */
+    width: 1000px;
+    height: 70px;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0px -3px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999; /* Ajusta este valor según tus necesidades */
+  }
+  
+
+.navigat ul{
+    display: flex;
+    width: 420px;
+}
+
+.navigat ul li {
+    position:relative;
+    list-style: none;
+    width: 100px;
+    height: 70px;
+    z-index: 1;
+}
+
+.navigat ul li a{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+}
+
+.navigat ul li a .icon{
+    position: relative;
+    display: block;
+    line-height: 75px;
+    font-size: 1.5em;
+    text-align: 0.5s;
+    transition: 0.5s;
+    color: #414141;
+}
+
+.navigat ul li.active a .icon{
+    transform: translateY(-32px);
+}
+
+.navigat ul li a .text {
+    position: absolute;
+    color: #414141;
+    font-weight: 400;
+    font-size: 0.80em;
+    letter-spacing: 0.05em;
+    transition: 0.5s;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.navigat ul li.active a .text{
+    opacity: 1;
+    transform: translateY(10px);
+}
+
+.indicator{
+    position: absolute;
+    top: -50%;
+    
+    width: 70px;
+    height: 70px;
+    background:  #1ec87a ;
+    border-radius: 50%;
+    border: 6px solid  #191924;
+    transition: 0.5s;
+
+}
+
+.indicator::before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -22px;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border-top-right-radius: 20px;
+    box-shadow: 1px -10px 0 0  #191924;
+}
+
+.indicator::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -22px;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border-top-left-radius: 20px;
+    box-shadow: -1px -10px 0 0  #191924;
+}
+
+
+.navigat ul li:nth-child(1).active ~ .indicator{
+    transform: translateX(calc(70px * 0));
+}
+
+.navigat ul li:nth-child(2).active ~ .indicator{
+    transform: translateX(calc(70px*1));
+}
+
+.navigat ul li:nth-child(3).active ~ .indicator{
+    transform: translateX(calc(70px*2));
+}
+
+.navigat ul li:nth-child(4).active ~ .indicator{
+    transform: translateX(calc(70px*3));
+}
+
+.navigat ul li:nth-child(5).active ~ .indicator{
+    transform: translateX(calc(70px*4));
+}
+
+.navigat ul li:nth-child(6).active ~ .indicator{
+    transform: translateX(calc(71px*5));
+}
+
+
+
+/* Estilos para pantallas de escritorio */
+@media (min-width: 1024px) {
+    /* Agrega aquí tus estilos para pantallas de escritorio */
+    
+  }
+  
+  /* Estilos para tablets */
+  @media (max-width: 1023px) {
+    .cajonbody{
+     
+        background:  #353542 ;
+    }
+    .indicator{
+    
+        border: 6px solid #353542;
+    }
+    
+    .indicator::before{
+        
+     
+        box-shadow: 1px -10px 0 0  #353542;
+        height: 18px;
+    }
+    
+    .indicator::after{
+     
+        box-shadow: -1px -10px 0 0 #353542;
+        height: 18px;
+    }
+    .navigat {
+       
+        height: 69px;
+       
+      }
+  }
+  
+  /* Estilos para dispositivos móviles */
+  @media (max-width: 767px) {
+    /* Agrega aquí tus estilos para dispositivos móviles */
+    .cajonbody{
+     
+        background:  #353542 ;
+    }
+    .indicator{
+     
+        border: 6px solid #353542;
+       
+    
+    }
+    .navigat {
+       
+        height: 69px;
+       
+      }
+    
+    .indicator::before{
+      
+        box-shadow: 1px -10px 0 0  #353542;
+        height: 18px;
+    }
+    
+    .indicator::after{
+      
+        box-shadow: -1px -10px 0 0 #353542;
+        height: 18px;
+    }
+  }

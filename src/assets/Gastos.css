@@ -1,0 +1,289 @@
+/* GastosModule.module.css */
+
+
+  
+  .title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #5b5f5d;
+  }
+  
+  .addButton {
+    background-color: #544fca;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .addButton:hover{
+    background-color: #29268C;
+  }
+  .modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    
+    width: 400px;
+    max-width: 90%;
+    color: #303331;
+    box-shadow: 0 2px 4px rgba(7, 235, 147, 0.1);
+  }
+  
+  .overlay {
+    background-color: rgba(196, 20, 49, 0.5);
+  }
+  
+  .modalTitle {
+    font-size: 12px;
+    margin-bottom: 7px;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+  }
+  
+  .saveButton {
+    background-color: #0dc26d;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+  
+  .cancelButton {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .tableTitle {
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: #828584;
+    
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(122, 118, 118, 0.774);
+    border-radius: 8px;
+  }
+  
+  th,
+  td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f3c23a;
+    color: #fff;
+    
+  }
+
+  th:first-child {
+    border-top-left-radius: 8px;
+  }
+  
+  th:last-child {
+    border-top-right-radius: 8px;
+  }
+  
+  th:not(:first-child):not(:last-child) {
+    border-bottom: none;
+  }
+  
+
+  td {
+    border-top: 1px solid #ddd;
+    color: #5b5f5d;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .tableRow:hover {
+    background-color: #f7ed66;
+    /* Color de fondo al pasar el puntero sobre la fila */
+    cursor: pointer;
+  }
+  
+  .selectedRow {
+    background-color: #f7ed66;
+    /* Color de fondo de la fila seleccionada */
+  }
+  
+  .table-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+  
+  .row-actions {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    top: 44px;
+    right: 0;
+    background-color: #f8f8f8;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 15px;
+  }
+ 
+  /* .edit-button {
+    background-color: #44F281;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  .edit-button:hover{
+    background-color: #2db65d;
+  }
+  .delete-button {
+    background-color: #F24452;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 10px;
+  
+  }
+
+  .delete-button:hover{
+    background-color: #f36773;
+  } */
+
+  .edit-icon,
+.delete-icon {
+  cursor: pointer;
+  font-size: 25px;
+  margin-right: 8px;
+}
+
+.edit-icon {
+  color: #44F281; /* Color para el icono de edición */
+}
+
+.delete-icon {
+  color: #F24452; /* Color para el icono de eliminación */
+}
+
+.edit-icon:hover,
+.delete-icon:hover {
+  opacity: 0.7; /* Opacidad al pasar el puntero sobre los iconos */
+}
+
+
+  
+  
+/* paginacion  */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; /* Ajusta el margen superior según sea necesario */
+}
+
+.pagination-button {
+  background-color: #3a2cb6; /* Ajusta el color de fondo del botón según sea necesario */
+  color: #fff; /* Ajusta el color de texto del botón según sea necesario */
+  border: none;
+  border-radius: 4px; /* Ajusta el radio de borde según sea necesario */
+  padding: 8px 16px; /* Ajusta el relleno del botón según sea necesario */
+  margin: 0 2px; /* Ajusta el margen horizontal del botón según sea necesario */
+  font-size: 10px; /* Ajusta el tamaño de fuente del botón según sea necesario */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+
+
+.pagination-button:disabled {
+  background-color: #ccc; /* Ajusta el color de fondo del botón deshabilitado según sea necesario */
+  cursor: not-allowed;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #3600b3; /* Ajusta el color de fondo del botón al pasar el cursor según sea necesario */
+}
+
+  
+
+  /* cargando */
+
+  .loading-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 250px; /* Ajusta la altura según sea necesario */
+    background: #f5f3d7;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .loadingtext {
+    margin-left: 8px; /* Ajusta el margen izquierdo según sea necesario */
+    font-size: 16px; /* Ajusta el tamaño de fuente según sea necesario */
+  }
+  
+  .loading-bar {
+    width: 100px; /* Ajusta el ancho de la barra de carga según sea necesario */
+    height: 4px; /* Ajusta la altura de la barra de carga según sea necesario */
+    background-color: #ccc; /* Ajusta el color de fondo de la barra de carga según sea necesario */
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .loading-progress {
+    width: 0;
+    height: 100%;
+    background-color: #08f042; /* Ajusta el color de progreso de la barra de carga según sea necesario */
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: loadingAnimation 2s infinite;
+
+  }
+
+
+  
+  
+  @keyframes loadingAnimation {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  

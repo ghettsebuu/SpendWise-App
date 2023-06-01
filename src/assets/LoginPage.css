@@ -1,0 +1,97 @@
+
+.login-page {
+    background:#3abf8e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+
+  .login-container {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    padding: 40px;
+    background: white;
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+  }
+  
+  .logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .google-login-button {
+    background-color: #3abf8e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .google-login-button:hover {
+    background-color: #147551;
+  }
+  
+  .google-icon {
+    font-size: 20px;
+    margin-right: 8px;
+  }
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .loading-icon {
+    font-size: 48px;
+    color: #3abf8e;
+    animation: spin 1.5s linear infinite;
+  }
+  
+  .loading-text {
+    font-size: 24px;
+    color: #333;
+    margin-top: 10px;
+  }
+  
+  @keyframes pulse {
+    0% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.6;
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  
