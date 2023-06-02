@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -18,12 +17,14 @@ const Gastos = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [editingData, setEditingData] = useState(null);
   const [pageIndex, setPageIndex] = useState(0);
+  const [presupuesto, setPresupuesto] = useState(null);
+
 
   useEffect(() => {
-    
     const fetchGastos = async () => {
       const user = auth.currentUser;
       if (user) {
+        // Obtener los gastos del usuario
         const q = query(collection(db, 'gastos'), where('userId', '==', user.uid));
         const querySnapshot = await getDocs(q);
         const gastosData = querySnapshot.docs.map((doc) => ({
@@ -31,12 +32,20 @@ const Gastos = () => {
           ...doc.data(),
         }));
         setGastos(gastosData);
-        setIsLoading(false);
+  
+        // Obtener el presupuesto del usuario
+        const presupuestoSnapshot = await getDocs(query(collection(db, 'presupuesto'), where('userId', '==', user.uid)));
+        if (!presupuestoSnapshot.empty) {
+          const presupuestoData = presupuestoSnapshot.docs[0].data();
+          setPresupuesto(presupuestoData);
+        }
       }
+      setIsLoading(false);
     };
-
+  
     fetchGastos();
   }, []);
+  
 
   const columns = useMemo(
     () => [
@@ -160,6 +169,12 @@ const Gastos = () => {
   return (
     <div className="cont">
       <h2 className="title">Módulo de Gastos</h2>
+      {presupuesto && (
+        <div className="card-presupuesto">
+          <h3>Presupuesto</h3>
+          <p>Monto: {presupuesto.monto} {presupuesto.moneda}</p>
+        </div>
+      )}
 
       <button className="addButton"  onClick={() => handleOpenModal(null)}>Agregar Gastos</button>
       {isLoading ? (
