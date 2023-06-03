@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../assets/Presupuesto.css';
 
+
 const Presupuesto = () => {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -51,14 +52,16 @@ const Presupuesto = () => {
     const user = auth.currentUser;
     const nuevoPresupuesto = {
       userId: user.uid,
-      monto,
+      monto: parseFloat(monto), // Convertir a número utilizando parseFloat
       moneda,
       periodo,
+      presupuestoActual: parseFloat(monto), // Convertir a número utilizando parseFloat
+      fecha: new Date().toISOString() // Agregar la fecha y hora actual como un campo "fecha" en formato ISOString
     };
   
     try {
       if (presupuestoId) {
-        await setDoc(doc(db, 'presupuesto', presupuestoId), nuevoPresupuesto); // Utilizar setDoc en lugar de updateDoc
+        await setDoc(doc(db, 'presupuesto', presupuestoId), nuevoPresupuesto);
         setModalIsOpen(false);
         toast.success('¡Presupuesto actualizado correctamente!');
       } else {

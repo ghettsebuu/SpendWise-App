@@ -22,7 +22,8 @@ background:  #191924 ;
     border-radius: 8px;
     position: fixed;
     top: 0;
-    box-shadow: 0px -3px 6px rgba(77, 76, 76, 0.1);
+    
+    box-shadow: 0px -3px 6px rgba(0, 0, 0, 0.1);
    
 }
 

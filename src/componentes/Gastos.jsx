@@ -14,6 +14,7 @@ const Gastos = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [gastos, setGastos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const noHayGastos = gastos.length === 0;
   const [selectedRow, setSelectedRow] = useState(null);
   const [editingData, setEditingData] = useState(null);
   const [pageIndex, setPageIndex] = useState(0);
@@ -37,8 +38,11 @@ const Gastos = () => {
         const presupuestoSnapshot = await getDocs(query(collection(db, 'presupuesto'), where('userId', '==', user.uid)));
         if (!presupuestoSnapshot.empty) {
           const presupuestoData = presupuestoSnapshot.docs[0].data();
-          setPresupuesto(presupuestoData);
+          const presupuestoActual = presupuestoData.presupuestoActual;
+          const moneda = presupuestoData.moneda;
+          setPresupuesto({ monto: presupuestoActual, moneda });
         }
+
       }
       setIsLoading(false);
     };
@@ -129,7 +133,7 @@ const Gastos = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const descripcion = e.target.descripcion.value;
-    const monto = e.target.monto.value;
+    const monto = parseFloat(e.target.monto.value);
     const moneda = e.target.moneda.value;
     const categoria = e.target.categoria.value;
     const fecha = e.target.fecha.value;
@@ -137,12 +141,13 @@ const Gastos = () => {
     const user = auth.currentUser;
   
     const nuevoGasto = {
-      userId: user.uid, // Asociar el ID del usuario al gasto
+      userId: user.uid,
       fecha,
       descripcion,
       monto,
       moneda,
       categoria,
+      hora: new Date().toLocaleTimeString()
     };
   
     try {
@@ -160,33 +165,66 @@ const Gastos = () => {
         handleCloseModal();
         toast.success('¡Gasto agregado correctamente!');
       }
+  
+      // Obtener el presupuesto actual del usuario
+      const presupuestoQuerySnapshot = await getDocs(
+        query(collection(db, 'presupuesto'), where('userId', '==', user.uid))
+      );
+  
+      if (!presupuestoQuerySnapshot.empty) {
+        const presupuestoDocRef = presupuestoQuerySnapshot.docs[0].ref;
+        const presupuestoData = presupuestoQuerySnapshot.docs[0].data();
+        const presupuestoActual = presupuestoData.presupuestoActual;
+  
+        // Calcular la diferencia de montos
+        const diferenciaMonto = editingData ? monto - editingData.monto : monto;
+  
+        // Restar la diferencia de montos al presupuesto actual
+        const nuevoPresupuestoActual = presupuestoActual - diferenciaMonto;
+  
+        // Actualizar el campo presupuestoActual en el documento de presupuesto
+        await updateDoc(presupuestoDocRef, { presupuestoActual: nuevoPresupuestoActual });
+  
+        // Actualizar el estado de presupuesto
+        setPresupuesto({ ...presupuesto, monto: nuevoPresupuestoActual });
+      }
     } catch (error) {
       console.error('Error al guardar el gasto:', error);
       toast.error('Ocurrió un error al guardar el gasto.');
     }
   };
+  
 
   return (
     <div className="cont">
-      <h2 className="title">Módulo de Gastos</h2>
-      {presupuesto && (
-        <div className="card-presupuesto">
-          <h3>Presupuesto</h3>
-          <p>Monto: {presupuesto.monto} {presupuesto.moneda}</p>
-        </div>
-      )}
+    <h2 className="title">Módulo de Gastos</h2>
+    {presupuesto && (
+      <div className="card-presupuesto">
+        <h3>Presupuesto</h3>
+        <p>
+          Monto: {presupuesto.monto} {presupuesto.moneda}
+        </p>
+      </div>
+    )}
 
-      <button className="addButton"  onClick={() => handleOpenModal(null)}>Agregar Gastos</button>
-      {isLoading ? (
-        <div className="loading-cont">
+    <button className="addButton" onClick={() => handleOpenModal(null)}>
+      Agregar Gastos
+    </button>
+
+    {isLoading ? (
+      <div className="loading-cont">
         <div className="loading-bar">
           <div className="loading-progress"></div>
         </div>
         <div className="loadingtext">Cargando Gastos...</div>
       </div>
-
-      ) : (
-        <>
+    ) : (
+      <>
+        {noHayGastos ? (
+          <div className='no-gastos'><p>No hay gastos guardados aún.</p></div>
+          
+        ) : (
+          <>
           <table {...getTableProps()} className="table">
             <thead>
               {headerGroups.map((headerGroup) => (
@@ -244,8 +282,10 @@ const Gastos = () => {
                 </button>
           </div>
 
-        </>
-      )}
+          </>
+        )}
+      </>
+    )}
 
       <Modal
         isOpen={modalIsOpen}
@@ -301,10 +341,7 @@ const Gastos = () => {
             Cancelar
           </button>
         </form>
-
       </Modal>
-
-      
 
       <ToastContainer />
     </div>

@@ -26,19 +26,20 @@
     z-index: 9999;
     background-color: #f2f2f2;
     border-radius: 8px;
-    padding: 16px;
+    padding: 13px;
+    margin-top: 8px;
     margin-right: 10px;
-    margin-bottom: 5px;
+    box-shadow: 0 2px 4px rgba(185, 183, 183, 0.774);
   }
   
   .card-presupuesto h3 {
-    font-size: 18px;
-    margin-bottom: 8px;
+    font-size: 17px;
+    margin-bottom: 2px;
     color: #5b5f5d;
   }
   
   .card-presupuesto p {
-    font-size: 14px;
+    font-size: 15px;
     margin-bottom: 0;
   }
   
@@ -272,6 +273,7 @@
     justify-content: center;
     height: 250px; /* Ajusta la altura según sea necesario */
     background: #f5f3d7;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
@@ -299,6 +301,16 @@
 
   }
 
+  .no-gastos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 250px; /* Ajusta la altura según sea necesario */
+    background: #f5f3d7;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 
   
   

@@ -19,7 +19,9 @@ const Recordatorios = () => {
   });
   const [modalOpen, setModalOpen] = useState(false);
   const [recordatorioEliminar, setRecordatorioEliminar] = useState(null);
-  const [confirmarEliminar, setConfirmarEliminar] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+ 
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -29,6 +31,7 @@ const Recordatorios = () => {
         (snapshot) => {
           const datos = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
           setRecordatorios(datos);
+          setIsLoading(false);
         }
       );
       return () => unsubscribe();
@@ -61,15 +64,18 @@ const Recordatorios = () => {
 
   const handleEliminarRecordatorio = async () => {
     const id = recordatorioEliminar.id;
-    try {
-      await deleteDoc(doc(db, 'recordatorios', id));
-      const actualizados = recordatorios.filter((r) => r.id !== id);
-      setRecordatorios(actualizados);
-      closeModal();
-      toast.success('Recordatorio eliminado correctamente');
-    } catch (error) {
-      console.error('Error al eliminar el recordatorio:', error);
-      toast.error('Error al eliminar el recordatorio');
+    const confirmar = window.confirm('¿Estás seguro de que deseas eliminar este recordatorio?');
+    if (confirmar) {
+      try {
+        await deleteDoc(doc(db, 'recordatorios', id));
+        const actualizados = recordatorios.filter((r) => r.id !== id);
+        setRecordatorios(actualizados);
+        closeModal();
+        toast.success('Recordatorio eliminado correctamente');
+      } catch (error) {
+        console.error('Error al eliminar el recordatorio:', error);
+        toast.error('Error al eliminar el recordatorio');
+      }
     }
   };
 
@@ -80,75 +86,82 @@ const Recordatorios = () => {
   const closeModal = () => {
     setModalOpen(false);
     setRecordatorioEliminar(null);
-    setConfirmarEliminar(false);
+    
   };
 
   const handleConfirmarEliminar = (recordatorio) => {
     setRecordatorioEliminar(recordatorio);
-    setConfirmarEliminar(true);
-    setModalOpen(true);
+    handleEliminarRecordatorio();
   };
 
   return (
     <div className="cont">
       <h2 className="recordatorios-heading">Recordatorios</h2>
 
-      <button onClick={openModal} className="agregar-recordatorio-btn">Agregar Recordatorio</button>
+      <button onClick={openModal} className="addButton">Agregar Recordatorio</button>
 
-      <ul className="recordatorios-list">
-        {recordatorios.map((recordatorio) => (
-          <li key={recordatorio.id} className="recordatorio-item">
-            <span>{recordatorio.descripcion}</span>
-            <button onClick={() => handleConfirmarEliminar(recordatorio)} className="recordatorio-item-btn">Eliminar</button>
-          </li>
-        ))}
-      </ul>
-
+      {isLoading ? (
+      <div className="loading-cont">
+        <div className="loading-bar">
+          <div className="loading-progress"></div>
+        </div>
+        <div className="loadingtext">Cargando Recordatorios...</div>
+      </div>
+      ) : (
+        <>
+          {recordatorios.length === 0 ? (
+            <div className='no-gastos'>
+              <p>Aún no hay recordatorios añadidos.</p>
+            </div>
+            
+          ) : (
+            <ul className="recordatorios-list">
+              {recordatorios.map((recordatorio) => (
+                <li key={recordatorio.id} className="recordatorio-item">
+                  <span>{recordatorio.descripcion}</span>
+                  <button onClick={() => handleConfirmarEliminar(recordatorio)} className="recordatorio-item-btn">Eliminar</button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
+      )}
       <Messaging />
 
       <Modal isOpen={modalOpen} onRequestClose={closeModal} appElement={document.getElementById('root')} className="modal" overlayClassName="overlay">
-        {confirmarEliminar ? (
-          <>
-            <h3>Eliminar Recordatorio</h3>
-            <p>¿Estás seguro de que deseas eliminar este recordatorio?</p>
-            <button type="button" onClick={handleEliminarRecordatorio} className="eliminar-recordatorio-btn">Eliminar</button>
-            <button type="button" onClick={closeModal} className="eliminar-recordatorio-btn">Cancelar</button>
-          </>
-        ) : (
-          <>
-            <h3>Agregar Recordatorio</h3>
-            <form>
-              <input
-                type="text"
-                value={nuevoRecordatorio.descripcion}
-                onChange={(e) => setNuevoRecordatorio({ ...nuevoRecordatorio, descripcion: e.target.value })}
-                placeholder="Descripción"
-                className="agregar-recordatorio-input"
-              />
-              <select
-                value={nuevoRecordatorio.frecuencia}
-                onChange={(e) => setNuevoRecordatorio({ ...nuevoRecordatorio, frecuencia: e.target.value })}
-                className="agregar-recordatorio-input"
-              >
-                <option value="">Seleccionar frecuencia</option>
-                <option value="Diaria">Diaria</option>
-                <option value="Semanal">Semanal</option>
-                <option value="Mensual">Mensual</option>
-              </select>
-              <input
-                type="date"
-                value={nuevoRecordatorio.fecha}
-                min={new Date().toISOString().split('T')[0]}
-                onChange={(e) => setNuevoRecordatorio({ ...nuevoRecordatorio, fecha: e.target.value })}
-                placeholder="Fecha"
-                className="agregar-recordatorio-input"
-              />
-              <button type="button" onClick={handleAgregarRecordatorio} className="agregar-recordatorio-btn">Agregar</button>
-              <button type="button" onClick={closeModal} className="agregar-recordatorio-btn">Cancelar</button>
-            </form>
-          </>
-        )}
-      </Modal>
+      <>
+        <h3>Agregar Recordatorio</h3>
+        <form>
+          <input
+            type="text"
+            value={nuevoRecordatorio.descripcion}
+            onChange={(e) => setNuevoRecordatorio({ ...nuevoRecordatorio, descripcion: e.target.value })}
+            placeholder="Descripción"
+            className="agregar-recordatorio-input"
+          />
+          <select
+            value={nuevoRecordatorio.frecuencia}
+            onChange={(e) => setNuevoRecordatorio({ ...nuevoRecordatorio, frecuencia: e.target.value })}
+            className="agregar-recordatorio-input"
+          >
+            <option value="">Seleccionar frecuencia</option>
+            <option value="Diaria">Diaria</option>
+            <option value="Semanal">Semanal</option>
+            <option value="Mensual">Mensual</option>
+          </select>
+          <input
+            type="date"
+            value={nuevoRecordatorio.fecha}
+            min={new Date().toISOString().split('T')[0]}
+            onChange={(e) => setNuevoRecordatorio({ ...nuevoRecordatorio, fecha: e.target.value })}
+            placeholder="Fecha"
+            className="agregar-recordatorio-input"
+          />
+          <button type="button" onClick={handleAgregarRecordatorio} className="agregar-recordatorio-btn">Agregar</button>
+          <button type="button" onClick={closeModal} className="agregar-recordatorio-btn">Cancelar</button>
+        </form>
+      </>
+    </Modal>
     </div>
   );
 };
