@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
-import { collection, addDoc, updateDoc, doc, onSnapshot, getDocs, deleteDoc, query, where,setDoc  } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, doc, onSnapshot, getDocs,deleteDoc } from 'firebase/firestore';
 import { db, auth } from '../firebase/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../assets/Presupuesto.css';
-
 
 const Presupuesto = () => {
   const navigate = useNavigate();
@@ -14,7 +13,6 @@ const Presupuesto = () => {
   const [monto, setMonto] = useState('');
   const [moneda, setMoneda] = useState('USD');
   const [periodo, setPeriodo] = useState('día');
-  const [presupuestoId, setPresupuestoId] = useState(null); // Nuevo estado para almacenar el ID del presupuesto actual
   const [presupuestos, setPresupuestos] = useState([]);
 
   useEffect(() => {
@@ -22,15 +20,11 @@ const Presupuesto = () => {
       if (!user) {
         navigate('/login');
       } else {
-        const q = query(collection(db, 'presupuesto'), where('userId', '==', user.uid));
-        const unsubscribeSnapshot = onSnapshot(q, (snapshot) => { // Usamos la consulta "q" para obtener solo los presupuestos del usuario actual
+        const unsubscribeSnapshot = onSnapshot(collection(db, 'presupuesto'), (snapshot) => {
           const data = [];
           snapshot.forEach((doc) => {
             data.push({ id: doc.id, ...doc.data() });
           });
-          if (data.length > 0) {
-            setPresupuestoId(data[0].id); // Almacenamos el ID del presupuesto actual en el estado
-          }
           setPresupuestos(data);
         });
         return () => unsubscribeSnapshot();
@@ -52,16 +46,15 @@ const Presupuesto = () => {
     const user = auth.currentUser;
     const nuevoPresupuesto = {
       userId: user.uid,
-      monto: parseFloat(monto), // Convertir a número utilizando parseFloat
+      monto,
       moneda,
       periodo,
-      presupuestoActual: parseFloat(monto), // Convertir a número utilizando parseFloat
-      fecha: new Date().toISOString() // Agregar la fecha y hora actual como un campo "fecha" en formato ISOString
     };
-  
+
     try {
-      if (presupuestoId) {
-        await setDoc(doc(db, 'presupuesto', presupuestoId), nuevoPresupuesto);
+      if (presupuestos.length > 0) {
+        const presupuestoId = presupuestos[0].id;
+        await updateDoc(doc(db, 'presupuesto', presupuestoId), nuevoPresupuesto);
         setModalIsOpen(false);
         toast.success('¡Presupuesto actualizado correctamente!');
       } else {
@@ -74,7 +67,6 @@ const Presupuesto = () => {
       toast.error('Ocurrió un error al guardar el presupuesto.');
     }
   };
-  
 
   const deletePresupuesto = async (presupuestoId) => {
     const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar este presupuesto?');

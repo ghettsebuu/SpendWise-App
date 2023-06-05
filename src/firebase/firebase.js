@@ -9,13 +9,13 @@ import { getMessaging } from 'firebase/messaging';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_API_KEY,
-  authDomain: import.meta.env.VITE_AUTH_DOMAIN ,
-  projectId: import.meta.env.VITE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
-  messagingSenderId:import.meta.env.VITE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_APP_ID,
-  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
+  apiKey: "AIzaSyCj30otjPRdKVziJn3jDoPNieDAUliqWFE",
+  authDomain: "app-spendwise-r.firebaseapp.com",
+  projectId: "app-spendwise-r",
+  storageBucket: "app-spendwise-r.appspot.com",
+  messagingSenderId: "522605424301",
+  appId: "1:522605424301:web:6c36af0ac547b824326024",
+  measurementId: "G-62CMGRKBTE"
 };
 
 // Initialize Firebase
