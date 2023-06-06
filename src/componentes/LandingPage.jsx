@@ -1,14 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { auth} from '../firebase/firebase';
 import '../assets/LandingPage.css';
+import { onAuthStateChanged } from 'firebase/auth';
 
 
 function LandingPage() {
+  
+  const [validar, setValidar] = useState(false);
+  
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (data) =>{
+      setValidar(data.displayName)
+    })
+  
+   
+  }, [])
+  
+
+ 
+  
+  
+
   return (
     <div>
       <header>
         <nav className="navigation">
-          <NavLink className="navigation__link " to="/login" activeClassName="active">Acceder</NavLink>
+          
+          {
+            auth.currentUser ?  <div>
+              
+              <NavLink className="navigation__link " to="/login" activeClassName="active"> Bienvenido {validar} Dashboard</NavLink> 
+            </div>
+            : 
+             <NavLink className="navigation__link " to="/login" activeClassName="active">Acceder</NavLink>
+          }
+  
         </nav>
         <div className="texts">
           <h1 className="texts__title">Bienvenidos a SpendWise</h1>

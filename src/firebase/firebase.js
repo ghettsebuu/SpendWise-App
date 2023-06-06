@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {getAuth} from "firebase/auth";
+import {getAuth,onAuthStateChanged} from "firebase/auth";
 import {getStorage , getDownloadURL , getBytes,ref,uploadBytes,} from "firebase/storage";
 import {getFirestore ,collection , addDoc, getDoc,doc , getDocs,query,where,setDoc,deleteDoc} from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
@@ -74,4 +74,23 @@ export async function getUserInfo(uid){
   }catch(error){
 
   }
+}
+  export async function getUserValid(){
+    try{
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+         console.log(user)
+          // ...
+        } else {
+          // User is signed out
+          // ...
+          console.log(user)
+        }
+      });
+     
+    }catch(error){
+  
+    }
 }

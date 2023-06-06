@@ -24,7 +24,7 @@ const Recordatorios = () => {
   useEffect(() => {
     const user = auth.currentUser;
 
-   
+   console.log(user);
     if (user) {
       const unsubscribe = onSnapshot(
         query(collection(db, 'recordatorios'), where('userId', '==', user.uid)),
@@ -57,7 +57,7 @@ const Recordatorios = () => {
       try {
         const docRef = await addDoc(collection(db, 'recordatorios'), recordatorio);
         setRecordatorios([...recordatorios, { id: docRef.id, ...recordatorio }]);
-        setNuevoRecordatorio({ descripcion: '', frecuencia: '', fecha: '' });
+        setNuevoRecordatorio({ descripcion: '', fecha: '' });
         closeModal();
         toast.success('Recordatorio agregado correctamente');
       } catch (error) {
@@ -134,16 +134,7 @@ const Recordatorios = () => {
                 placeholder="Descripción"
                 className="agregar-recordatorio-input"
               />
-              <select
-                value={nuevoRecordatorio.frecuencia}
-                onChange={(e) => setNuevoRecordatorio({ ...nuevoRecordatorio, frecuencia: e.target.value })}
-                className="agregar-recordatorio-input"
-              >
-                <option value="">Seleccionar frecuencia</option>
-                <option value="Diaria">Diaria</option>
-                <option value="Semanal">Semanal</option>
-                <option value="Mensual">Mensual</option>
-              </select>
+             
               <input
                 type="date"
                 value={nuevoRecordatorio.fecha}
