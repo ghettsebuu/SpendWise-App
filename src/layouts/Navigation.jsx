@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import { getAuth, signOut } from "firebase/auth";
 import '../assets/Navigation.css';
 
 const Navigation = () => {
@@ -25,6 +26,14 @@ const Navigation = () => {
 
   const handleItemClick = (index) => {
     setActiveIndex(index);
+  //  if(index==5 ){
+  //   const auth = getAuth();
+  //     signOut(auth).then(() => {
+  //      console.log('listo');
+  //     }).catch((error) => {
+  //       // An error happened.
+  //     });
+  //  }
   };
 
   
@@ -34,7 +43,7 @@ const Navigation = () => {
     { icon: 'calendar-outline', text: 'Recordatorios', path: '/dashboard/recordatorios' },
     { icon: 'cash-outline', text: 'Presupuesto', path: '/dashboard/presupuesto' },
     { icon: 'bar-chart-outline', text: 'Informes', path: '/dashboard/informes' },
-    { icon: 'log-in-outline', text: 'Logout', path: '' },
+    { icon: 'log-in-outline', text: 'Logout', path: '/dashboard/logout' },
   ];
 
   return (

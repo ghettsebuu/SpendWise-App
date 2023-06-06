@@ -31,7 +31,7 @@ function LandingPage() {
           {
             auth.currentUser ?  <div>
               
-              <NavLink className="navigation__link " to="/login" activeClassName="active"> Bienvenido {validar} Dashboard</NavLink> 
+              <NavLink className="navigation__link " to="/dashboard/home" activeClassName="active"> Bienvenido {validar} Dashboard</NavLink> 
             </div>
             : 
              <NavLink className="navigation__link " to="/login" activeClassName="active">Acceder</NavLink>

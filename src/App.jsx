@@ -13,7 +13,7 @@ import Navigation from './layouts/Navigation';
 import LandingPage from './componentes/LandingPage';
 import LoginPage from './componentes/LoginPage';
 import RegisterPage from './componentes/RegisterPage';
-
+import Logout from './componentes/Logout'
 function App() {
   const userLoggedIn = true; // Variable para simular si el usuario ha iniciado sesión
  
@@ -33,6 +33,7 @@ function App() {
               <Route path="/dashboard/recordatorios" element={<Recordatorios />} />
               <Route path="/dashboard/presupuesto" element={<Presupuesto />} />
               <Route path="/dashboard/informes" element={<Informes />} />
+              <Route path="/dashboard/logout" element={<Logout />} />
             </Route>
           )}
         </Routes>
