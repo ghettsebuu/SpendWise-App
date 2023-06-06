@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { db, auth } from '../firebase/firebase';
 import { toast } from 'react-toastify';
@@ -96,7 +98,7 @@ const Recordatorios = () => {
 
   return (
     <div className="cont">
-      <h2 className="recordatorios-heading">Recordatorios</h2>
+      <h2 className="title">Módulo de Recordatorios</h2>
 
       <button onClick={openModal} className="addButton">Agregar Recordatorio</button>
 
@@ -119,7 +121,8 @@ const Recordatorios = () => {
               {recordatorios.map((recordatorio) => (
                 <li key={recordatorio.id} className="recordatorio-item">
                   <span>{recordatorio.descripcion}</span>
-                  <button onClick={() => handleConfirmarEliminar(recordatorio)} className="recordatorio-item-btn">Eliminar</button>
+                  
+                  <FontAwesomeIcon icon={faTrash} onClick={() => handleConfirmarEliminar(recordatorio)} className="recordatorio-item-btn"/>
                 </li>
               ))}
             </ul>
@@ -130,7 +133,7 @@ const Recordatorios = () => {
 
       <Modal isOpen={modalOpen} onRequestClose={closeModal} appElement={document.getElementById('root')} className="modal" overlayClassName="overlay">
       <>
-        <h3>Agregar Recordatorio</h3>
+        <h3 className='modalTitle'>Agregar Recordatorio</h3>
         <form>
           <input
             type="text"

@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { format } from 'date-fns';
 
 import Modal from 'react-modal';
 import { useTable, usePagination } from 'react-table';
@@ -19,6 +20,8 @@ const Gastos = () => {
   const [editingData, setEditingData] = useState(null);
   const [pageIndex, setPageIndex] = useState(0);
   const [presupuesto, setPresupuesto] = useState(null);
+  const [currentDate, setCurrentDate] = useState('');
+
 
 
   useEffect(() => {
@@ -47,6 +50,8 @@ const Gastos = () => {
       setIsLoading(false);
     };
   
+    const today = new Date().toISOString().split('T')[0];
+    setCurrentDate(today);
     fetchGastos();
   }, []);
   
@@ -136,18 +141,18 @@ const Gastos = () => {
     const monto = parseFloat(e.target.monto.value);
     const moneda = e.target.moneda.value;
     const categoria = e.target.categoria.value;
-    const fecha = e.target.fecha.value;
+    const fecha = new Date(); // Obtener la fecha y hora actual
   
     const user = auth.currentUser;
   
     const nuevoGasto = {
       userId: user.uid,
-      fecha,
+      fecha: fecha.toISOString(),
       descripcion,
       monto,
       moneda,
       categoria,
-      hora: new Date().toLocaleTimeString()
+      hora: format(fecha, 'HH:mm:ss') // Formato HH:mm:ss
     };
   
     try {
@@ -175,24 +180,36 @@ const Gastos = () => {
         const presupuestoDocRef = presupuestoQuerySnapshot.docs[0].ref;
         const presupuestoData = presupuestoQuerySnapshot.docs[0].data();
         const presupuestoActual = presupuestoData.presupuestoActual;
+        const presupuestoFecha = new Date(presupuestoData.fecha );
+        const gastoFecha = new Date(fecha );
+
+       console.log('Fecha del presupuesto:', presupuestoFecha);
+        console.log('Fecha del gasto:', gastoFecha);
+
   
-        // Calcular la diferencia de montos
-        const diferenciaMonto = editingData ? monto - editingData.monto : monto;
+        if (gastoFecha > presupuestoFecha) {
+          // Calcular la diferencia de montos
+          const diferenciaMonto = editingData ? monto - editingData.monto : monto;
   
-        // Restar la diferencia de montos al presupuesto actual
-        const nuevoPresupuestoActual = presupuestoActual - diferenciaMonto;
+          // Restar la diferencia de montos al presupuesto actual
+          const nuevoPresupuestoActual = presupuestoActual - diferenciaMonto;
   
-        // Actualizar el campo presupuestoActual en el documento de presupuesto
-        await updateDoc(presupuestoDocRef, { presupuestoActual: nuevoPresupuestoActual });
+          // Actualizar el campo presupuestoActual en el documento de presupuesto
+          await updateDoc(presupuestoDocRef, { presupuestoActual: nuevoPresupuestoActual });
   
-        // Actualizar el estado de presupuesto
-        setPresupuesto({ ...presupuesto, monto: nuevoPresupuestoActual });
+          // Actualizar el estado de presupuesto
+          setPresupuesto({ ...presupuesto, monto: nuevoPresupuestoActual });
+        } else {
+          // No se realiza ningún cambio en el presupuesto
+          toast.info('¡Este gasto es prehistórico para tu presupuesto actual!');
+        }
       }
     } catch (error) {
       console.error('Error al guardar el gasto:', error);
       toast.error('Ocurrió un error al guardar el gasto.');
     }
   };
+ 
   
 
   return (
@@ -200,7 +217,7 @@ const Gastos = () => {
     <h2 className="title">Módulo de Gastos</h2>
     {presupuesto && (
       <div className="card-presupuesto">
-        <h3>Presupuesto</h3>
+        <h3>Presupuesto Actual</h3>
         <p>
           Monto: {presupuesto.monto} {presupuesto.moneda}
         </p>
@@ -295,12 +312,12 @@ const Gastos = () => {
         overlayClassName="overlay"
 
       >
-        <h2>{editingData ? 'Editar Gasto' : 'Agregar Gasto'}</h2>
+        <h2 className='modalTitle'>{editingData ? 'Editar Gasto' : 'Agregar Gasto'}</h2>
         <form onSubmit={handleSubmit}>
           <label>
             Fecha:
-            <input type="date" name="fecha" className="input"  defaultValue={editingData ? editingData.fecha : ''}
-              required />
+            <input type="date" name="fecha" className="input" defaultValue={editingData ? editingData.fecha : currentDate}
+            required/> 
           </label>
           <label>
             Descripción:

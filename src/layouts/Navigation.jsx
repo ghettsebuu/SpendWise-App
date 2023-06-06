@@ -33,8 +33,8 @@ const Navigation = () => {
     { icon: 'wallet-outline', text: 'Gastos', path: '/dashboard/gastos' },
     { icon: 'calendar-outline', text: 'Recordatorios', path: '/dashboard/recordatorios' },
     { icon: 'cash-outline', text: 'Presupuesto', path: '/dashboard/presupuesto' },
-    { icon: 'bar-chart-outline', text: 'Estadisticas', path: '/dashboard/informes' },
-    { icon: 'log-in-outline', text: 'Logout', path: '' },
+    { icon: 'bar-chart-outline', text: 'Informes', path: '/dashboard/informes' },
+    // { icon: 'log-in-outline', text: 'Logout', path: '' },
   ];
 
   return (

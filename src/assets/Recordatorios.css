@@ -33,11 +33,11 @@
 
 .recordatorio-item-btn {
   padding: 8px 16px;
-  background-color: #f44336;
-  color: #fff;
+  color: #e95b5b;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
+  font-size: 25px;
+  margin-right: 8px;
 }
 
 .agregar-recordatorio-heading {
@@ -61,5 +61,8 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-right: 55px;
+  margin-left: 55px;
+  margin-top: 10px;
   margin-bottom: 10px;
 }

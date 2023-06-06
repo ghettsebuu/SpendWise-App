@@ -3,8 +3,8 @@
 
   
   .title {
-    font-size: 18px;
-    margin-bottom: 10px;
+    font-size: 20px;
+    margin-bottom: 5px;
     color: #5b5f5d;
   }
   
@@ -49,33 +49,33 @@
   }
   .modal {
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
-    
-    width: 400px;
-    max-width: 90%;
+    width: 450px;
+    max-width: 100%;
     color: #303331;
     box-shadow: 0 2px 4px rgba(7, 235, 147, 0.1);
   }
   
-  .overlay {
-    background-color: rgba(196, 20, 49, 0.5);
-  }
+ 
   
   .modalTitle {
-    font-size: 12px;
-    margin-bottom: 7px;
-  }
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+  } 
   
-  .input {
+   .input {
+    display: block;
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
-    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
   
   .saveButton {
@@ -86,7 +86,8 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
-    margin-right: 10px;
+    margin-right: 35px;
+    width: 40%;
   }
   
   .cancelButton {
@@ -96,8 +97,10 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-left: 35px;
     font-size: 14px;
-  }
+    width: 40%;
+  }  
   
   .tableTitle {
     font-size: 16px;

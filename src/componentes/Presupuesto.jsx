@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { format } from 'date-fns';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { collection, addDoc, updateDoc, doc, onSnapshot, getDocs, deleteDoc, query, where,setDoc  } from 'firebase/firestore';
@@ -16,7 +20,8 @@ const Presupuesto = () => {
   const [periodo, setPeriodo] = useState('día');
   const [presupuestoId, setPresupuestoId] = useState(null); // Nuevo estado para almacenar el ID del presupuesto actual
   const [presupuestos, setPresupuestos] = useState([]);
-
+  
+  
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (!user) {
@@ -50,13 +55,16 @@ const Presupuesto = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
+    const fecha = new Date(); // Obtener la fecha y hora actual
+
     const nuevoPresupuesto = {
       userId: user.uid,
-      monto: parseFloat(monto), // Convertir a número utilizando parseFloat
+      monto: parseFloat(monto),
       moneda,
       periodo,
-      presupuestoActual: parseFloat(monto), // Convertir a número utilizando parseFloat
-      fecha: new Date().toISOString() // Agregar la fecha y hora actual como un campo "fecha" en formato ISOString
+      presupuestoActual: parseFloat(monto),
+      fecha: fecha.toISOString(), // Campo "fecha" con la fecha en formato ISOString
+      hora: format(fecha, 'HH:mm:ss'), // Campo "hora" con la hora en formato HH:mm:ss
     };
   
     try {
@@ -96,15 +104,26 @@ const Presupuesto = () => {
 
       {presupuestos.length > 0 ? (
         presupuestos.map((presupuesto) => (
+
           <div className="card" key={presupuesto.userId}>
-            <h3 className="card-title">Tu presupuesto actual:</h3>
-            <p>Monto: {presupuesto.monto}</p>
-            <p>Moneda: {presupuesto.moneda}</p>
-            <p>Periodo: {presupuesto.periodo}</p>
-            <div className='botonesCard'>
-              <button className="editButton" onClick={() => handleEdit(presupuesto)}>Editar Presupuesto</button>
-              <button className="deleteButton" onClick={() => deletePresupuesto(presupuesto.id)}>Eliminar Presupuesto</button>
-            </div>
+              {/* <h3 className="card-title">Tu presupuesto :</h3> */}
+              <div className='cont-presu'>
+                <div className='monto'>
+                  <p className='parrafos-p'> {presupuesto.monto}</p>
+                </div>
+                <div className='moneda'>
+                  <p className='parrafos-p'>{presupuesto.moneda}</p>
+                </div>
+              </div>
+              <div className='periodo'>
+                  <p className='parrafos-p'>Periodo: {presupuesto.periodo}</p>
+              </div>
+
+
+              <div className='botonesCard'>
+                  <FontAwesomeIcon className="editButton" icon={faEdit} onClick={() => handleEdit(presupuesto)}/>
+                  <FontAwesomeIcon className="deleteButton" icon={faTrash} onClick={() => deletePresupuesto(presupuesto.id)}/>
+              </div>
             
           </div>
         ))
@@ -123,7 +142,7 @@ const Presupuesto = () => {
         className="modal"
         overlayClassName="overlay"
       >
-        <h2>{presupuestos.length > 0 ? 'Editar Presupuesto' : 'Agregar Presupuesto'}</h2>
+        <h2 className='modalTitle'>{presupuestos.length > 0 ? 'Editar Presupuesto' : 'Agregar Presupuesto'}</h2>
         <form onSubmit={handleSubmit}>
           <label>
             Monto:
@@ -164,7 +183,7 @@ const Presupuesto = () => {
               <option value="mes">Mes</option>
             </select>
           </label>
-          <button className="saveButton" type="submit">
+          <button className="saveButton-p" type="submit">
             {presupuestos.length > 0 ? 'Actualizar Presupuesto' : 'Agregar Presupuesto'}
           </button>
           
