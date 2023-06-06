@@ -93,7 +93,7 @@ background:  #191924 ;
 
 .navigat ul{
     display: flex;
-    width: 350px;
+    width: 420px;
 }
 
 .navigat ul li {
@@ -203,7 +203,9 @@ background:  #191924 ;
     transform: translateX(calc(70px*4));
 }
 
-
+.navigat ul li:nth-child(6).active ~ .indicator{
+    transform: translateX(calc(71px*5));
+}
 
 
 
