@@ -20,6 +20,7 @@ const Gastos = () => {
   const [editingData, setEditingData] = useState(null);
   const [pageIndex, setPageIndex] = useState(0);
   const [presupuesto, setPresupuesto] = useState(null);
+  const presupuestoSnapshot = useMemo(() => null, []);
   // const [currentDate, setCurrentDate] = useState('');
   const today = new Date().toISOString().split('T')[0];
   const [currentDate, setCurrentDate] = useState(today); // Asignar el valor de today a currentDate
@@ -108,16 +109,22 @@ const Gastos = () => {
   );
 
   const handleOpenModal = (index) => {
-    if (index !== null) {
-      const gasto = page[index].original;
-      setEditingData(gasto);
-      setInitialDate(gasto.fecha);
+    if ((!presupuesto || presupuesto.monto > 0) || presupuestoSnapshot !== null) {
+      if (index !== null) {
+        const gasto = page[index].original;
+        setEditingData(gasto);
+        setInitialDate(gasto.fecha);
+      } else {
+        setEditingData(null);
+        setInitialDate(currentDate);
+      }
+      setModalIsOpen(true);
     } else {
-      setEditingData(null);
-      setInitialDate(currentDate);
+      toast.warning('¡Tu presupuesto ha llegado a cero! Actualiza tu presupuesto para seguir agregando gastos.');
     }
-    setModalIsOpen(true);
   };
+  
+  
 
   const handleCloseModal = () => {
     setModalIsOpen(false);
@@ -192,8 +199,8 @@ const Gastos = () => {
         const presupuestoFecha = new Date(presupuestoData.fecha );
         const gastoFecha = new Date(fecha );
 
-       console.log('Fecha del presupuesto:', presupuestoFecha);
-        console.log('Fecha del gasto:', gastoFecha);
+      /*  console.log('Fecha del presupuesto:', presupuestoFecha);
+        console.log('Fecha del gasto:', gastoFecha); */
 
   
         if (gastoFecha > presupuestoFecha) {
@@ -205,6 +212,12 @@ const Gastos = () => {
   
           // Actualizar el campo presupuestoActual en el documento de presupuesto
           await updateDoc(presupuestoDocRef, { presupuestoActual: nuevoPresupuestoActual });
+              // Verificar si el presupuesto actual es igual o menor que cero
+              if (nuevoPresupuestoActual <= 0) {
+                // Enviar una notificación al usuario indicando que el presupuesto ha llegado a cero
+                // Puedes utilizar la biblioteca de notificaciones que prefieras (por ejemplo, react-toastify)
+                toast.warning('¡Tu presupuesto ha llegado a cero! Actualiza tu presupuesto para seguir agregando gastos.');
+              }
   
           // Actualizar el estado de presupuesto
           setPresupuesto({ ...presupuesto, monto: nuevoPresupuestoActual });
