@@ -20,7 +20,11 @@ const Gastos = () => {
   const [editingData, setEditingData] = useState(null);
   const [pageIndex, setPageIndex] = useState(0);
   const [presupuesto, setPresupuesto] = useState(null);
-  const [currentDate, setCurrentDate] = useState('');
+  // const [currentDate, setCurrentDate] = useState('');
+  const today = new Date().toISOString().split('T')[0];
+  const [currentDate, setCurrentDate] = useState(today); // Asignar el valor de today a currentDate
+  const [initialDate, setInitialDate] = useState('');
+
 
 
 
@@ -50,8 +54,9 @@ const Gastos = () => {
       setIsLoading(false);
     };
   
-    const today = new Date().toISOString().split('T')[0];
-    setCurrentDate(today);
+    /* const today = new Date().toISOString().split('T')[0];
+    setCurrentDate(today); */
+    
     fetchGastos();
   }, []);
   
@@ -61,6 +66,7 @@ const Gastos = () => {
       {
         Header: 'Fecha',
         accessor: 'fecha',
+        Cell: ({ value }) => format(new Date(value), 'dd/MM/yyyy HH:mm:ss'),
       },
       {
         Header: 'Descripción',
@@ -105,8 +111,10 @@ const Gastos = () => {
     if (index !== null) {
       const gasto = page[index].original;
       setEditingData(gasto);
+      setInitialDate(gasto.fecha);
     } else {
       setEditingData(null);
+      setInitialDate(currentDate);
     }
     setModalIsOpen(true);
   };
@@ -141,7 +149,8 @@ const Gastos = () => {
     const monto = parseFloat(e.target.monto.value);
     const moneda = e.target.moneda.value;
     const categoria = e.target.categoria.value;
-    const fecha = new Date(); // Obtener la fecha y hora actual
+    const fecha = editingData ? new Date(editingData.fecha) : new Date();
+
   
     const user = auth.currentUser;
   
@@ -314,11 +323,18 @@ const Gastos = () => {
       >
         <h2 className='modalTitle'>{editingData ? 'Editar Gasto' : 'Agregar Gasto'}</h2>
         <form onSubmit={handleSubmit}>
-          <label>
-            Fecha:
-            <input type="date" name="fecha" className="input" defaultValue={editingData ? editingData.fecha : currentDate}
-            required/> 
-          </label>
+        <label>
+          Fecha:
+          <input
+            type="date"
+            name="fecha"
+            className="input"
+            defaultValue={editingData ? initialDate : currentDate}
+            required
+            disabled
+          />
+        </label>
+
           <label>
             Descripción:
             <input type="text" name="descripcion" className="input" defaultValue={editingData ? editingData.descripcion : ''}
