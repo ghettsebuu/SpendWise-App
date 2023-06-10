@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash , faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { db, auth } from '../firebase/firebase';
 import { toast } from 'react-toastify';
@@ -16,9 +16,10 @@ const Recordatorios = () => {
   const [recordatorios, setRecordatorios] = useState([]);
   const [nuevoRecordatorio, setNuevoRecordatorio] = useState({
     descripcion: '',
-    frecuencia: '',
     fecha: '',
+    realizado: false // Added field
   });
+  
   const [modalOpen, setModalOpen] = useState(false);
   const [recordatorioEliminar, setRecordatorioEliminar] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -46,15 +47,15 @@ const Recordatorios = () => {
       const recordatorio = {
         userId: user.uid,
         descripcion: nuevoRecordatorio.descripcion,
-        frecuencia: nuevoRecordatorio.frecuencia,
         fecha: nuevoRecordatorio.fecha,
         creadoEn: serverTimestamp(),
+        realizado: false // Added field
       };
 
       try {
         const docRef = await addDoc(collection(db, 'recordatorios'), recordatorio);
         setRecordatorios([...recordatorios, { id: docRef.id, ...recordatorio }]);
-        setNuevoRecordatorio({ descripcion: '', frecuencia: '', fecha: '' });
+        setNuevoRecordatorio({ descripcion: '',  fecha: '' });
         closeModal();
         toast.success('Recordatorio agregado correctamente');
       } catch (error) {
@@ -63,6 +64,8 @@ const Recordatorios = () => {
       }
     }
   };
+
+  
 
   const handleEliminarRecordatorio = async () => {
     const id = recordatorioEliminar.id;
@@ -93,8 +96,27 @@ const Recordatorios = () => {
 
   const handleConfirmarEliminar = (recordatorio) => {
     setRecordatorioEliminar(recordatorio);
-    handleEliminarRecordatorio();
+    handleEliminarRecordatorio(); // Llamar a handleEliminarRecordatorio después de actualizar el estado
   };
+
+  const handleMarcarRealizado = async (recordatorio) => {
+    const id = recordatorio.id;
+    const confirmar = window.confirm('¿Estás seguro de que deseas marcar este recordatorio como realizado?');
+    if (confirmar) {
+      const updatedRecordatorio = { ...recordatorio, realizado: true };
+  
+      try {
+        await setDoc(doc(db, 'recordatorios', id), updatedRecordatorio);
+        const actualizados = recordatorios.map((r) => (r.id === id ? updatedRecordatorio : r));
+        setRecordatorios(actualizados);
+        toast.success('Recordatorio marcado como realizado');
+      } catch (error) {
+        console.error('Error al marcar el recordatorio como realizado:', error);
+        toast.error('Error al marcar el recordatorio como realizado');
+      }
+    }
+  };
+  
 
   return (
     <div className="cont">
@@ -117,15 +139,29 @@ const Recordatorios = () => {
             </div>
             
           ) : (
-            <ul className="recordatorios-list">
-              {recordatorios.map((recordatorio) => (
-                <li key={recordatorio.id} className="recordatorio-item">
-                  <span>{recordatorio.descripcion}</span>
-                  
-                  <FontAwesomeIcon icon={faTrash} onClick={() => handleConfirmarEliminar(recordatorio)} className="recordatorio-item-btn"/>
-                </li>
-              ))}
-            </ul>
+            <div className='contenedor-recordatorios' style={{ maxHeight: '270px', overflowY: 'auto' }}>
+              <ul className="recordatorios-list">
+                {recordatorios.map((recordatorio) => (
+                  <li key={recordatorio.id} className={`recordatorio-item ${recordatorio.realizado ? 'realizado' : ''}`}>
+                    <span>{recordatorio.descripcion}</span>
+                    <div className='separarIconos'>
+                      <FontAwesomeIcon
+                        icon={faCheckCircle}
+                        onClick={() => handleMarcarRealizado(recordatorio)}
+                        className={`recordatorio-item-btnR ${recordatorio.realizado ? 'realizado' : ''}`}
+                      />
+
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={() => handleConfirmarEliminar(recordatorio)}
+                        className="recordatorio-item-btn"
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
           )}
         </>
       )}

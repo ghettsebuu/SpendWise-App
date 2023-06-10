@@ -5,7 +5,7 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
-import { collection, addDoc, updateDoc, doc, onSnapshot, getDocs, deleteDoc, query, where,setDoc  } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, doc, onSnapshot, getDocs, deleteDoc, query, where, setDoc } from 'firebase/firestore';
 import { db, auth } from '../firebase/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,27 +18,39 @@ const Presupuesto = () => {
   const [monto, setMonto] = useState('');
   const [moneda, setMoneda] = useState('USD');
   const [periodo, setPeriodo] = useState('día');
-  const [presupuestoId, setPresupuestoId] = useState(null); // Nuevo estado para almacenar el ID del presupuesto actual
+  const [presupuestoId, setPresupuestoId] = useState(null);
   const [presupuestos, setPresupuestos] = useState([]);
-  
-  
+  const [monedaPredeterminada, setMonedaPredeterminada] = useState('');
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (!user) {
         navigate('/login');
       } else {
+        const configQuery = query(collection(db, 'configuracion'), where('userId', '==', user.uid));
         const q = query(collection(db, 'presupuesto'), where('userId', '==', user.uid));
-        const unsubscribeSnapshot = onSnapshot(q, (snapshot) => { // Usamos la consulta "q" para obtener solo los presupuestos del usuario actual
+        const unsubscribeSnapshot = onSnapshot(q, (snapshot) => {
           const data = [];
           snapshot.forEach((doc) => {
             data.push({ id: doc.id, ...doc.data() });
           });
           if (data.length > 0) {
-            setPresupuestoId(data[0].id); // Almacenamos el ID del presupuesto actual en el estado
+            setPresupuestoId(data[0].id);
           }
           setPresupuestos(data);
         });
-        return () => unsubscribeSnapshot();
+
+        const unsubscribeConfigSnapshot = onSnapshot(configQuery, (configSnapshot) => {
+          configSnapshot.forEach((configDoc) => {
+            const configData = configDoc.data();
+            setMonedaPredeterminada(configData.monedaPredeterminada);
+          });
+        });
+
+        return () => {
+          unsubscribeSnapshot();
+          unsubscribeConfigSnapshot();
+        };
       }
     });
 
@@ -49,24 +61,28 @@ const Presupuesto = () => {
     setModalIsOpen(true);
     setMonto(presupuesto.monto);
     setMoneda(presupuesto.moneda);
-    setPeriodo(presupuesto.periodo);
+    // setPeriodo(presupuesto.periodo);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
-    const fecha = new Date(); // Obtener la fecha y hora actual
+    const fecha = new Date();
+
+    if (!monedaPredeterminada) {
+      toast.error('Debe establecer una moneda antes de agregar un presupuesto.');
+      return;
+    }
 
     const nuevoPresupuesto = {
       userId: user.uid,
       monto: parseFloat(monto),
       moneda,
-      periodo,
+      // periodo,
       presupuestoActual: parseFloat(monto),
-      fecha: fecha.toISOString(), // Campo "fecha" con la fecha en formato ISOString
-      hora: format(fecha, 'HH:mm:ss'), // Campo "hora" con la hora en formato HH:mm:ss
+      fecha: fecha.toISOString(),
     };
-  
+
     try {
       if (presupuestoId) {
         await setDoc(doc(db, 'presupuesto', presupuestoId), nuevoPresupuesto);
@@ -82,11 +98,10 @@ const Presupuesto = () => {
       toast.error('Ocurrió un error al guardar el presupuesto.');
     }
   };
-  
 
   const deletePresupuesto = async (presupuestoId) => {
     const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar este presupuesto?');
-  
+
     if (confirmDelete) {
       try {
         await deleteDoc(doc(db, 'presupuesto', presupuestoId));
@@ -97,41 +112,36 @@ const Presupuesto = () => {
       }
     }
   };
-  
+
   return (
     <div className="cont">
       <h2 className="title">Módulo de Presupuesto</h2>
 
       {presupuestos.length > 0 ? (
         presupuestos.map((presupuesto) => (
-
           <div className="card" key={presupuesto.userId}>
-              {/* <h3 className="card-title">Tu presupuesto :</h3> */}
-              <div className='cont-presu'>
-                <div className='monto'>
-                  <p className='parrafos-p'> {presupuesto.monto}</p>
-                </div>
-                <div className='moneda'>
-                  <p className='parrafos-p'>{presupuesto.moneda}</p>
-                </div>
+            <div className='cont-presu'>
+              <div className='monto'>
+                <p className='parrafos-p'>{presupuesto.monto}</p>
               </div>
-              <div className='periodo'>
-                  <p className='parrafos-p'>Periodo: {presupuesto.periodo}</p>
+              <div className='moneda'>
+                <p className='parrafos-p'>{monedaPredeterminada}</p>
               </div>
+            </div>
+           {/*  <div className='periodo'>
+              <p className='parrafos-p'>Periodo: {presupuesto.periodo}</p>
+            </div> */}
 
-
-              <div className='botonesCard'>
-                  <FontAwesomeIcon className="editButton" icon={faEdit} onClick={() => handleEdit(presupuesto)}/>
-                  <FontAwesomeIcon className="deleteButton" icon={faTrash} onClick={() => deletePresupuesto(presupuesto.id)}/>
-              </div>
-            
+            <div className='botonesCard'>
+              <FontAwesomeIcon className="editButton" icon={faEdit} onClick={() => handleEdit(presupuesto)} />
+              <FontAwesomeIcon className="deleteButton" icon={faTrash} onClick={() => deletePresupuesto(presupuesto.id)} />
+            </div>
           </div>
         ))
       ) : (
         <div className="no-presupuesto">
           <p>No tienes un presupuesto asignado.</p>
           <button className="addButton" onClick={() => setModalIsOpen(true)}>Agregar Presupuesto</button>
-        
         </div>
       )}
 
@@ -157,19 +167,14 @@ const Presupuesto = () => {
           </label>
           <label>
             Moneda:
-            <select
-              name="moneda"
+            <input
+              type="text"
               className="input"
-              value={moneda}
-              onChange={(e) => setMoneda(e.target.value)}
-              required
-            >
-              <option value="USD">USD</option>
-              <option value="BS">BS</option>
-              <option value="EUR">EUR</option>
-            </select>
+              value={monedaPredeterminada}
+              readOnly
+            />
           </label>
-          <label>
+          {/* <label>
             Periodo:
             <select
               name="periodo"
@@ -182,11 +187,10 @@ const Presupuesto = () => {
               <option value="semana">Semana</option>
               <option value="mes">Mes</option>
             </select>
-          </label>
+          </label> */}
           <button className="saveButton-p" type="submit">
             {presupuestos.length > 0 ? 'Actualizar Presupuesto' : 'Agregar Presupuesto'}
           </button>
-          
         </form>
       </Modal>
 

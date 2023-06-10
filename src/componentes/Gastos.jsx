@@ -25,8 +25,7 @@ const Gastos = () => {
   const today = new Date().toISOString().split('T')[0];
   const [currentDate, setCurrentDate] = useState(today); // Asignar el valor de today a currentDate
   const [initialDate, setInitialDate] = useState('');
-
-
+  const [moneda, setMoneda] = useState('');
 
 
   useEffect(() => {
@@ -51,6 +50,8 @@ const Gastos = () => {
           setPresupuesto({ monto: presupuestoActual, moneda });
         }
 
+        
+
       }
       setIsLoading(false);
     };
@@ -60,6 +61,8 @@ const Gastos = () => {
     
     fetchGastos();
   }, []);
+
+  
   
 
   const columns = useMemo(
@@ -131,24 +134,52 @@ const Gastos = () => {
     setEditingData(null);
   };
 
+
   const handleDelete = async (index) => {
     const gasto = page[index].original;
   
     try {
       if (window.confirm('¿Estás seguro de eliminar los datos?')) {
-        await deleteDoc(doc(db, 'gastos', gasto.id));
+        const presupuestoSnapshot = await getDocs(
+          query(collection(db, 'presupuesto'), where('userId', '==', gasto.userId))
+        );
   
-        const updatedGastos = gastos.filter((g) => g.id !== gasto.id);
+        if (presupuestoSnapshot.empty) {
+          // No hay presupuesto definido, permitir eliminar el gasto
+          await deleteDoc(doc(db, 'gastos', gasto.id));
+          const updatedGastos = gastos.filter((g) => g.id !== gasto.id);
+          setGastos(updatedGastos);
+          toast.success('¡Gasto eliminado correctamente!');
+        } else {
+          const presupuestoDocRef = presupuestoSnapshot.docs[0].ref;
+          const presupuestoData = presupuestoSnapshot.docs[0].data();
   
-        setGastos(updatedGastos); // Actualizar el estado después de la operación en la base de datos
+          if (presupuestoData.fecha < gasto.fecha) {
+            const nuevoMontoPresupuesto = presupuestoData.presupuestoActual + gasto.monto;
   
-        toast.success('¡Gasto eliminado correctamente!');
+            await Promise.all([
+              deleteDoc(doc(db, 'gastos', gasto.id)),
+              updateDoc(presupuestoDocRef, { presupuestoActual: nuevoMontoPresupuesto })
+            ]);
+  
+            const updatedGastos = gastos.filter((g) => g.id !== gasto.id);
+            setGastos(updatedGastos);
+            toast.success('¡Gasto eliminado correctamente!');
+            setPresupuesto({ ...presupuesto, monto: nuevoMontoPresupuesto });
+          } else {
+            await deleteDoc(doc(db, 'gastos', gasto.id));
+            const updatedGastos = gastos.filter((g) => g.id !== gasto.id);
+            setGastos(updatedGastos);
+            toast.success('¡Gasto eliminado correctamente!');
+          }
+        }
       }
     } catch (error) {
       console.error('Error al eliminar el gasto:', error);
       toast.error('Ocurrió un error al eliminar el gasto.');
     }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -157,7 +188,6 @@ const Gastos = () => {
     const moneda = e.target.moneda.value;
     const categoria = e.target.categoria.value;
     const fecha = editingData ? new Date(editingData.fecha) : new Date();
-
   
     const user = auth.currentUser;
   
@@ -168,10 +198,61 @@ const Gastos = () => {
       monto,
       moneda,
       categoria,
-      hora: format(fecha, 'HH:mm:ss') // Formato HH:mm:ss
+     
     };
   
     try {
+      // Obtener el presupuesto actual del usuario
+      const presupuestoQuerySnapshot = await getDocs(
+        query(collection(db, 'presupuesto'), where('userId', '==', user.uid))
+      );
+      
+      if (!presupuestoQuerySnapshot.empty) {
+        const presupuestoDocRef = presupuestoQuerySnapshot.docs[0].ref;
+        const presupuestoData = presupuestoQuerySnapshot.docs[0].data();
+        const presupuestoActual = presupuestoData.presupuestoActual;
+        const presupuestoFecha = new Date(presupuestoData.fecha);
+        const gastoFecha = new Date(fecha);
+  
+        if (monto > presupuestoActual && !editingData) {
+          // Enviar una notificación al usuario indicando que el monto del gasto es mayor al presupuesto actual
+          toast.warning('El monto del gasto es mayor al presupuesto actual. No se puede agregar el gasto.');
+          return; // Salir de la función sin guardar el gasto
+        } else if (gastoFecha > presupuestoFecha) {
+          // Calcular la diferencia de montos
+          const diferenciaMonto = editingData ? monto - editingData.monto : monto;
+          const nuevoMontoPresupuesto = presupuestoActual - diferenciaMonto;
+          const saldoNegativo = nuevoMontoPresupuesto < 0;
+  
+          // Verificar si el monto del presupuesto resultaría en un saldo negativo
+          if (saldoNegativo) {
+            // Mostrar un mensaje de advertencia indicando que el monto del gasto editado resultaría en un saldo negativo
+            toast.warning('El monto del gasto editado resultaría en un saldo negativo. No se puede guardar el cambio.');
+            return; // Salir de la función sin guardar el cambio
+          }
+  
+          // Restar la diferencia de montos al presupuesto actual
+          const nuevoPresupuestoActual = presupuestoActual - diferenciaMonto;
+  
+          // Actualizar el campo presupuestoActual en el documento de presupuesto
+          await updateDoc(presupuestoDocRef, { presupuestoActual: nuevoPresupuestoActual });
+  
+          // Verificar si el presupuesto actual es igual o menor que cero
+          if (nuevoPresupuestoActual <= 0) {
+            // Enviar una notificación al usuario indicando que el presupuesto ha llegado a cero
+            // Puedes utilizar la biblioteca de notificaciones que prefieras (por ejemplo, react-toastify)
+            toast.warning('¡Tu presupuesto ha llegado a cero! Actualiza tu presupuesto para seguir agregando gastos.');
+          }
+  
+          // Actualizar el estado de presupuesto
+          setPresupuesto({ ...presupuesto, monto: nuevoPresupuestoActual });
+        } else {
+          // No se realiza ningún cambio en el presupuesto
+          toast.info('¡Este gasto es prehistórico para tu presupuesto actual!');
+        }
+      }
+  
+      // Guardar el gasto y mostrar el mensaje de éxito
       if (editingData) {
         await updateDoc(doc(db, 'gastos', editingData.id), nuevoGasto);
         const updatedGastos = gastos.map((gasto) =>
@@ -186,54 +267,15 @@ const Gastos = () => {
         handleCloseModal();
         toast.success('¡Gasto agregado correctamente!');
       }
-  
-      // Obtener el presupuesto actual del usuario
-      const presupuestoQuerySnapshot = await getDocs(
-        query(collection(db, 'presupuesto'), where('userId', '==', user.uid))
-      );
-  
-      if (!presupuestoQuerySnapshot.empty) {
-        const presupuestoDocRef = presupuestoQuerySnapshot.docs[0].ref;
-        const presupuestoData = presupuestoQuerySnapshot.docs[0].data();
-        const presupuestoActual = presupuestoData.presupuestoActual;
-        const presupuestoFecha = new Date(presupuestoData.fecha );
-        const gastoFecha = new Date(fecha );
-
-      /*  console.log('Fecha del presupuesto:', presupuestoFecha);
-        console.log('Fecha del gasto:', gastoFecha); */
-
-  
-        if (gastoFecha > presupuestoFecha) {
-          // Calcular la diferencia de montos
-          const diferenciaMonto = editingData ? monto - editingData.monto : monto;
-  
-          // Restar la diferencia de montos al presupuesto actual
-          const nuevoPresupuestoActual = presupuestoActual - diferenciaMonto;
-  
-          // Actualizar el campo presupuestoActual en el documento de presupuesto
-          await updateDoc(presupuestoDocRef, { presupuestoActual: nuevoPresupuestoActual });
-              // Verificar si el presupuesto actual es igual o menor que cero
-              if (nuevoPresupuestoActual <= 0) {
-                // Enviar una notificación al usuario indicando que el presupuesto ha llegado a cero
-                // Puedes utilizar la biblioteca de notificaciones que prefieras (por ejemplo, react-toastify)
-                toast.warning('¡Tu presupuesto ha llegado a cero! Actualiza tu presupuesto para seguir agregando gastos.');
-              }
-  
-          // Actualizar el estado de presupuesto
-          setPresupuesto({ ...presupuesto, monto: nuevoPresupuestoActual });
-        } else {
-          // No se realiza ningún cambio en el presupuesto
-          toast.info('¡Este gasto es prehistórico para tu presupuesto actual!');
-        }
-      }
     } catch (error) {
       console.error('Error al guardar el gasto:', error);
       toast.error('Ocurrió un error al guardar el gasto.');
     }
   };
- 
   
-
+  
+  
+  
   return (
     <div className="cont">
     <h2 className="title">Módulo de Gastos</h2>

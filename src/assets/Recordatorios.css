@@ -31,9 +31,24 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.recordatorio-item.realizado {
+  background-color: #ebebeb; /* Change the background color to the desired completed state color */
+  color: #535286;
+  text-decoration: line-through;
+}
+
 .recordatorio-item-btn {
   padding: 8px 16px;
   color: #e95b5b;
+  border: none;
+  cursor: pointer;
+  font-size: 25px;
+  margin-right: 8px;
+}
+
+.recordatorio-item-btnR {
+  padding: 8px 16px;
+  color: #e9cf5b;
   border: none;
   cursor: pointer;
   font-size: 25px;
@@ -66,3 +81,8 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.recordatorio-item-btnR.realizado {
+  color: #52d8b7; /* Change the color to the desired completed state color */
+}
+
