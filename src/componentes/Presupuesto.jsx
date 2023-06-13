@@ -70,7 +70,7 @@ const Presupuesto = () => {
     const fecha = new Date();
 
     if (!monedaPredeterminada) {
-      toast.error('Debe establecer una moneda antes de agregar un presupuesto.');
+      toast.error('Debe establecer una moneda antes de agregar un presupuesto. Vaya al modulo de Usuario y seleccione la moneda en el panel de configuración');
       return;
     }
 
@@ -128,6 +128,10 @@ const Presupuesto = () => {
                 <p className='parrafos-p'>{monedaPredeterminada}</p>
               </div>
             </div>
+            <div className='fecha'>
+              <p className='parrafos-p'>Fecha: {new Date(presupuesto.fecha).toLocaleDateString()}</p>
+            </div>
+
            {/*  <div className='periodo'>
               <p className='parrafos-p'>Periodo: {presupuesto.periodo}</p>
             </div> */}

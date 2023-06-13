@@ -26,6 +26,8 @@ const Gastos = () => {
   const [currentDate, setCurrentDate] = useState(today); // Asignar el valor de today a currentDate
   const [initialDate, setInitialDate] = useState('');
   const [moneda, setMoneda] = useState('');
+  const [monedaPredeterminada, setMonedaPredeterminada] = useState('');
+
 
 
   useEffect(() => {
@@ -49,20 +51,21 @@ const Gastos = () => {
           const moneda = presupuestoData.moneda;
           setPresupuesto({ monto: presupuestoActual, moneda });
         }
-
-        
-
+  
+        // Obtener la moneda predeterminada del usuario
+        const configuracionSnapshot = await getDocs(query(collection(db, 'configuracion'), where('userId', '==', user.uid)));
+        if (!configuracionSnapshot.empty) {
+          const configuracionData = configuracionSnapshot.docs[0].data();
+          const monedaPredeterminada = configuracionData.monedaPredeterminada;
+          setMonedaPredeterminada(monedaPredeterminada);
+        }
       }
       setIsLoading(false);
     };
-  
-    /* const today = new Date().toISOString().split('T')[0];
-    setCurrentDate(today); */
-    
+    setMonedaPredeterminada(monedaPredeterminada);
+
     fetchGastos();
   }, []);
-
-  
   
 
   const columns = useMemo(
@@ -183,6 +186,12 @@ const Gastos = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!monedaPredeterminada) {
+      toast.warning('No se puede agregar el gasto. Configura la moneda predeterminada en el panel de configuración que esta en el modulo de Usuario .');
+      return;
+    }
+    
     const descripcion = e.target.descripcion.value;
     const monto = parseFloat(e.target.monto.value);
     const moneda = e.target.moneda.value;
@@ -402,12 +411,14 @@ const Gastos = () => {
           </label>
           <label>
             Moneda:
-            <select name="moneda" className="input"  defaultValue={editingData ? editingData.moneda : ''}
-              required>
-              <option>USD</option>
-              <option>BS</option>
-              <option>EUR</option>
-            </select>
+            <input
+              type="text"
+              name="moneda"
+              className="input"
+              value={monedaPredeterminada}
+              readOnly
+              required
+            />
           </label>
           <label>
             Categoría:

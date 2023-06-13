@@ -96,31 +96,39 @@ const Home = () => {
           userId: user.uid,
           monedaPredeterminada: selectedCurrency
         };
-        try {
-          const confirmed = window.confirm('¿Estás seguro de guardar los cambios?');
-          if (confirmed) {
-            await setDoc(userRef, userData, { merge: true });
-            setDefaultCurrency(selectedCurrency);
-            setModalVisible(false);
-            toast.success('Moneda establecida correctamente');
+
+        // Obtener gastos del usuario
+        const gastosSnapshot = await getDocs(
+          query(collection(db, 'gastos'), where('userId', '==', user.uid))
+        );
+
+        if (gastosSnapshot.empty) {
+          try {
+            const confirmed = window.confirm('¿Estás seguro de guardar los cambios?');
+            if (confirmed) {
+              await setDoc(userRef, userData, { merge: true });
+              setDefaultCurrency(selectedCurrency);
+              setModalVisible(false);
+              toast.success('Moneda establecida correctamente');
+            }
+          } catch (error) {
+            console.log(error);
+            toast.error('Error al establecer la moneda');
           }
-        } catch (error) {
-          console.log(error);
-          toast.error('Error al establecer la moneda');
+        } else {
+          toast.error('No puedes modificar la moneda predeterminada si ya tienes gastos agregados');
         }
       }
     }
   };
-  
 
   return (
     <div className="cont">
       <div className="menu">
-        <FontAwesomeIcon icon={faCog} onClick={() => setMenuVisible(!menuVisible)} />
+        <FontAwesomeIcon icon={faCog} onClick={() => setMenuVisible(!menuVisible)} title="Panel de configuración"/>
         {menuVisible && (
           <div className="dropdown-menu">
             <ul>
-              <li>Perfil</li>
               <li onClick={handleOpenModal}>Moneda</li>
               <li>Color</li>
             </ul>
