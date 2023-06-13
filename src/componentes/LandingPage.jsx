@@ -31,7 +31,7 @@ function LandingPage() {
           {
             auth.currentUser ?  <div>
               
-              <NavLink className="navigation__link " to="/dashboard/home" activeClassName="active"> Bienvenido {validar}</NavLink> 
+              <NavLink className="navigation__link " to="/dashboard/home" activeClassName="active"> {validar}</NavLink> 
             </div>
             : 
              <NavLink className="navigation__link " to="/login" activeClassName="active">Acceder</NavLink>
@@ -48,7 +48,15 @@ function LandingPage() {
           <p>Empieza a tener el control de tus finanzas personales de forma fácil y divertida.</p>
         </div>
         <div className="button-container">
-          <NavLink className="btn animation " to="/login">¡Comienza ahora!</NavLink>
+        {
+            auth.currentUser ?  <div>
+              <NavLink className="btn animation " to="/dashboard/gastos">¡Agrega tus gastos!</NavLink>
+              
+            </div>
+            : 
+            <NavLink className="btn animation " to="/login">¡Comienza ahora!</NavLink>
+          }
+          
         </div>
       </div>
       <footer className="footer">
