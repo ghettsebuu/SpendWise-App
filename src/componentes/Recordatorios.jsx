@@ -40,7 +40,7 @@ const Recordatorios = () => {
       return () => unsubscribe();
     }
   }, []);
-
+console.log(recordatorios);
   const handleAgregarRecordatorio = async () => {
     const user = auth.currentUser;
     if (user) {

@@ -1,54 +1,67 @@
 
 .cont {
-    padding: 20px;
-    border-radius: 8px;
-    background: #ffffff;
-    margin: 20px;
-    position: relative;
-    height: 400px; /* Cambia este valor según tus necesidades */
-   
-  }
-  
-/* modulo de salir */
-  .boton-salir {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 360px;
-    background-color: #f8f2e0;
-    color: #535286;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
+  padding: 20px;
+  border-radius: 8px;
+  background: #ffffff;
+  margin: 20px;
+  position: relative;
+  height: 400px; /* Cambia este valor según tus necesidades */
  
+}
+
+/* modulo de salir */
+.boton-salir {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 360px;
+  background-color: #f8f2e0;
+  color: #535286;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.button-salir {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
+  background-color: #f73535;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   
-  .button-salir {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 30px;
-    background-color: #f73535;
-    color: #fff;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    
-  }
-  
-  .button-salir:hover {
-    background-color: #e06a6a;
-  }
-  
-  .button-salir:focus {
-    outline: none;
-  }
-  
-  .button-salir svg {
-    margin-right: 8px;
-    font-size: 20px;
-  }
+}
+
+.button-salir:hover {
+  background-color: #e06a6a;
+}
+
+.button-salir:focus {
+  outline: none;
+}
+
+.button-salir svg {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+
+.gasto{
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.TOTAL{
+  padding-top: 1em;
+  text-align: center;
+}
