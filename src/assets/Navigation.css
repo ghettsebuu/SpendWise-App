@@ -93,7 +93,7 @@ background:  #191924 ;
 
 .navigat ul{
     display: flex;
-    width: 420px;
+    width: 430px;
 }
 
 .navigat ul li {
@@ -188,23 +188,23 @@ background:  #191924 ;
 }
 
 .navigat ul li:nth-child(2).active ~ .indicator{
-    transform: translateX(calc(70px*1));
+    transform: translateX(calc(71px*1));
 }
 
 .navigat ul li:nth-child(3).active ~ .indicator{
-    transform: translateX(calc(70px*2));
+    transform: translateX(calc(71px*2));
 }
 
 .navigat ul li:nth-child(4).active ~ .indicator{
-    transform: translateX(calc(70px*3));
+    transform: translateX(calc(71px*3));
 }
 
 .navigat ul li:nth-child(5).active ~ .indicator{
-    transform: translateX(calc(70px*4));
+    transform: translateX(calc(71px*4));
 }
 
 .navigat ul li:nth-child(6).active ~ .indicator{
-    transform: translateX(calc(71px*5));
+    transform: translateX(calc(72px*5));
 }
 
 

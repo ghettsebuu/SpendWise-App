@@ -1,23 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase/firebase';
-import { getToken, onMessage } from 'firebase/messaging';
+import { onMessage } from 'firebase/messaging';
+import {addDoc,collection,deleteDoc,doc,getDocs,serverTimestamp,setDoc,query,where,onSnapshot,getDoc,} from 'firebase/firestore';
 import { messaging } from '../firebase/firebase';
-import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc, query, where, onSnapshot, getDoc } from 'firebase/firestore';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoins } from '@fortawesome/free-solid-svg-icons';
+import { faMoneyCheckDollar} from '@fortawesome/free-solid-svg-icons';
+
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import '../assets/Home.css';
 
 const Home = () => {
   const [recordatorios, setRecordatorios] = useState([]);
+  const [categorias, setCategorias] = useState([]);
   const navigate = useNavigate();
   const [menuVisible, setMenuVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('');
   const [defaultCurrency, setDefaultCurrency] = useState('');
+  const [totalGastos, setTotalGastos] = useState(0);
+  const [currencySymbol, setCurrencySymbol] = useState('');
+  const [weeklyExpenses, setWeeklyExpenses] = useState([]);
+  const [gastos, setGastos] = useState([]);
+  const [presupuestoActual, setPresupuestoActual] = useState(0);
+  const [pendientes, setPendientes] = useState([]);
+
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -45,8 +56,21 @@ const Home = () => {
       const unsubscribe = onSnapshot(
         query(collection(db, 'recordatorios'), where('userId', '==', user.uid)),
         (snapshot) => {
-          const datos = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+          const datos = snapshot.docs
+            .map((doc) => ({ id: doc.id, ...doc.data() }))
+            .sort((a, b) => {
+              const fechaA = new Date(a.fecha);
+              const fechaB = new Date(b.fecha);
+              return fechaA - fechaB;
+            });
           setRecordatorios(datos);
+  
+          const pendientesProximos = datos.filter((recordatorio) => {
+            const fechaRecordatorio = new Date(recordatorio.fecha);
+            const fechaActual = new Date();
+            return fechaRecordatorio >= fechaActual && !recordatorio.realizado;
+          });
+          setPendientes(pendientesProximos);
         }
       );
       return () => unsubscribe();
@@ -58,6 +82,70 @@ const Home = () => {
       notificacion();
     }
   }, [recordatorios]);
+
+  useEffect(() => {
+    const user = auth.currentUser;
+
+    if (user) {
+      const unsubscribeGastos = onSnapshot(
+        query(collection(db, 'gastos'), where('userId', '==', user.uid)),
+        (snapshot) => {
+          const gastos = snapshot.docs.map((doc) => doc.data());
+          setGastos(gastos);
+  
+          const categorias = obtenerCategorias(gastos);
+          setCategorias(categorias);
+  
+          const total = gastos.reduce((accumulator, current) => accumulator + current.monto, 0);
+          setTotalGastos(total);
+  
+          const weeklyExpenses = getWeeklyExpenses(gastos);
+          setWeeklyExpenses(weeklyExpenses);
+        }
+      );
+  
+      const unsubscribePresupuesto = onSnapshot(
+        query(collection(db, 'presupuesto'), where('userId', '==', user.uid)),
+        (snapshot) => {
+          snapshot.forEach((doc) => {
+            const presupuestoData = doc.data();
+            setPresupuestoActual(presupuestoData.presupuesto);
+          });
+        }
+      );
+  
+      return () => {
+        unsubscribeGastos();
+        unsubscribePresupuesto();
+      };
+    }
+  }, []);
+
+  const getCurrencySymbol = (currency) => {
+    switch (currency) {
+      case 'BS':
+        return 'BS';
+      case 'EUR':
+        return '€';
+      case 'USD':
+        return '$';
+      default:
+        return '';
+    }
+  };
+
+  const obtenerCategorias = (gastos) => {
+    const categorias = {};
+    gastos.forEach((gasto) => {
+      if (gasto.categoria in categorias) {
+        categorias[gasto.categoria]++;
+      } else {
+        categorias[gasto.categoria] = 1;
+      }
+    });
+    const categoriasOrdenadas = Object.entries(categorias).sort((a, b) => b[1] - a[1]);
+    return categoriasOrdenadas;
+  };
 
   const notificacion = () => {
     const today = new Date();
@@ -94,7 +182,7 @@ const Home = () => {
         const userRef = doc(collection(db, 'configuracion'), user.uid);
         const userData = {
           userId: user.uid,
-          monedaPredeterminada: selectedCurrency
+          monedaPredeterminada: selectedCurrency,
         };
 
         // Obtener gastos del usuario
@@ -122,10 +210,38 @@ const Home = () => {
     }
   };
 
+  const handleCardClick = () => {
+    navigate('/dashboard/informes');
+  };
+
+  const getWeeklyExpenses = (gastos) => {
+    const today = new Date();
+    const startOfWeek = new Date(today);
+    startOfWeek.setHours(0, 0, 0, 0);
+    startOfWeek.setDate(today.getDate() - today.getDay());
+  
+    const endOfWeek = new Date(today);
+    endOfWeek.setHours(23, 59, 59, 999);
+    endOfWeek.setDate(today.getDate() + (6 - today.getDay()));
+  
+    const weeklyExpenses = gastos.filter((gasto) => {
+      const fecha = gasto.fecha instanceof Date ? gasto.fecha : new Date(gasto.fecha);
+      return fecha >= startOfWeek && fecha <= endOfWeek;
+    });
+  
+    return weeklyExpenses.reduce((total, gasto) => total + gasto.monto, 0);
+  };
+  
+  const totalGastosSemanales = getWeeklyExpenses(gastos);
+
   return (
     <div className="cont">
       <div className="menu">
-        <FontAwesomeIcon icon={faCog} onClick={() => setMenuVisible(!menuVisible)} title="Panel de configuración"/>
+        <FontAwesomeIcon
+          icon={faCog}
+          onClick={() => setMenuVisible(!menuVisible)}
+          title="Panel de configuración"
+        />
         {menuVisible && (
           <div className="dropdown-menu">
             <ul>
@@ -135,8 +251,80 @@ const Home = () => {
           </div>
         )}
       </div>
-      <h2 className="title">Bienvenido a la página de inicio</h2>
-      <p>Contenido de la página de inicio</p>
+      <h2 className="title">Módulo de Inicio</h2>
+
+      <div className="card">
+        <div
+          className="card-top-categorias"
+          onClick={handleCardClick}
+          title="Clic para ir a informes"
+        >
+          <div className="title-top">
+            <h3>Top de categorías</h3>
+          </div>
+          {categorias.length > 0 ? (
+            categorias.map(([categoria, cantidad], index) => (
+              <div className="categorias" key={categoria}>
+                <span className="span-numeracion">{index + 1}.</span>
+                <span className="span-categoria">{categoria}</span>
+                <progress
+                  className="progreso"
+                  value={cantidad}
+                  max={categorias[0][1]}
+                ></progress>
+              </div>
+            ))
+          ) : (
+            <div className="no-categorias">No hay categorías aún...</div>
+          )}
+        </div>
+
+        <div className="card-top-gastos">
+          <div className="title-top">
+            <h3>Total de gastos agregados</h3>
+          </div>
+          <div className="total-gastos">
+            <span className="icon">
+            <FontAwesomeIcon icon={faMoneyCheckDollar} />
+            </span>
+            {totalGastos} {currencySymbol}
+          </div>
+        </div>
+      </div>
+
+      <div className="card-semana">
+        <div className="title-top">
+          <h3>Gasto de la semana </h3>
+        </div>
+        <div className="total-gastos-semana">
+          <span className="icon">
+            <FontAwesomeIcon icon={faCoins} />
+          </span>
+          {totalGastosSemanales} {currencySymbol}
+        </div>
+    </div>
+
+    <div className="contenedor-pendientes">
+      <div className='title-top'>
+        <h3 >Próximos pendientes </h3>
+      </div>
+      
+      <div className='contenedor-listaP'>
+      {pendientes.length > 0 ? (
+       
+          <ul>
+            {pendientes.map((pendiente) => (
+              <li key={pendiente.id}>{pendiente.descripcion}</li>
+            ))}
+          </ul>
+        
+      ) : (
+
+        <p className='no-pendientes'>No hay pendientes .</p>
+      )}
+      </div>
+    </div>
+
 
       {modalVisible && (
         <div className="modal-h">
@@ -151,7 +339,9 @@ const Home = () => {
             <option value="USD">USD</option>
           </select>
           <div>
-            <button onClick={handleSetCurrency}>{selectedCurrency ? 'Editar' : 'Establecer'}</button>
+            <button onClick={handleSetCurrency}>
+              {selectedCurrency ? 'Editar' : 'Establecer'}
+            </button>
             <button onClick={handleCloseModal}>Cancelar</button>
           </div>
         </div>

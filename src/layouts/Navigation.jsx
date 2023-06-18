@@ -38,7 +38,7 @@ const Navigation = () => {
 
   
   const navItems = [
-    { icon: 'person-outline', text: 'Usuario', path: '/dashboard/home' },
+    { icon: 'home-outline', text: 'Inicio', path: '/dashboard/home' },
     { icon: 'wallet-outline', text: 'Gastos', path: '/dashboard/gastos' },
     { icon: 'calendar-outline', text: 'Recordatorios', path: '/dashboard/recordatorios' },
     { icon: 'cash-outline', text: 'Presupuesto', path: '/dashboard/presupuesto' },
