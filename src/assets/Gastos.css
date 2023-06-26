@@ -1,24 +1,5 @@
 /* GastosModule.module.css */
 
-
-  
-.title {
-  font-size: 22px;
-  margin-bottom: 5px;
-  color: #5b5f5d;
-}
-
-.addButton {
-  background-color: #544fca;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
 .card-presupuesto {
   position: absolute;
   top: 16px;
@@ -44,9 +25,7 @@
 }
 
 
-.addButton:hover{
-  background-color: #29268C;
-}
+
 .modal {
   position: absolute;
   top: 45%;
@@ -247,7 +226,7 @@ background-color: #3a2cb6; /* Ajusta el color de fondo del botón según sea nec
 color: #fff; /* Ajusta el color de texto del botón según sea necesario */
 border: none;
 border-radius: 4px; /* Ajusta el radio de borde según sea necesario */
-padding: 8px 16px; /* Ajusta el relleno del botón según sea necesario */
+padding: 5px 16px; /* Ajusta el relleno del botón según sea necesario */
 margin: 0 2px; /* Ajusta el margen horizontal del botón según sea necesario */
 font-size: 10px; /* Ajusta el tamaño de fuente del botón según sea necesario */
 cursor: pointer;
@@ -325,3 +304,4 @@ background-color: #3600b3; /* Ajusta el color de fondo del botón al pasar el cu
     width: 100%;
   }
 }
+

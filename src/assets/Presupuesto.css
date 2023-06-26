@@ -1,17 +1,6 @@
 /* Presupuesto.css */
 
 
-.card {
-  
-  background-color: #f3f1d8;
-  height: 320px;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
-}
-
 .card-title {
   font-size: 18px;
   margin-bottom: 20px;
@@ -132,7 +121,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  height: 320px;
+  height: 315px;
   margin-bottom: 20px;
   background-color: #f5f3d7;
   border-radius: 8px;

@@ -92,7 +92,7 @@ const LoginPage = () => {
         </div>
         <div className="loading-text">Loading...</div>
       </div>
-    </AuthProvider>
+    </AuthProvider> 
   );
 };
 

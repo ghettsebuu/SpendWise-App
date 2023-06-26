@@ -29,7 +29,6 @@ const Gastos = () => {
   const [monedaPredeterminada, setMonedaPredeterminada] = useState('');
 
 
-
   useEffect(() => {
     const fetchGastos = async () => {
       const user = auth.currentUser;
@@ -66,6 +65,11 @@ const Gastos = () => {
 
     fetchGastos();
   }, []);
+
+  useEffect(() => {
+    setMoneda(monedaPredeterminada);
+  }, [monedaPredeterminada]);
+  
   
 
   const columns = useMemo(
@@ -292,10 +296,11 @@ const Gastos = () => {
       <div className="card-presupuesto">
         <h3>Presupuesto Actual</h3>
         <p>
-          Monto: {presupuesto.monto} {presupuesto.moneda}
+          Monto: {presupuesto.monto} {moneda}
         </p>
       </div>
     )}
+
 
     <button className="addButton" onClick={() => handleOpenModal(null)}>
       Agregar Gastos

@@ -16,22 +16,35 @@ import RegisterPage from './componentes/RegisterPage';
 import Logout from './componentes/Logout';
 
 function App() {
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [userLoggedIn, setUserLoggedIn] = useState(null);
 
   useEffect(() => {
-    // Lógica para obtener el estado de autenticación
     const checkUserAuthentication = async () => {
       try {
-        await getUserValid();
-        setUserLoggedIn(true);
+        const isAuthenticated = await getUserValid();
+        setUserLoggedIn(isAuthenticated);
+        console.log("isAuthenticated:", isAuthenticated); // Agregar esta línea
       } catch (error) {
         setUserLoggedIn(false);
       }
     };
-
+  
     checkUserAuthentication();
   }, []);
+  
+  console.log("userLoggedIn:", userLoggedIn); // Mover esta línea fuera de useEffect
 
+  if (userLoggedIn === null) {
+    return (
+      <div class="loading-container">
+        <div class="loading-circle"></div>
+        <div class="loading-text">Cargando...</div>
+      </div>
+// Mostrar un indicador de carga mientras se verifica la autenticación
+    );
+  }
+  
+  console.log("userLoggedIn:", userLoggedIn); // Mover esta línea fuera de useEffect
   return (
     <div>
       <BrowserRouter>

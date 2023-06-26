@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { getAuth, signOut } from "firebase/auth";
 import '../assets/Navigation.css';
 
@@ -10,9 +10,16 @@ const Navigation = () => {
   const [dateMonth, setDateMonth] = useState('');
   const [dateYear, setDateYear] = useState('');
 
+  const location = useLocation();
+
   useEffect(() => {
     mostrarFechaActual();
+    restoreActiveIndex();
   }, []);
+
+  useEffect(() => {
+    saveActiveIndex();
+  }, [activeIndex]);
 
   function mostrarFechaActual() {
     const date = new Date();
@@ -24,19 +31,21 @@ const Navigation = () => {
     setDateYear(date.getFullYear());
   }
 
+  function saveActiveIndex() {
+    localStorage.setItem('activeIndex', JSON.stringify(activeIndex));
+  }
+
+  function restoreActiveIndex() {
+    const savedActiveIndex = localStorage.getItem('activeIndex');
+    const parsedActiveIndex = savedActiveIndex ? JSON.parse(savedActiveIndex) : 0;
+
+    setActiveIndex(parsedActiveIndex);
+  }
+
   const handleItemClick = (index) => {
     setActiveIndex(index);
-  //  if(index==5 ){
-  //   const auth = getAuth();
-  //     signOut(auth).then(() => {
-  //      console.log('listo');
-  //     }).catch((error) => {
-  //       // An error happened.
-  //     });
-  //  }
   };
 
-  
   const navItems = [
     { icon: 'home-outline', text: 'Inicio', path: '/dashboard/home' },
     { icon: 'wallet-outline', text: 'Gastos', path: '/dashboard/gastos' },
@@ -45,6 +54,13 @@ const Navigation = () => {
     { icon: 'bar-chart-outline', text: 'Informes', path: '/dashboard/informes' },
     { icon: 'log-in-outline', text: 'Logout', path: '/dashboard/logout' },
   ];
+
+  useEffect(() => {
+    const currentNavItem = navItems.findIndex((item) => item.path === location.pathname);
+    if (currentNavItem !== -1) {
+      setActiveIndex(currentNavItem);
+    }
+  }, [location.pathname]);
 
   return (
     <>

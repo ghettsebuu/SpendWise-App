@@ -1,4 +1,4 @@
-.Informes-container {
+/* .Informes-container {
     padding: 20px;
     border-radius: 8px;
     background: #ffffff;
@@ -6,4 +6,128 @@
     position: relative;
     height: 430px; 
     overflow: auto; 
+    } */
+    .Informes{
+        background-color: blanchedalmond;
+        margin-top: 0.1rem;
+        height: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        border-radius: 8px;
+        
+      }
+
+     
+
+      .tabla-informes{
+       
+        height: 10px;
+        width: 30%;
+        position: relative;
+        right: 10px;
+        top: -150px;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        border-radius: 8px;
+        
+      }
+
+      .title-info {
+        color: #777777;
+        font-size: 15px;
+        font-weight: bold; /* Coloca el texto en negrita */
+        display: flex;
+        justify-content: center;
+        border-radius: 8px;
+       
+      }
+
+      .table-info {
+        margin: 0 auto; /* Centra la tabla horizontalmente */
+        max-width: 100%; /* Evita que la tabla se desborde en ancho */
+        table-layout: fixed; /* Fija el ancho de las columnas y evita que se desborden */
+        
+      }
+      
+      .table-info thead th, .table-info tbody td {
+        max-width: 0; /* Evita que los elementos de la tabla se desborden en ancho */
+        overflow: hidden; /* Oculta el contenido que se desborda */
+        text-overflow: ellipsis; /* Muestra puntos suspensivos (...) para el contenido que se desborda */
+        white-space: nowrap; /* Evita que el contenido se divida en varias líneas */
+        
+      }
+      
+    
+      .tabla-cabecera {
+        font-size: 13px;
     }
+    
+    .tabla-cuerpo {
+        font-size: 13px;
+    }
+    
+    .menu-mes {
+      background-color: #6a76e0;
+      width: 180px;
+      height: 30px;
+      padding: 1px;
+      margin: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border-radius: 8px;
+      color: rgb(72, 68, 95);
+    }
+    
+      .TOTAL{
+      
+        background-color: #e06a6a;
+        width: 450px;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        bottom:35px;
+        left: 419px;
+        border-radius: 8px;
+        color: rgb(72, 68, 95);
+      }
+
+      .grafica {
+        background-color: rgb(255, 255, 244);
+        margin: 20px;
+        border-radius: 8px;
+        padding: 20px;
+        position: relative;
+        top: -15px;
+        left: 20px;
+        width: 450px; /* Ancho fijo de 300px */
+        height: 270px; /* Alto fijo de 200px */
+        
+    }
+    
+    .torta{
+      position: relative;
+        top: -12px;
+        left: 10px;
+    }
+
+    .no-datos-mensaje {
+      margin-top: 20px;
+      font-size: 16px;
+      color: gray;
+      position: relative;
+      bottom: -80px;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      
+    }
+
+  

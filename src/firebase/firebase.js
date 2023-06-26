@@ -75,22 +75,27 @@ export async function getUserInfo(uid){
 
   }
 }
-  export async function getUserValid(){
-    try{
+
+export async function getUserValid() {
+  try {
+    const user = await new Promise((resolve, reject) => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-         console.log(user)
-          // ...
+          resolve(user); // Usuario autenticado
         } else {
-          // User is signed out
-          // ...
-          console.log(user)
+          resolve(null); // Usuario no autenticado
         }
+      }, (error) => {
+        reject(error); // Error al obtener el estado de autenticación
       });
-     
-    }catch(error){
-  
-    }
+    });
+
+    console.log("User:", user);
+
+    return !!user; // Devuelve true si el usuario no es nulo, false si es nulo
+  } catch (error) {
+    console.error("Error al obtener el estado de autenticación:", error);
+    return false;
+  }
 }
+

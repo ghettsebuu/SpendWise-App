@@ -30,7 +30,7 @@ const Home = () => {
 
 
 
-  useEffect(() => {
+  /* useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (!user) {
         navigate('/login');
@@ -38,7 +38,7 @@ const Home = () => {
     });
 
     return () => unsubscribe();
-  }, [navigate]);
+  }, [navigate]); */
 
   useEffect(() => {
     onMessage(messaging, (message) => {
@@ -83,43 +83,49 @@ const Home = () => {
     }
   }, [recordatorios]);
 
+ 
   useEffect(() => {
     const user = auth.currentUser;
-
-    if (user) {
-      const unsubscribeGastos = onSnapshot(
-        query(collection(db, 'gastos'), where('userId', '==', user.uid)),
-        (snapshot) => {
-          const gastos = snapshot.docs.map((doc) => doc.data());
-          setGastos(gastos);
   
-          const categorias = obtenerCategorias(gastos);
-          setCategorias(categorias);
+    const fetchData = async () => {
+      if (user) {
+        const unsubscribeGastos = onSnapshot(
+          query(collection(db, 'gastos'), where('userId', '==', user.uid)),
+          (snapshot) => {
+            const gastos = snapshot.docs.map((doc) => doc.data());
+            setGastos(gastos);
   
-          const total = gastos.reduce((accumulator, current) => accumulator + current.monto, 0);
-          setTotalGastos(total);
+            const categorias = obtenerCategorias(gastos);
+            setCategorias(categorias);
   
-          const weeklyExpenses = getWeeklyExpenses(gastos);
-          setWeeklyExpenses(weeklyExpenses);
+            const total = gastos.reduce((accumulator, current) => accumulator + current.monto, 0);
+            setTotalGastos(total);
+  
+            const weeklyExpenses = getWeeklyExpenses(gastos);
+            setWeeklyExpenses(weeklyExpenses);
+          }
+        );
+  
+        const docRef = doc(db, 'configuracion', user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const { monedaPredeterminada } = docSnap.data();
+          setDefaultCurrency(monedaPredeterminada);
+          if (monedaPredeterminada) {
+            setCurrencySymbol(getCurrencySymbol(monedaPredeterminada));
+          }
         }
-      );
   
-      const unsubscribePresupuesto = onSnapshot(
-        query(collection(db, 'presupuesto'), where('userId', '==', user.uid)),
-        (snapshot) => {
-          snapshot.forEach((doc) => {
-            const presupuestoData = doc.data();
-            setPresupuestoActual(presupuestoData.presupuesto);
-          });
-        }
-      );
+        return () => {
+          unsubscribeGastos();
+          // unsubscribePresupuesto();
+        };
+      }
+    };
   
-      return () => {
-        unsubscribeGastos();
-        unsubscribePresupuesto();
-      };
-    }
+    fetchData();
   }, []);
+  
 
   const getCurrencySymbol = (currency) => {
     switch (currency) {
@@ -254,76 +260,85 @@ const Home = () => {
       <h2 className="title">Módulo de Inicio</h2>
 
       <div className="card">
+
         <div
-          className="card-top-categorias"
-          onClick={handleCardClick}
-          title="Clic para ir a informes"
-        >
-          <div className="title-top">
-            <h3>Top de categorías</h3>
+            className="card-top-categorias"
+            onClick={handleCardClick}
+            title="Clic para ir a informes"
+          >
+            <div className="title-top">
+              <h3>Top de categorías</h3>
+            </div>
+            {categorias.length > 0 ? (
+              categorias.map(([categoria, cantidad], index) => (
+                <div className="categorias" key={categoria}>
+                  <span className="span-numeracion">{index + 1}.</span>
+                  <span className="span-categoria">{categoria}</span>
+                  <progress
+                    className="progreso"
+                    value={cantidad}
+                    max={categorias[0][1]}
+                  ></progress>
+                </div>
+              ))
+            ) : (
+              <div className="no-categorias">No hay categorías aún...</div>
+            )}
           </div>
-          {categorias.length > 0 ? (
-            categorias.map(([categoria, cantidad], index) => (
-              <div className="categorias" key={categoria}>
-                <span className="span-numeracion">{index + 1}.</span>
-                <span className="span-categoria">{categoria}</span>
-                <progress
-                  className="progreso"
-                  value={cantidad}
-                  max={categorias[0][1]}
-                ></progress>
+        <div className='tajetas-totales'>
+
+            <div className="card-top-gastos">
+                <div className="title-top">
+                  <h3>Total de gastos agregados</h3>
+                </div>
+                <div className="total-gastos">
+                  <span className="icon">
+                  <FontAwesomeIcon icon={faMoneyCheckDollar} />
+                  </span>
+                  {totalGastos} {currencySymbol}
+                </div>
               </div>
-            ))
-          ) : (
-            <div className="no-categorias">No hay categorías aún...</div>
-          )}
-        </div>
 
-        <div className="card-top-gastos">
-          <div className="title-top">
-            <h3>Total de gastos agregados</h3>
+            <div className="card-semana">
+              <div className="title-top">
+                <h3>Gasto de la semana </h3>
+              </div>
+              <div className="total-gastos-semana">
+                <span className="icon">
+                  <FontAwesomeIcon icon={faCoins} />
+                </span>
+                {totalGastosSemanales} {currencySymbol}
+              </div>
           </div>
-          <div className="total-gastos">
-            <span className="icon">
-            <FontAwesomeIcon icon={faMoneyCheckDollar} />
-            </span>
-            {totalGastos} {currencySymbol}
-          </div>
-        </div>
-      </div>
 
-      <div className="card-semana">
-        <div className="title-top">
-          <h3>Gasto de la semana </h3>
-        </div>
-        <div className="total-gastos-semana">
-          <span className="icon">
-            <FontAwesomeIcon icon={faCoins} />
-          </span>
-          {totalGastosSemanales} {currencySymbol}
-        </div>
-    </div>
+          <div className="contenedor-pendientes">
+            <div className='title-top'>
+              <h3 >Próximos pendientes </h3>
+            </div>
+            
+            <div className='contenedor-listaP'>
+            {pendientes.length > 0 ? (
+            
+                <ul>
+                  {pendientes.map((pendiente) => (
+                    <li key={pendiente.id}>{pendiente.descripcion}</li>
+                  ))}
+                </ul>
+              
+            ) : (
 
-    <div className="contenedor-pendientes">
-      <div className='title-top'>
-        <h3 >Próximos pendientes </h3>
-      </div>
-      
-      <div className='contenedor-listaP'>
-      {pendientes.length > 0 ? (
+              <p className='no-pendientes'>No hay pendientes .</p>
+            )}
+            </div>
+        </div>
+
+        </div>
+          
+
        
-          <ul>
-            {pendientes.map((pendiente) => (
-              <li key={pendiente.id}>{pendiente.descripcion}</li>
-            ))}
-          </ul>
-        
-      ) : (
 
-        <p className='no-pendientes'>No hay pendientes .</p>
-      )}
+       
       </div>
-    </div>
 
 
       {modalVisible && (
