@@ -260,33 +260,33 @@ const Home = () => {
       <h2 className="title">Módulo de Inicio</h2>
 
       <div className="card">
-
-        <div
-            className="card-top-categorias"
-            onClick={handleCardClick}
-            title="Clic para ir a informes"
-          >
-            <div className="title-top">
-              <h3>Top de categorías</h3>
+       <div className='contenido'>
+          <div
+              className="card-top-categorias"
+              onClick={handleCardClick}
+              title="Clic para ir a informes"
+            >
+              <div className="title-top">
+                <h3>Top de categorías</h3>
+              </div>
+              {categorias.length > 0 ? (
+                categorias.map(([categoria, cantidad], index) => (
+                  <div className="categorias" key={categoria}>
+                    <span className="span-numeracion">{index + 1}.</span>
+                    <span className="span-categoria">{categoria}</span>
+                    <progress
+                      className="progreso"
+                      value={cantidad}
+                      max={categorias[0][1]}
+                    ></progress>
+                  </div>
+                ))
+              ) : (
+                <div className="no-categorias">No hay categorías aún...</div>
+              )}
             </div>
-            {categorias.length > 0 ? (
-              categorias.map(([categoria, cantidad], index) => (
-                <div className="categorias" key={categoria}>
-                  <span className="span-numeracion">{index + 1}.</span>
-                  <span className="span-categoria">{categoria}</span>
-                  <progress
-                    className="progreso"
-                    value={cantidad}
-                    max={categorias[0][1]}
-                  ></progress>
-                </div>
-              ))
-            ) : (
-              <div className="no-categorias">No hay categorías aún...</div>
-            )}
+        
           </div>
-        <div className='tajetas-totales'>
-
             <div className="card-top-gastos">
                 <div className="title-top">
                   <h3>Total de gastos agregados</h3>
@@ -297,7 +297,7 @@ const Home = () => {
                   </span>
                   {totalGastos} {currencySymbol}
                 </div>
-              </div>
+            </div>
 
             <div className="card-semana">
               <div className="title-top">
@@ -309,7 +309,7 @@ const Home = () => {
                 </span>
                 {totalGastosSemanales} {currencySymbol}
               </div>
-          </div>
+           </div>
 
           <div className="contenedor-pendientes">
             <div className='title-top'>
@@ -329,14 +329,8 @@ const Home = () => {
 
               <p className='no-pendientes'>No hay pendientes .</p>
             )}
-            </div>
+          </div>
         </div>
-
-        </div>
-          
-
-       
-
        
       </div>
 

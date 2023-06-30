@@ -120,43 +120,5 @@
 
 
 
-/* Estilos para dispositivos móviles */
-/* @media only screen and (max-width: 767px) {
 
-    
-  
-    .indicator{
-      background:#1ec87a;
-      border: 6px solid   #191924;
-      
-     
-    }
 
-   
-    .indicator::before{
-        content: '';
-        position: absolute;
-        top:0;
-        left: 0;
-        width: 0;
-        height: 0;
-        background: transparent;
-        border-top-right-radius: 20px;
-        box-shadow: 1px -10px 0 0  #191924;
-    }
-    
-    .indicator::after{
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 0;
-        height: 0;
-        background: transparent;
-        border-top-left-radius: 20px;
-        box-shadow: -1px -10px 0 0  #191924;
-    }
-  
-  
-    
-  } */
