@@ -139,6 +139,7 @@
 .dateNumber {
   font-size: 68px;
   font-weight: 700;
+  color: #292363;
 }
 
 .dateMonth {
@@ -146,18 +147,34 @@
   font-weight: 700;
   margin-left: 8px;
   text-transform: uppercase;
+  color: #292363;
 }
 
 .dateYear {
   margin-left: 8px;
   font-size: 25px;
+  color: #1e1947;
 }
 
+.username-text{
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+.username{
+  background-image: linear-gradient(45deg, #a3aa3e, #6164f7);
+  background-clip: text;
+  -webkit-background-clip: text; /* Para navegadores webkit */
+  color: transparent;
+  font-size: 20px;
+}
 .dateText {
+  color: #292363;
   font-size: 20px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
+  
 }
 
 

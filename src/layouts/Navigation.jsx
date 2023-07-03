@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { getAuth, signOut } from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 import '../assets/Navigation.css';
 
 const Navigation = () => {
@@ -9,12 +10,15 @@ const Navigation = () => {
   const [dateNumber, setDateNumber] = useState('');
   const [dateMonth, setDateMonth] = useState('');
   const [dateYear, setDateYear] = useState('');
+  const [username, setUsername] = useState('');
 
   const location = useLocation();
+  const db = getFirestore();
 
   useEffect(() => {
     mostrarFechaActual();
     restoreActiveIndex();
+    fetchUsername();
   }, []);
 
   useEffect(() => {
@@ -29,6 +33,21 @@ const Navigation = () => {
     setDateNumber(date.getDate());
     setDateMonth(date.toLocaleString('es-ES', { month: 'short' }));
     setDateYear(date.getFullYear());
+  }
+
+  async function fetchUsername() {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+      const userDocRef = doc(db, 'users', user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (userDocSnap.exists()) {
+        const userData = userDocSnap.data();
+        setUsername(userData.username);
+      }
+    }
   }
 
   function saveActiveIndex() {
@@ -93,9 +112,14 @@ const Navigation = () => {
                 <div className='dateMonth'>{dateMonth}</div>
                 <div className='dateYear'>{dateYear}</div>
               </div>
+            </div> 
+            <div className='username-text'>
+              <div className="username">{username}</div> {/* Nuevo elemento para mostrar el username */}
+              <div className='dateText'>{dateText}</div>
             </div>
-            <div className='dateText'>{dateText}</div>
+            
           </div>
+          
           <Outlet></Outlet>
         </section>
       </div>

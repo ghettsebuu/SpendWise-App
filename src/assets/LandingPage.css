@@ -1,69 +1,55 @@
+/* Estilos generales */
 body {
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  font-family: Arial, sans-serif;
 }
 
-header {
-  background-color: #ffffff;
-  text-align: center;
+
+
+.container {
+  max-width: 1200px;
+
+  margin: 0 auto;
   padding: 20px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
-
-.texts {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-}
-
-.texts__title {
-  font-size: 3.5rem;
-  margin: 0;
-}
-
+/* Estilos de navegación */
 .navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
+  height: 110px;
   top: 0;
   left: 0;
   right: 0;
-  height: 70px;
   z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 10px;
-  background-color: #fff;
-  box-shadow: 0 10px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .navigation__link {
   text-decoration: none;
   padding: 1em 2em;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #282828;
-  background-color: #fff;
-  border: 1px solid #27ca89;
+  color: #ffffff;
+  background-color:  #52dd9c;
   border-radius: 45px;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease 0s;
   cursor: pointer;
   outline: none;
-  margin-left: 10px;
 }
 
 .navigation__link:hover {
-  background-color: #27ca89;
+  color: #111121;
+  background-color:  #fafafa;
+  border: 1px solid #52dd9c;
   box-shadow: 0px 15px 20px rgba(41, 207, 141, 0.4);
   transform: translateY(-7px);
 }
@@ -72,35 +58,155 @@ header {
   transform: translateY(-1px);
 }
 
-.container {
-  background-color: #ffffff ;
+
+.logo {
+  width: 100px;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+/* Estilos de encabezado */
+/* Estilos del encabezado */
+header.container {
+  position: relative;
+  background-image: url('src/assets/img/banner-removebg.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
   text-align: center;
-  padding: 20px;
-  height: 100vh;
+  color: #fff;
+  padding: 100px 0;
+  margin-top: 40px;
+}
+
+header.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.texts{
+  padding: 120px;
+}
+
+
+.texts__title {
+  font-size: 90px;
+  margin-bottom: 20px;
+  color:#39394e ; /* Cambio de color del título */
+  font-family: 'Your Friendly Font', Arial, sans-serif; /* Cambio de fuente */
+}
+
+.texts__highlight {
+  color: #39394e; /* Cambia "rojo" por el color que desees para "Spend" */
+}
+
+.texts__normal {
+  color: #1ec87a; /* Cambia "azul" por el color que desees para "Wise" */
+}
+
+
+.texts__paragraph {
+  font-size: 25px;
+  margin-bottom: 40px;
+  color: #777779; /* Cambio de color del párrafo */
+  font-family: 'Your Friendly Font', Arial, sans-serif; /* Cambio de fuente */
+}
+
+
+/* Estilos de sección de características */
+.section.caracteristicas {
+  background-image: linear-gradient(to bottom,#0fdf77, #1ec87a);
+  padding: 40px 0;
+  color: #292938;
+}
+
+.section-content {
+  text-align: center;
+}
+
+.feature-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.feature {
+  flex-basis: 250px;
+  margin: 10px;
+  text-align: center;
+  
+}
+
+.feature img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.feature h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Estilos del contenido principal */
+.container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  height: 100vh;
 }
 
-.header {
+.content {
+  
   text-align: center;
-  margin-bottom: 10px;
+  
 }
 
-h1 {
-  font-size: 36px;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-p {
-  font-size: 18px;
-  color: #666;
-  margin-bottom: 20px;
+.illustration img {
+  border-radius: 50%;
+  
 }
 
 .button-container {
+  margin-top: 20px;
   text-align: center;
+}
+
+
+.header {
+  flex-basis: 50%;
+  padding-right: 40px;
+}
+
+.header .textcolor {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #1ec87a;
+}
+
+.header h1 {
+  font-size: 38px;
+  margin-bottom: 10px;
+  color: #292938;
+}
+
+.header p {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #777779;
+}
+
+.button-container {
+  margin-top: 20px;
 }
 
 .btn {
@@ -109,7 +215,7 @@ p {
   padding: 12px 24px;
   font-size: 18px;
   color: #fff ;
-  background-color: #27ca89;
+  background-image: linear-gradient(to bottom,#0fdf77, #1ec87a);
   border-radius: 30px;
   outline: none;
   border:none;
@@ -118,7 +224,7 @@ p {
 }
 
 .btn:hover {
-  background-color: #318d58;
+  background-image: linear-gradient(to bottom,#00ff80, #0ab968);
   color: #fff;
   
 }
@@ -127,129 +233,52 @@ p {
   animation: bounce 2s infinite;
 }
 
-.section {
-  background-color: #ffffff;
-  padding: 40px;
-  margin-bottom: 0;
-}
 
-.section-content {
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.caracteristicas{
-  background-color: #27ca89;
-}
-
-.feature-list {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.feature {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.feature img {
-  width: 200px; /* Ajusta el ancho según tus necesidades */
-  height: auto;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  margin-right: 10px;
-  transition: transform 0.3s ease;
-}
-
-.feature img:hover {
-  transform: scale(1.1);
-}
-
-
-.feature h3 {
-  font-size: 18px;
-  margin-bottom: 5px;
-  color: #666;
-}
-
-
-
-
-
+/* Estilos de ilustración */
 .illustration {
-  text-align: center;
-  margin-bottom: 40px;
+  flex-basis: 50%;
 }
 
 .illustration img {
-  max-width: 20%;
+  border-radius: 50%;
+  width: 300px; /* Cambia el valor "200px" al tamaño deseado */
   height: auto;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 
-
-
-
+/* Estilos del pie de página */
+.section.footer {
+  background-color: #292938;
+  color: #868686;
+  padding: 20px 0;
+}
 
 .social-icons {
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .social-icons a {
-  display: inline-block;
-  margin: 10px;
-  color: #999898;
+  color: #7c7a83;
+  margin: 0 10px;
   font-size: 50px;
-  text-decoration: none;
-  transition: color 0.3s;
 }
 
 .social-icons a:hover {
   color: #27ca89;
 }
 
-.social-icons a:first-child {
-  margin-left: 0;
-}
 
-.social-icons a:last-child {
-  margin-right: 0;
-}
-
-
+/* Estilos del pie de página inferior */
 .footer {
-  background-color: #2e2e2e;
-  color: #ffffff;
-  padding: 20px;
-  width: 100%;
-}
-
-.footer p {
-  color: #c5bdbd;
-  margin: 0;
-}
-
-.footer-content {
+  background-color: #111121;
+  color: #616168;
+  padding: 10px 0;
   text-align: center;
 }
 
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+
+@media (max-width: 768px) {
+  /* Estilos para pantallas de hasta 768px de ancho */
+  /* Aquí puedes modificar los estilos según tus necesidades */
 }
-
-

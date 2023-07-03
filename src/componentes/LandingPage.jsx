@@ -17,44 +17,54 @@ function LandingPage() {
 
   return (
     <div>
-      <header>
+      
         <nav className="navigation">
+          <img className="logo" src="src/assets/img/logodef.png" alt="Logo" />
           {auth.currentUser ? (
             <div>
               <NavLink className="navigation__link" to="/dashboard/home" activeClassName="active">
+               
                 {validar}
               </NavLink>
             </div>
           ) : (
             <NavLink className="navigation__link" to="/login" activeClassName="active">
+             
               Acceder
             </NavLink>
           )}
         </nav>
-        <div className="texts">
-          <h1 className="texts__title">Bienvenidos a SpendWise</h1>
-        </div>
-        
-      </header>
+      
+        <header class="container">
+          <div class="texts"> 
+            <h1 class="texts__title">¡Bienvenido  
+              a <span class="texts__highlight">Spend</span><span class="texts__normal">Wise</span>!
+            </h1>
+
+              <p class="texts__paragraph">El dinero no crece en los árboles, pero nuestra aplicación <br />te ayuda a cuidarlo...</p>
+              
+          </div>
+        </header>
+
 
       <section className="section caracteristicas">
         <div className="section-content">
           <h2>Características principales</h2>
           <div className="feature-list">
             <div className="feature">
-            <img src='src/assets/img/8670874.jpg' alt="Gastos" />
+            <img src='src/assets/img/2.png' alt="Gastos" />
               <h3>Registro de gastos</h3> 
             </div>
             <div className="feature">
-            <img src='src/assets/img/4682641.jpg' alt="Recordatorios" />
+            <img src='src/assets/img/3.png' alt="Recordatorios" />
               <h3>Recordatorios</h3> 
             </div>
             <div className="feature">
-            <img src='src/assets/img/6550818.jpg' alt="Presupuesto" />
+            <img src='src/assets/img/4.png' alt="Presupuesto" />
               <h3>Presupuesto</h3>
             </div>
             <div className="feature">
-              <img src='src/assets/img/5603126.jpg' alt="Informes" />
+              <img src='src/assets/img/5.png' alt="Informes" />
               <h3>Informe de gastos</h3>
             </div>
           </div>
@@ -62,10 +72,17 @@ function LandingPage() {
       </section>
 
 
-      <div className="container">
-          <div className="header">
+      <div class="container">
+        <div class="illustration">
+          <img src="src/assets/img/logodef.png" alt="Descripción de la imagen" />
+        </div>
+        <div class="content">
+          <div class="header">
+            <p className='textcolor'>"¿Te preguntas a dónde va tu dinero? <br />
+              No te preocupes, nuestra app tiene un GPS financiero".</p>
             <h1>¡Controla tus gastos!</h1>
             <p>Ten el control de tus finanzas personales de forma fácil y divertida.</p>
+            
           </div>
           <div className="button-container">
             {auth.currentUser ? (
@@ -80,14 +97,12 @@ function LandingPage() {
               </NavLink>
             )}
           </div>
-          <div className="illustration">
-            <img src='src/assets/img/6333412.jpg' alt="Descripción de la imagen" />
-          </div>
         </div>
+      </div>
 
-       
      
       <section className="section footer">
+        
         <div className="section-content">
           <div className="social-icons">
             {/* Aquí puedes agregar enlaces a las redes sociales de tu empresa */}
