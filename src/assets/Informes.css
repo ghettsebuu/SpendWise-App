@@ -13,7 +13,7 @@
       height: 90%;
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
+      justify-content: center;
       border-radius: 8px;
         
     }
@@ -21,16 +21,14 @@
      
 
       .tabla-informes{
-       
-        height: 10px;
-        width: 30%;
-        position: relative;
-        right: 10px;
-        top: -150px;
+    
         display: flex;
         justify-content: flex-start;
         flex-direction: column;
         border-radius: 8px;
+        width: 94%;
+    height: 72%;
+
         
       }
 
@@ -67,7 +65,12 @@
     .tabla-cuerpo {
         font-size: 13px;
     }
-    
+    .menuflex{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
     .menu-mes {
       background-color: #6a76e0;
       width: 180px;
@@ -77,9 +80,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      position: absolute;
-      top: 10px;
-      right: 10px;
+  
+      
       border-radius: 8px;
       color: rgb(72, 68, 95);
     }
@@ -87,35 +89,41 @@
       .TOTAL{
       
         background-color: #e06a6a;
-        width: 450px;
+        
         padding: 5px;
         display: flex;
         justify-content: center;
         text-align: center;
-        position: relative;
-        bottom:35px;
-        left: 419px;
+       
         border-radius: 8px;
         color: rgb(72, 68, 95);
       }
-
-      .grafica {
-        background-color: rgb(255, 255, 244);
-        margin: 20px;
+      .graficaFlex{
+        flex-direction: row;
+    justify-content: center;
+    display: flex;
+        width: 32%;
+        height: 61%;
+        background: white;
+        margin: 2em;
         border-radius: 8px;
-        padding: 20px;
-        position: relative;
-        top: -15px;
-        left: 20px;
-        width: 450px; /* Ancho fijo de 300px */
-        height: 270px; /* Alto fijo de 200px */
+      }
+      .grafica {
+        
+       
+     
         
     }
-    
+    .flexinforme{
+      display: flex;
+      align-content: center;
+      align-items: center;
+      justify-content: center;
+      width: 29%;
+      height: 100%;
+    }
     .torta{
-      position: relative;
-        top: -12px;
-        left: 10px;
+    
     }
 
     .no-datos-mensaje {
@@ -130,4 +138,46 @@
       
     }
 
+
+    @media (max-width: 1024px) {
   
+      .graficaFlex {
+          width: 55%;
+      }
+      .TOTAL{
+        margin-left: 1em;
+    margin-right: 1em;
+
+      }
+     
+    }
+    @media (max-width: 768px) {
+
+    .tabla-informes{
+      height: 87%;
+    }
+.title-info{
+  font-size: 13px
+}
+    }
+    
+    @media (max-width:425px) {
+      .Informes{
+        flex-direction: column;
+   
+        width: 100%;
+        height: 100%;
+        
+      }
+      
+      .flexinforme{
+        width: 100%;
+    margin-top: 6em;
+      }
+      .graficaFlex{
+        width: 100%;
+      }
+      .tabla-informes{
+        height: 78%;
+      }
+    }

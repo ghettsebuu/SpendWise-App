@@ -291,7 +291,14 @@ const Gastos = () => {
   
   return (
     <div className="cont">
-    <h2 className="title">Módulo de Gastos</h2>
+      <div className="gastosflex">
+        <div className="agregarFlex">
+
+      <h2 className="title">Módulo de Gastos</h2>
+      <button className="addButton" onClick={() => handleOpenModal(null)}>
+      Agregar Gastos
+    </button>
+        </div>
     {presupuesto && (
       <div className="card-presupuesto">
         <h3>Presupuesto Actual</h3>
@@ -302,9 +309,9 @@ const Gastos = () => {
     )}
 
 
-    <button className="addButton" onClick={() => handleOpenModal(null)}>
-      Agregar Gastos
-    </button>
+    
+      </div>
+   
 
     {isLoading ? (
       <div className="loading-cont">

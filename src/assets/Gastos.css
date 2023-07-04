@@ -1,15 +1,12 @@
 /* GastosModule.module.css */
 
 .card-presupuesto {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 9999;
+  
+  
   background-color: #f2f2f2;
   border-radius: 8px;
   padding: 13px;
-  margin-top: 8px;
-  margin-right: 10px;
+
   box-shadow: 0 2px 4px rgba(185, 183, 183, 0.774);
 }
 
@@ -294,6 +291,16 @@ background-color: #3600b3; /* Ajusta el color de fondo del botón al pasar el cu
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.gastosflex{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.agregarFlex{
+  display: flex;
+  flex-direction: column;
+}
 
 
 @keyframes loadingAnimation {
@@ -303,5 +310,16 @@ background-color: #3600b3; /* Ajusta el color de fondo del botón al pasar el cu
   100% {
     width: 100%;
   }
+}
+@media (max-width: 768px) {
+.cont{
+
+  overflow-x: auto;
+}
+@media (max-width: 425px) {
+.gastosflex{
+  flex-direction: column;
+
+}
 }
 

@@ -141,6 +141,8 @@ const Informes = () => {
 
   return (
     <div className="cont">
+      <div className="menuflex">
+
       <h2 className="title">Módulo de Informes</h2>
       <div className='menu-mes'>
         <select value={mesSeleccionado} onChange={handleMesSeleccionado}>
@@ -159,6 +161,7 @@ const Informes = () => {
           <option value="12">Diciembre</option>
         </select>
       </div>
+      </div>
      {/*  {isLoading ? (
         <div className="loading-cont-Informe">
           <div className="loading-bar">
@@ -168,33 +171,40 @@ const Informes = () => {
        </div>
       ) : ( */}
         <div className="Informes">
-          <div className="tabla-informes">
-            <div className='title-info'>
-              <span>Total de gastos por categoría</span>
-            </div>
-            <Table className='table-info' striped bordered hover variant="dark">
-              <thead className='tabla-cabecera'>
-                <tr>
-                  <th>Categorías</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody className='tabla-cuerpo'>
-                {datosFiltrados && datosFiltrados.length > 0 ? (
-                  datosFiltrados.map((dato, index) => (
-                    <tr key={index}>
-                      <td>{dato.categoria}</td>
-                      <td>{dato.monto} {monedaPredeterminada}</td>
-                    </tr>
-                  ))
-                ) : (
+          <div className="flexinforme">
+
+
+            <div className="tabla-informes">
+              <div className='title-info'>
+                <span>Total de gastos por categoría</span>
+              </div>
+              <Table className='table-info' striped bordered hover variant="dark">
+                <thead className='tabla-cabecera'>
                   <tr>
-                    <td colSpan="2"> No hay datos disponibles este mes</td>
+                    <th>Categorías</th>
+                    <th>Total</th>
                   </tr>
-                )}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody className='tabla-cuerpo'>
+                  {datosFiltrados && datosFiltrados.length > 0 ? (
+                    datosFiltrados.map((dato, index) => (
+                      <tr key={index}>
+                        <td>{dato.categoria}</td>
+                        <td>{dato.monto} {monedaPredeterminada}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="2"> No hay datos disponibles este mes</td>
+                    </tr>
+                  )}
+                </tbody>
+              </Table>
+            </div>
           </div>
+
+          <div className="graficaFlex">
+
           <div className="grafica">
             {datosFiltrados && datosFiltrados.length > 0 ? (
               <Chart
@@ -207,14 +217,16 @@ const Informes = () => {
             ) : (
               <div className="no-datos-mensaje">No hay datos disponibles para la gráfica</div>
             )}
+               <div className='TOTAL'>
+            <h4>Total de gastos : {datosFiltrados.reduce((total, dato) => total + dato.monto, 0)} {monedaPredeterminada}</h4>
+          </div>
+          </div>
           </div>
           
         </div>
       {/* )} */}
      
-     <div className='TOTAL'>
-            <h4>Total de gastos : {datosFiltrados.reduce((total, dato) => total + dato.monto, 0)} {monedaPredeterminada}</h4>
-          </div>
+  
     </div>
   );
 };

@@ -287,31 +287,36 @@ const Home = () => {
             </div>
         
           </div>
+          <div className="pendientesFlex">
+
+         
+           <div className="gastosflex">
             <div className="card-top-gastos">
+                  <div className="title-top">
+                    <h3>Total de gastos agregados</h3>
+                  </div>
+                  <div className="total-gastos">
+                    <span className="icon">
+                    <FontAwesomeIcon icon={faMoneyCheckDollar} />
+                    </span>
+                    {totalGastos} {currencySymbol}
+                  </div>
+              </div>
+
+              <div className="card-top-gastos margingastos ">
                 <div className="title-top">
-                  <h3>Total de gastos agregados</h3>
+                  <h3>Gasto de la semana </h3>
                 </div>
-                <div className="total-gastos">
+                <div className="total-gastos-semana">
                   <span className="icon">
-                  <FontAwesomeIcon icon={faMoneyCheckDollar} />
+                    <FontAwesomeIcon icon={faCoins} />
                   </span>
-                  {totalGastos} {currencySymbol}
+                  {totalGastosSemanales} {currencySymbol}
                 </div>
             </div>
+            </div>
 
-            <div className="card-semana">
-              <div className="title-top">
-                <h3>Gasto de la semana </h3>
-              </div>
-              <div className="total-gastos-semana">
-                <span className="icon">
-                  <FontAwesomeIcon icon={faCoins} />
-                </span>
-                {totalGastosSemanales} {currencySymbol}
-              </div>
-           </div>
-
-          <div className="contenedor-pendientes">
+            <div className="contenedor-pendientes">
             <div className='title-top'>
               <h3 >Próximos pendientes </h3>
             </div>
@@ -330,7 +335,9 @@ const Home = () => {
               <p className='no-pendientes'>No hay pendientes .</p>
             )}
           </div>
-        </div>
+           </div>
+          </div>
+          
        
       </div>
 
