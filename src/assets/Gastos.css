@@ -1,19 +1,40 @@
-/* GastosModule.module.css */
+/* Estilos para la distribución general */
+
+
+.gastosflex-m {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+.agregarFlex {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+
+.title {
+  margin-right: 10px;
+}
+
+
+/* estilos de la tarjeta de presupuesto  */
 
 .card-presupuesto {
-  
-  
   background-color: #f2f2f2;
+  color: #4d4d57;
   border-radius: 8px;
-  padding: 13px;
-
+  padding: 10px;
   box-shadow: 0 2px 4px rgba(185, 183, 183, 0.774);
+
 }
 
 .card-presupuesto h3 {
   font-size: 17px;
   margin-bottom: 2px;
-  color: #5b5f5d;
+  color: #60607c;
 }
 
 .card-presupuesto p {
@@ -22,6 +43,7 @@
 }
 
 
+/* estilos del modal */
 
 .modal {
   position: absolute;
@@ -36,7 +58,6 @@
   color: #303331;
   box-shadow: 0 2px 4px rgba(7, 235, 147, 0.1);
 }
-
 
 
 .modalTitle {
@@ -78,13 +99,8 @@
   width: 40%;
 }  
 
-.tableTitle {
-  font-size: 16px;
-  margin-top: 15px;
-  margin-bottom: 10px;
-  color: #828584;
-  
-}
+
+/* estilos de la tabla  */
 
 .table {
   width: 100%;
@@ -96,7 +112,7 @@
 
 th,
 td {
-  padding: 10px;
+  padding: 6px;
   text-align: left;
 }
 
@@ -118,16 +134,11 @@ th:not(:first-child):not(:last-child) {
   border-bottom: none;
 }
 
-
 td {
   border-top: 1px solid #ddd;
   color: #5b5f5d;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
 
 .tableRow:hover {
   background-color: #f7ed66;
@@ -143,183 +154,160 @@ td {
 .table-actions {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .row-actions {
   display: flex;
-  gap: 10px;
+  gap: 5px;
   position: absolute;
   top: 44px;
   right: 0;
   background-color: #f8f8f8;
-  padding: 5px;
+  padding: 0;
   border-radius: 5px;
   margin-right: 15px;
 }
 
-/* .edit-button {
-  background-color: #44F281;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-.edit-button:hover{
-  background-color: #2db65d;
-}
-.delete-button {
-  background-color: #F24452;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  margin-bottom: 10px;
-
-}
-
-.delete-button:hover{
-  background-color: #f36773;
-} */
-
 .edit-icon,
 .delete-icon {
 cursor: pointer;
-font-size: 25px;
-margin-right: 8px;
+font-size: 22px;
+margin-right: 15px;
+margin-left: 15px;
 }
 
 .edit-icon {
-color: #44F281; /* Color para el icono de edición */
-}
-
-.delete-icon {
-color: #F24452; /* Color para el icono de eliminación */
-}
-
-.edit-icon:hover,
-.delete-icon:hover {
-opacity: 0.7; /* Opacidad al pasar el puntero sobre los iconos */
-}
-
-
-
-
-/* paginacion  */
-
-.pagination {
-display: flex;
-justify-content: center;
-margin-top: 10px; /* Ajusta el margen superior según sea necesario */
-}
-
-.pagination-button {
-background-color: #3a2cb6; /* Ajusta el color de fondo del botón según sea necesario */
-color: #fff; /* Ajusta el color de texto del botón según sea necesario */
-border: none;
-border-radius: 4px; /* Ajusta el radio de borde según sea necesario */
-padding: 5px 16px; /* Ajusta el relleno del botón según sea necesario */
-margin: 0 2px; /* Ajusta el margen horizontal del botón según sea necesario */
-font-size: 10px; /* Ajusta el tamaño de fuente del botón según sea necesario */
-cursor: pointer;
-transition: background-color 0.3s;
-}
-
-
-
-.pagination-button:disabled {
-background-color: #ccc; /* Ajusta el color de fondo del botón deshabilitado según sea necesario */
-cursor: not-allowed;
-}
-
-.pagination-button:hover:not(:disabled) {
-background-color: #3600b3; /* Ajusta el color de fondo del botón al pasar el cursor según sea necesario */
-}
-
-
-
-/* cargando */
-
-.loading-cont {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 250px; /* Ajusta la altura según sea necesario */
-  background: #f5f3d7;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.loadingtext {
-  margin-left: 8px; /* Ajusta el margen izquierdo según sea necesario */
-  font-size: 16px; /* Ajusta el tamaño de fuente según sea necesario */
-}
-
-.loading-bar {
-  width: 100px; /* Ajusta el ancho de la barra de carga según sea necesario */
-  height: 4px; /* Ajusta la altura de la barra de carga según sea necesario */
-  background-color: #ccc; /* Ajusta el color de fondo de la barra de carga según sea necesario */
-  position: relative;
-  overflow: hidden;
-}
-
-.loading-progress {
-  width: 0;
-  height: 100%;
-  background-color: #08f042; /* Ajusta el color de progreso de la barra de carga según sea necesario */
-  position: absolute;
-  top: 0;
-  left: 0;
-  animation: loadingAnimation 2s infinite;
-
-}
-
-.no-gastos{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 250px; /* Ajusta la altura según sea necesario */
-  background: #f5f3d7;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.gastosflex{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-.agregarFlex{
-  display: flex;
-  flex-direction: column;
-}
-
-
-@keyframes loadingAnimation {
-  0% {
-    width: 0;
+  color: #44F281; /* Color para el icono de edición */
   }
-  100% {
+  
+  .delete-icon {
+  color: #F24452; /* Color para el icono de eliminación */
+  }
+  
+  .edit-icon:hover,
+  .delete-icon:hover {
+  opacity: 0.7; /* Opacidad al pasar el puntero sobre los iconos */
+  }
+  
+  
+  
+  /* paginacion  */
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px; /* Ajusta el margen superior según sea necesario */
+  }
+  
+  .pagination-button {
+    background-color: #3a2cb6; /* Ajusta el color de fondo del botón según sea necesario */
+    color: #fff; /* Ajusta el color de texto del botón según sea necesario */
+    border: none;
+    border-radius: 4px; /* Ajusta el radio de borde según sea necesario */
+    padding: 5px 16px; /* Ajusta el relleno del botón según sea necesario */
+    margin: 0 2px; /* Ajusta el margen horizontal del botón según sea necesario */
+    font-size: 10px; /* Ajusta el tamaño de fuente del botón según sea necesario */
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  
+  .pagination-button:disabled {
+  background-color: #ccc; /* Ajusta el color de fondo del botón deshabilitado según sea necesario */
+  cursor: not-allowed;
+  }
+  
+  .pagination-button:hover:not(:disabled) {
+  background-color: #3600b3; /* Ajusta el color de fondo del botón al pasar el cursor según sea necesario */
+  }
+  
+  
+  /* cargando */
+  
+  .loading-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 250px; /* Ajusta la altura según sea necesario */
+    background: #f5f3d7;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .loadingtext {
+    margin-left: 8px; /* Ajusta el margen izquierdo según sea necesario */
+    font-size: 16px; /* Ajusta el tamaño de fuente según sea necesario */
+  }
+  
+  .loading-bar {
+    width: 100px; /* Ajusta el ancho de la barra de carga según sea necesario */
+    height: 4px; /* Ajusta la altura de la barra de carga según sea necesario */
+    background-color: #ccc; /* Ajusta el color de fondo de la barra de carga según sea necesario */
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .loading-progress {
+    width: 0;
+    height: 100%;
+    background-color: #08f042; /* Ajusta el color de progreso de la barra de carga según sea necesario */
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: loadingAnimation 2s infinite;
+  
+  }
+  
+  @keyframes loadingAnimation {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  
+
+
+/* Estilos para el modal */
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  .gastosflex-m {
+    flex-direction: raw;
+    align-items: flex-start;
+  }
+
+  .agregarFlex {
+    margin-bottom: 10px;
+  }
+
+  .title {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .addButton {
     width: 100%;
   }
-}
-@media (max-width: 768px) {
-.cont{
 
-  overflow-x: auto;
-}
-@media (max-width: 425px) {
-.gastosflex{
-  flex-direction: column;
+  .table {
+    width: 100%;
 
+  }
+  
+  .table th,
+  .table td {
+    padding: 4px;
+  }
+  
+  .table th {
+    font-size: 12px;
+  }
+  
+  .table td {
+    font-size: 12px;
+  }
 }
-}
-

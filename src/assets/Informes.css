@@ -1,183 +1,129 @@
-/* .Informes-container {
-    padding: 20px;
-    border-radius: 8px;
-    background: #ffffff;
-    margin: 20px;
-    position: relative;
-    height: 430px; 
-    overflow: auto; 
-    } */
-    .Informes{
-      background-color: #f3f1d8;
-      margin-top: 0.1rem;
-      height: 90%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-        
-    }
-
-     
-
-      .tabla-informes{
-    
-        display: flex;
-        justify-content: flex-start;
-        flex-direction: column;
-        border-radius: 8px;
-        width: 94%;
-    height: 72%;
-
-        
-      }
-
-      .title-info {
-        color: #777777;
-        font-size: 15px;
-        font-weight: bold; /* Coloca el texto en negrita */
-        display: flex;
-        justify-content: center;
-        border-radius: 8px;
-       
-      }
-
-      .table-info {
-        margin: 0 auto; /* Centra la tabla horizontalmente */
-        max-width: 100%; /* Evita que la tabla se desborde en ancho */
-        table-layout: fixed; /* Fija el ancho de las columnas y evita que se desborden */
-        
-      }
-      
-      .table-info thead th, .table-info tbody td {
-        max-width: 0; /* Evita que los elementos de la tabla se desborden en ancho */
-        overflow: hidden; /* Oculta el contenido que se desborda */
-        text-overflow: ellipsis; /* Muestra puntos suspensivos (...) para el contenido que se desborda */
-        white-space: nowrap; /* Evita que el contenido se divida en varias líneas */
-        
-      }
-      
-    
-      .tabla-cabecera {
-        font-size: 13px;
-    }
-    
-    .tabla-cuerpo {
-        font-size: 13px;
-    }
-    .menuflex{
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .menu-mes {
-      background-color: #6a76e0;
-      width: 180px;
-      height: 30px;
-      padding: 1px;
-      margin: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  
-      
-      border-radius: 8px;
-      color: rgb(72, 68, 95);
-    }
-    
-      .TOTAL{
-      
-        background-color: #e06a6a;
-        
-        padding: 5px;
-        display: flex;
-        justify-content: center;
-        text-align: center;
-       
-        border-radius: 8px;
-        color: rgb(72, 68, 95);
-      }
-      .graficaFlex{
-        flex-direction: row;
-    justify-content: center;
-    display: flex;
-        width: 32%;
-        height: 61%;
-        background: white;
-        margin: 2em;
-        border-radius: 8px;
-      }
-      .grafica {
-        
-       
-     
-        
-    }
-    .flexinforme{
-      display: flex;
-      align-content: center;
-      align-items: center;
-      justify-content: center;
-      width: 29%;
-      height: 100%;
-    }
-    .torta{
-    
-    }
-
-    .no-datos-mensaje {
-      margin-top: 20px;
-      font-size: 16px;
-      color: gray;
-      position: relative;
-      bottom: -80px;
-      display: flex;
-      justify-content: center;
-      text-align: center;
-      
-    }
 
 
-    @media (max-width: 1024px) {
-  
-      .graficaFlex {
-          width: 55%;
-      }
-      .TOTAL{
-        margin-left: 1em;
-    margin-right: 1em;
-
-      }
-     
-    }
-    @media (max-width: 768px) {
-
-    .tabla-informes{
-      height: 87%;
-    }
-.title-info{
-  font-size: 13px
+.menuflex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #faf5f5;
 }
-    }
+
+.title {
+  font-size: 20px;
+  margin: 0;
+}
+
+.menu-mes {
+  margin: 0 20px;
+  background-color: #6a76e0;
+  width: 170px;
+  height: 30px;
+  padding:0 20px ;
+  border-radius: 8px;
+  color: rgb(72, 68, 95);
+}
+
+
+
+.flexinforme {
+  width: 100%;
+}
+
+.tabla-informes{
     
-    @media (max-width:425px) {
-      .Informes{
-        flex-direction: column;
-   
-        width: 100%;
-        height: 100%;
-        
-      }
-      
-      .flexinforme{
-        width: 100%;
-    margin-top: 6em;
-      }
-      .graficaFlex{
-        width: 100%;
-      }
-      .tabla-informes{
-        height: 78%;
-      }
-    }
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  border-radius: 8px;
+  width: 94%;
+  height: 72%;
+}
+
+.title-info {
+  color: #777777;
+  font-size: 15px;
+  font-weight: bold; /* Coloca el texto en negrita */
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+
+}
+
+
+
+.tabla-cabecera {
+font-size: 13px;
+}
+
+.tabla-cuerpo {
+font-size: 13px;
+}
+
+.cont-graTotal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 1em;
+}
+
+.graficaFlex {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 230px;
+  background: white;
+  margin: 0 2em;
+  border-radius: 8px;
+
+}
+
+.grafica {
+  width: 350px;
+
+}
+
+.no-datos-mensaje {
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.TOTAL {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 0;
+  background-color: #e06a6a;
+  padding: 5px;
+  border-radius: 8px;
+  color: rgb(72, 68, 95);
+
+}
+
+@media (max-width: 816px) {
+
+  .Informes{
+    flex-direction: column-reverse;
+    width: 100%;
+  }
+  
+  .flexinforme{
+    width: 100%;
+    margin-top: 1em;
+  }
+  .graficaFlex{
+    width: 100%;
+  }
+  .tabla-informes{
+    width: 100%;
+    height: 100%;
+  }
+  
+
+}
+  

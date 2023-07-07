@@ -279,6 +279,98 @@ header.container::before {
 
 
 @media (max-width: 768px) {
-  /* Estilos para pantallas de hasta 768px de ancho */
-  /* Aquí puedes modificar los estilos según tus necesidades */
+  body {
+    font-size: 14px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .navigation {
+    height: 80px;
+    padding: 5px 10px;
+  }
+
+  .navigation__link {
+    padding: 0.5em 1em;
+    font-size: 12px;
+  }
+
+  .logo {
+    width: 80px;
+    height: 20%;
+    
+  }
+
+  header.container {
+    padding: 60px 0;
+  }
+
+  .texts {
+    padding: 80px;
+  }
+
+  .texts__title {
+    font-size: 60px;
+  }
+
+  .texts__paragraph {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .section.caracteristicas {
+    padding: 20px 0;
+  }
+
+  .feature-list {
+    margin-top: 10px;
+  }
+
+  .feature {
+    flex-basis: 200px;
+  }
+
+  .feature img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .feature h3 {
+    font-size: 16px;
+  }
+
+  .container {
+    padding: 40px;
+    height: auto;
+  }
+
+  .header {
+    padding-right: 20px;
+  }
+
+  .header .textcolor {
+    font-size: 16px;
+  }
+
+  .header h1 {
+    font-size: 32px;
+  }
+
+  .header p {
+    font-size: 16px;
+  }
+
+  .illustration img {
+    width: 200px;
+  }
+
+  .section.footer {
+    padding: 10px 0;
+  }
+
+  .social-icons a {
+    font-size: 30px;
+  }
 }

@@ -305,7 +305,7 @@ const Home = () => {
 
               <div className="card-top-gastos margingastos ">
                 <div className="title-top">
-                  <h3>Gasto de la semana </h3>
+                  <h3>Total Gasto de la semana </h3>
                 </div>
                 <div className="total-gastos-semana">
                   <span className="icon">

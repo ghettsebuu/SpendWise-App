@@ -291,14 +291,13 @@ const Gastos = () => {
   
   return (
     <div className="cont">
-      <div className="gastosflex">
-        <div className="agregarFlex">
-
+  <div className="gastosflex-m">
+    <div className="agregarFlex">
       <h2 className="title">Módulo de Gastos</h2>
       <button className="addButton" onClick={() => handleOpenModal(null)}>
-      Agregar Gastos
-    </button>
-        </div>
+        Agregar Gastos
+      </button>
+    </div>
     {presupuesto && (
       <div className="card-presupuesto">
         <h3>Presupuesto Actual</h3>
@@ -307,26 +306,23 @@ const Gastos = () => {
         </p>
       </div>
     )}
+  </div>
 
-
-    
+  {isLoading ? (
+    <div className="loading-cont">
+      <div className="loading-bar">
+        <div className="loading-progress"></div>
       </div>
-   
-
-    {isLoading ? (
-      <div className="loading-cont">
-        <div className="loading-bar">
-          <div className="loading-progress"></div>
+      <div className="loadingtext">Cargando Gastos...</div>
+    </div>
+  ) : (
+    <>
+      {noHayGastos ? (
+        <div className="no-gastos">
+          <p>No hay gastos guardados aún.</p>
         </div>
-        <div className="loadingtext">Cargando Gastos...</div>
-      </div>
-    ) : (
-      <>
-        {noHayGastos ? (
-          <div className='no-gastos'><p>No hay gastos guardados aún.</p></div>
-          
-        ) : (
-          <>
+      ) : (
+        <div className="table-container">
           <table {...getTableProps()} className="table">
             <thead>
               {headerGroups.map((headerGroup) => (
@@ -352,15 +348,17 @@ const Gastos = () => {
                       <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     ))}
                     <td>
-                      <div className="actions" >
-                        <FontAwesomeIcon className="edit-icon"
+                      <div className="actions">
+                        <FontAwesomeIcon
+                          className="edit-icon"
                           icon={faEdit}
                           onClick={(e) => {
                             e.stopPropagation();
                             handleOpenModal(i);
                           }}
                         />
-                        <FontAwesomeIcon className="delete-icon"
+                        <FontAwesomeIcon
+                          className="delete-icon"
                           icon={faTrash}
                           onClick={(e) => {
                             e.stopPropagation();
@@ -382,22 +380,20 @@ const Gastos = () => {
                 <button onClick={() => nextPage()} disabled={!canNextPage} className="pagination-button">
                   &gt;
                 </button>
-          </div>
+              </div>
+        </div>
+      )}
+    </>
+  )}
 
-          </>
-        )}
-      </>
-    )}
-
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={handleCloseModal}
-        contentLabel="Agregar Gasto"
-        className="modal"
-        overlayClassName="overlay"
-
-      >
-        <h2 className='modalTitle'>{editingData ? 'Editar Gasto' : 'Agregar Gasto'}</h2>
+  <Modal
+    isOpen={modalIsOpen}
+    onRequestClose={handleCloseModal}
+    contentLabel="Agregar Gasto"
+    className="modal"
+    overlayClassName="overlay"
+  >
+       <h2 className='modalTitle'>{editingData ? 'Editar Gasto' : 'Agregar Gasto'}</h2>
         <form onSubmit={handleSubmit}>
         <label>
           Fecha:
@@ -452,10 +448,11 @@ const Gastos = () => {
             Cancelar
           </button>
         </form>
-      </Modal>
+  </Modal>
 
-      <ToastContainer />
-    </div>
+  <ToastContainer />
+</div>
+
   );
 };
 

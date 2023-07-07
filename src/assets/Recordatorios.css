@@ -86,3 +86,19 @@
   color: #52d8b7; /* Change the color to the desired completed state color */
 }
 
+.contenedor-recordatorios{
+ 
+  max-height: 1000px;
+  height: 80%;
+  overflow-y: auto;
+}
+
+@media (min-height: 901px) {
+  
+  .contenedor-recordatorios{
+    height: 90%;
+    overflow-y: auto;
+  }
+
+}
+

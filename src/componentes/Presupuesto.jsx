@@ -119,7 +119,8 @@ const Presupuesto = () => {
 
       {presupuestos.length > 0 ? (
         presupuestos.map((presupuesto) => (
-          <div className="card" key={presupuesto.userId}>
+        <div className="card" key={presupuesto.userId}>
+          <div className='card-presu'>
             <div className='cont-presu'>
               <div className='monto'>
                 <p className='parrafos-p'>{presupuesto.monto}</p>
@@ -141,6 +142,7 @@ const Presupuesto = () => {
               <FontAwesomeIcon className="deleteButton" icon={faTrash} onClick={() => deletePresupuesto(presupuesto.id)} />
             </div>
           </div>
+        </div>
         ))
       ) : (
         <div className="no-presupuesto">

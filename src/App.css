@@ -13,12 +13,13 @@
   align-items: center;
   height: 100vh;
   background: #191924;
+  
 }
 
 /* Estilos para cajasection */
 .cajasection {
   max-width: 1440px;
-  width: 100%;
+  width: 90%;
   height: 85%;
   background: #1ec87a;
   border-radius: 8px;
@@ -59,7 +60,7 @@
   position: fixed;
   bottom: 0;
   max-width: 2000px ;
-  width: 100%;
+  width: 90%;
   height: 85px;
   background: #ffffff;
   display: flex;
@@ -74,23 +75,49 @@
 .card {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   flex-direction: column;
   background-color: #f3f1d8;
   width: 100%;
+  max-height: 1000px;
   height: 100%;
-  max-height: 430px;
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  align-items: center;
+}
+
+.Informes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-height: 1000px;
+  height: 100%;
+  margin-top: 0;
+  padding: 0 20px;
+  background-color: #f3f1d8;
+  border-radius: 8px;
+  overflow-y: auto; 
+}
+
+.table-container {
+  display: flex;
+  margin-left: 0; 
+  width: 100%;
+  max-height: 1000px;
+  height: 100%;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+ 
 }
 
 
-
-
 .title {
-  font-size: 22px;
+  font-size: 18px;
   margin-bottom: 5px;
   color: #5b5f5d;
 }
@@ -186,7 +213,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 360px;
+  height: 100%;
   background-color: #f8f2e0;
   color: #535286;
   border-radius: 8px;
@@ -258,6 +285,30 @@ body {
   background-color: #f9f9f9;
 }
 
+.no-gastos{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 620px; /* Ajusta la altura según sea necesario */
+  background: #f5f3d7;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.no-presupuesto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-height: 620px;
+  margin-top: 15px;
+  background-color: #f5f3d7;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 @keyframes bounce {
   0%, 100% {
     transform: translateY(0);
@@ -267,8 +318,179 @@ body {
   }
 }
 
-/* Estilos responsivos */
-/* Dispositivos móviles */
 
+/* Media queries para adaptar a diferentes alturas de dispositivos */
+
+/* Dispositivos móviles */
+@media (max-height: 600px) {
+  .cajasection {
+    margin-top: 0%;
+    height: 74%;
+  }
+
+  .cont {
+   
+    height: 65%;
+  }
+ 
+
+  .card {
+    height: 80%;
+    overflow: auto; /* Agrega esta línea */
+  }
+
+  .Informes{
+    height: 75%;
+    
+    overflow: auto; /* Agrega esta línea */
+  }
+
+  .table-container {
+    height: 60%;
+    overflow: auto;
+     /* Ajusta la altura máxima según tus necesidades */
+    
+  }
+  .no-gastos{
+
+    height: 60%; /* Ajusta la altura según sea necesario */
+   
+  }
+  .no-presupuesto {
+   height: 80%;
+  }
+
+  
+}
 
 /* Tablets */
+@media (min-height: 601px) and (max-height: 900px) {
+ 
+
+  .cajasection {
+    
+    height: 82%;
+  }
+
+  
+
+  .card {
+    height: 90%;
+  }
+
+  .Informes{
+    height: 87%;
+    
+  }
+
+  .table-container {
+    padding-top: 10px;
+    height: 75%;
+    overflow: auto;
+     /* Ajusta la altura máxima según tus necesidades */
+    
+  }
+
+  .no-gastos{
+
+    height: 75%; /* Ajusta la altura según sea necesario */
+   
+  }
+  .no-presupuesto {
+    height: 87%;
+   }
+}
+
+/* Pantallas más grandes */
+@media (min-height: 901px) {
+  
+  .cajasection {
+    margin-top: 3%;
+    height: 83%;
+  }
+
+  .cont {
+   
+    height: 75%;
+  }
+
+  .card {
+    height: 95%;
+  }
+  .Informes{
+    height: 90%;
+  
+  }
+
+  .table-container {
+    padding-top: 70px;
+    height: 85%;
+    overflow: auto;
+     /* Ajusta la altura máxima según tus necesidades */
+    
+  }
+  .no-gastos{
+
+    height: 87%; /* Ajusta la altura según sea necesario */
+   
+  }
+
+  .no-presupuesto {
+    height: 91%;
+   }
+  .informes{
+    margin-top: 1em;
+    height: 100%;
+  }
+}
+
+/* 
+ancho */
+/* Dispositivos móviles */
+@media (max-width: 480px) {
+  /* Estilos específicos para dispositivos móviles */
+  .cajasection {
+    width: 100% ;
+  }
+
+  .navigat{
+    width: 100%;
+  }
+  
+  
+}
+
+/* Tablets en modo vertical */
+@media (min-width: 481px) and (max-width: 768px) {
+  /* Estilos específicos para tablets en modo vertical */
+  .cajasection {
+    width: 100% ;
+  }
+
+  .navigat{
+    width: 100%;
+  }
+
+  .table-container {
+   
+   width: 100%;
+    
+  }
+}
+
+
+/* Laptops y pantallas más grandes */
+@media (min-width: 1025px) {
+  /* Estilos específicos para laptops y pantallas más grandes */
+  .cajasection {
+    width: 70% ;
+  }
+
+  .card {
+    height: 95%;
+  }
+  .navigat{
+    width: 70%;
+  }
+
+}

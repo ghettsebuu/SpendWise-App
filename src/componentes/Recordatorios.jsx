@@ -139,7 +139,7 @@ console.log(recordatorios);
             </div>
             
           ) : (
-            <div className='contenedor-recordatorios' style={{ maxHeight: '270px', overflowY: 'auto' }}>
+            <div className='contenedor-recordatorios' >
               <ul className="recordatorios-list">
                 {recordatorios.map((recordatorio) => (
                   <li key={recordatorio.id} className={`recordatorio-item ${recordatorio.realizado ? 'realizado' : ''}`}>
