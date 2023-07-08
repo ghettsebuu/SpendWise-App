@@ -70,7 +70,7 @@ const LoginPage = () => {
     return (
       <div className="login-page">
         <div className="login-container">
-          <img src="/src/assets/sitio-web.png" alt="Logo" className="logo" />
+          <img src="/img/sitio-web.png" alt="Logo" className="logo" />
           <h2>Iniciar sesión</h2>
           <button className="google-login-button" onClick={handleGoogleLogin}>
             <FaGoogle className="google-icon" /> Accede con Google
