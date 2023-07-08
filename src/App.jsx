@@ -1,9 +1,8 @@
 import './App.css';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getUserValid } from './firebase/firebase'; // Importa la función getUserValid desde tu archivo firebase.js
+import { getUserValid } from './firebase/firebase';
 
-// Importamos los componentes creados
 import Home from './componentes/Home';
 import Gastos from './componentes/Gastos';
 import Recordatorios from './componentes/Recordatorios';
@@ -17,34 +16,43 @@ import Logout from './componentes/Logout';
 
 function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(null);
+  const [connectionError, setConnectionError] = useState(false);
 
   useEffect(() => {
     const checkUserAuthentication = async () => {
       try {
         const isAuthenticated = await getUserValid();
         setUserLoggedIn(isAuthenticated);
-        console.log("isAuthenticated:", isAuthenticated); // Agregar esta línea
+        console.log("isAuthenticated:", isAuthenticated);
       } catch (error) {
+        console.error("Error en la autenticación:", error);
+        setConnectionError(true);
         setUserLoggedIn(false);
       }
     };
-  
+
     checkUserAuthentication();
   }, []);
-  
-  console.log("userLoggedIn:", userLoggedIn); // Mover esta línea fuera de useEffect
 
-  if (userLoggedIn === null) {
+  if (userLoggedIn === null || connectionError) {
     return (
-      <div class="loading-container">
-        <div class="loading-circle"></div>
-        <div class="loading-text">Cargando...</div>
+      <div className="loading-container">
+        {connectionError ? (
+          <div className="error-message fun-error">
+            <span role="img" aria-label="Sad Face" className="icon">😞</span>
+            Ha ocurrido un error de conexión. Por favor, inténtalo de nuevo más tarde.
+          </div>
+        
+        ) : (
+          <>
+            <div className="loading-circle"></div>
+            <div className="loading-text">Cargando...</div>
+          </>
+        )}
       </div>
-// Mostrar un indicador de carga mientras se verifica la autenticación
     );
   }
-  
-  console.log("userLoggedIn:", userLoggedIn); // Mover esta línea fuera de useEffect
+
   return (
     <div>
       <BrowserRouter>

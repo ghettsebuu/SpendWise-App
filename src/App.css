@@ -263,6 +263,20 @@
   justify-content: center;
   height: 100vh;
 }
+.fun-error {
+  background-color: #f08e8e;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.fun-error .icon {
+  margin-right: 10px;
+  font-size: 24px;
+}
 
 .loading-circle {
   width: 80px;
@@ -379,7 +393,7 @@ body {
   }
 
   .Informes{
-    height: 87%;
+    height: 80%;
     
   }
 
@@ -418,7 +432,7 @@ body {
     height: 95%;
   }
   .Informes{
-    height: 90%;
+    height: 80%;
   
   }
 
@@ -438,10 +452,7 @@ body {
   .no-presupuesto {
     height: 91%;
    }
-  .informes{
-    margin-top: 1em;
-    height: 100%;
-  }
+ 
 }
 
 /* 
@@ -457,6 +468,10 @@ ancho */
     width: 100%;
   }
   
+  .Informes{
+    height: 77%;
+    
+  }
   
 }
 
@@ -471,11 +486,17 @@ ancho */
     width: 100%;
   }
 
+  .title {
+    font-size: 14px;
+  }
   .table-container {
    
    width: 100%;
     
   }
+
+  
+
 }
 
 

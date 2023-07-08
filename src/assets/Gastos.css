@@ -284,13 +284,11 @@ margin-left: 15px;
     margin-bottom: 10px;
   }
 
-  .title {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
+  
 
   .addButton {
-    width: 100%;
+    width: 90%;
+    font-size: 10px;
   }
 
   .table {

@@ -105,11 +105,26 @@ font-size: 13px;
 
 }
 
+@media (max-width: 516px) {
+ .menuflex{
+  flex-direction: column;
+ }
+ 
+
+}
+  
+
+
 @media (max-width: 816px) {
 
   .Informes{
     flex-direction: column-reverse;
     width: 100%;
+  }
+
+  .title {
+    font-size: 18px;
+    margin: 0;
   }
   
   .flexinforme{

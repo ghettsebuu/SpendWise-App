@@ -5,13 +5,10 @@ body {
   font-family: Arial, sans-serif;
 }
 
-
-
 .container {
-  max-width: 1200px;
-
+  max-width: 75vw;
   margin: 0 auto;
-  padding: 20px;
+  padding: 5vw;
 }
 
 /* Estilos de navegación */
@@ -20,27 +17,34 @@ body {
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  height: 110px;
+  height: 8.5vw;
   top: 0;
   left: 0;
   right: 0;
   z-index: 999;
-  padding: 10px 20px;
+  padding: 2vw;
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.35vw 0.7vw rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  width: 6.7vw;
+  height: 6vw;
+  margin-bottom: 2vw 0;
+  border-radius: 1vw;
 }
 
 .navigation__link {
   text-decoration: none;
-  padding: 1em 2em;
-  font-size: 13px;
+  padding: 0.8vw 1.6vw;
+  font-size: 0.9vw;
   font-weight: bold;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 0.2vw;
   color: #ffffff;
-  background-color:  #52dd9c;
-  border-radius: 45px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  background-color: #52dd9c;
+  border-radius: 2.25vw;
+  box-shadow: 0px 0.8vw 1.5vw rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease 0s;
   cursor: pointer;
   outline: none;
@@ -48,36 +52,27 @@ body {
 
 .navigation__link:hover {
   color: #111121;
-  background-color:  #fafafa;
-  border: 1px solid #52dd9c;
-  box-shadow: 0px 15px 20px rgba(41, 207, 141, 0.4);
-  transform: translateY(-7px);
+  background-color: #fafafa;
+  border: 0.1vw solid #52dd9c;
+  box-shadow: 0px 1.5vw 2vw rgba(41, 207, 141, 0.4);
+  transform: translateY(-0.7vw);
 }
 
 .navigation__link:active {
-  transform: translateY(-1px);
-}
-
-
-.logo {
-  width: 100px;
-  height: auto;
-  border-radius: 5px;
-  margin-top: 20px;
+  transform: translateY(-0.1vw);
 }
 
 /* Estilos de encabezado */
-/* Estilos del encabezado */
 header.container {
   position: relative;
-  background-image: url('src/assets/img/banner-removebg.png');
+  background-image: url('/img/banner-removebg.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   text-align: center;
   color: #fff;
-  padding: 100px 0;
-  margin-top: 40px;
+  padding: 6.7vw 0;
+  margin-top: 4vw;
 }
 
 header.container::before {
@@ -90,39 +85,36 @@ header.container::before {
   z-index: -1;
 }
 
-.texts{
-  padding: 120px;
+.texts {
+  padding: 10vw;
 }
 
-
 .texts__title {
-  font-size: 90px;
-  margin-bottom: 20px;
-  color:#39394e ; /* Cambio de color del título */
-  font-family: 'Your Friendly Font', Arial, sans-serif; /* Cambio de fuente */
+  font-size: 6vw;
+  margin-bottom: 2vw;
+  color: #39394e;
+  font-family: 'Your Friendly Font', Arial, sans-serif;
 }
 
 .texts__highlight {
-  color: #39394e; /* Cambia "rojo" por el color que desees para "Spend" */
+  color: #39394e;
 }
 
 .texts__normal {
-  color: #1ec87a; /* Cambia "azul" por el color que desees para "Wise" */
+  color: #1ec87a;
 }
-
 
 .texts__paragraph {
-  font-size: 25px;
-  margin-bottom: 40px;
-  color: #777779; /* Cambio de color del párrafo */
-  font-family: 'Your Friendly Font', Arial, sans-serif; /* Cambio de fuente */
+  font-size: 2.5vw;
+  margin-bottom: 4vw;
+  color: #777779;
+  font-family: 'Your Friendly Font', Arial, sans-serif;
 }
-
 
 /* Estilos de sección de características */
 .section.caracteristicas {
-  background-image: linear-gradient(to bottom,#0fdf77, #1ec87a);
-  padding: 40px 0;
+  background-image: linear-gradient(to bottom, #0fdf77, #1ec87a);
+  padding: 4vw 0;
   color: #292938;
 }
 
@@ -134,26 +126,25 @@ header.container::before {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 20px;
+  margin-top: 1vw;
 }
 
 .feature {
-  flex-basis: 250px;
-  margin: 10px;
+  flex-basis: 25vw;
+  margin: 2vw;
   text-align: center;
-  
 }
 
 .feature img {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+  width: 10vw;
+  height: 10vw;
+  margin-bottom: 1vw;
+  border-radius: 2vw;
 }
 
 .feature h3 {
-  font-size: 18px;
-  margin-bottom: 10px;
+  font-size: 2.5vw;
+  margin-bottom: 1vw;
 }
 
 /* Estilos del contenido principal */
@@ -161,96 +152,88 @@ header.container::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 60px;
-  height: 100vh;
+  padding: 5vw;
+  min-height: 100vh;
 }
 
 .content {
-  
   text-align: center;
-  
 }
 
 .illustration img {
   border-radius: 50%;
-  
 }
 
 .button-container {
-  margin-top: 20px;
+  margin-top: 2vw;
   text-align: center;
 }
 
-
 .header {
-  flex-basis: 50%;
-  padding-right: 40px;
+  padding-right: 2vw;
 }
 
 .header .textcolor {
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: 2vw;
+  margin-bottom: 1vw;
   color: #1ec87a;
 }
 
 .header h1 {
-  font-size: 38px;
-  margin-bottom: 10px;
+  font-size: 4vw;
+  margin-bottom: 1vw;
   color: #292938;
 }
 
 .header p {
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: 2vw;
+  margin-bottom: 1vw;
   color: #777779;
 }
 
 .button-container {
-  margin-top: 20px;
+  margin-top: 2vw;
 }
 
 .btn {
   text-decoration: none;
   display: inline-block;
-  padding: 12px 24px;
-  font-size: 18px;
-  color: #fff ;
-  background-image: linear-gradient(to bottom,#0fdf77, #1ec87a);
-  border-radius: 30px;
+  padding: 1.5vw 3vw;
+  font-size: 2.5vw;
+  color: #fff;
+  background-image: linear-gradient(to bottom, #0fdf77, #1ec87a);
+  border-radius: 3vw;
   outline: none;
-  border:none;
+  border: none;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .btn:hover {
-  background-image: linear-gradient(to bottom,#00ff80, #0ab968);
+  background-image: linear-gradient(to bottom, #00ff80, #0ab968);
   color: #fff;
-  
 }
 
 .animation {
   animation: bounce 2s infinite;
 }
 
-
 /* Estilos de ilustración */
 .illustration {
-  flex-basis: 50%;
+  flex-basis: 33.3%;
 }
 
 .illustration img {
   border-radius: 50%;
-  width: 300px; /* Cambia el valor "200px" al tamaño deseado */
+  width: 50vw;
   height: auto;
 }
-
 
 /* Estilos del pie de página */
 .section.footer {
   background-color: #292938;
   color: #868686;
-  padding: 20px 0;
+  padding: 2vw 0;
 }
 
 .social-icons {
@@ -260,117 +243,114 @@ header.container::before {
 
 .social-icons a {
   color: #7c7a83;
-  margin: 0 10px;
-  font-size: 50px;
+  margin: 0 1vw;
+  font-size: 5vw;
 }
 
 .social-icons a:hover {
   color: #27ca89;
 }
 
-
 /* Estilos del pie de página inferior */
 .footer {
   background-color: #111121;
   color: #616168;
-  padding: 10px 0;
+  padding: 1vw 0;
   text-align: center;
 }
 
-
 @media (max-width: 768px) {
   body {
-    font-size: 14px;
+    font-size: 3vw;
   }
 
   .container {
-    padding: 10px;
+    padding: 5vw;
   }
 
   .navigation {
-    height: 80px;
-    padding: 5px 10px;
+    height: 12vw;
+    padding: 2vw 4vw;
   }
 
   .navigation__link {
-    padding: 0.5em 1em;
-    font-size: 12px;
+    padding: 1vw 2vw;
+    font-size: 2vw;
   }
 
   .logo {
-    width: 80px;
-    height: 20%;
-    
+    width: 12vw;
+    height: 10vw;
+    margin: 4vw 0;
   }
 
   header.container {
-    padding: 60px 0;
+    padding: 10vw 0;
   }
 
   .texts {
-    padding: 80px;
+    padding:12vw;
   }
 
   .texts__title {
-    font-size: 60px;
+    font-size: 8vw;
   }
 
   .texts__paragraph {
-    font-size: 20px;
-    margin-bottom: 20px;
+    font-size: 4vw;
+    margin-bottom: 8vw;
   }
 
   .section.caracteristicas {
-    padding: 20px 0;
+    padding: 8vw 0;
   }
 
   .feature-list {
-    margin-top: 10px;
+    margin-top: 4vw;
   }
 
   .feature {
-    flex-basis: 200px;
+    flex-basis: 50vw;
   }
 
   .feature img {
-    width: 80px;
-    height: 80px;
+    width: 20vw;
+    height: 20vw;
   }
 
   .feature h3 {
-    font-size: 16px;
+    font-size: 6vw;
   }
 
   .container {
-    padding: 40px;
-    height: auto;
+    padding: 10vw;
   }
 
   .header {
-    padding-right: 20px;
+    padding-right: 4vw;
   }
 
   .header .textcolor {
-    font-size: 16px;
+    font-size: 4vw;
   }
 
   .header h1 {
-    font-size: 32px;
+    font-size: 8vw;
   }
 
   .header p {
-    font-size: 16px;
+    font-size: 4vw;
   }
 
   .illustration img {
-    width: 200px;
+    width: 80vw;
   }
 
   .section.footer {
-    padding: 10px 0;
+    padding: 4vw 0;
   }
 
   .social-icons a {
-    font-size: 30px;
+    font-size: 10vw;
   }
 }

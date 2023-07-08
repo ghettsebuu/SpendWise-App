@@ -19,7 +19,7 @@ function LandingPage() {
     <div>
       
         <nav className="navigation">
-          <img className="logo" src="src/assets/img/logodef.png" alt="Logo" />
+          <img className="logo" src="/img/logodef.png" alt="Logo" />
           {auth.currentUser ? (
             <div>
               <NavLink className="navigation__link" to="/dashboard/home" activeClassName="active">
@@ -52,19 +52,19 @@ function LandingPage() {
           <h2>Características principales</h2>
           <div className="feature-list">
             <div className="feature">
-            <img src='src/assets/img/2.png' alt="Gastos" />
+            <img src='/img/2.png' alt="Gastos" />
               <h3>Registro de gastos</h3> 
             </div>
             <div className="feature">
-            <img src='src/assets/img/3.png' alt="Recordatorios" />
+            <img src='/img/3.png' alt="Recordatorios" />
               <h3>Recordatorios</h3> 
             </div>
             <div className="feature">
-            <img src='src/assets/img/4.png' alt="Presupuesto" />
+            <img src='/img/4.png' alt="Presupuesto" />
               <h3>Presupuesto</h3>
             </div>
             <div className="feature">
-              <img src='src/assets/img/5.png' alt="Informes" />
+              <img src='/img/5.png' alt="Informes" />
               <h3>Informe de gastos</h3>
             </div>
           </div>
@@ -74,7 +74,7 @@ function LandingPage() {
 
       <div class="container">
         <div class="illustration">
-          <img src="src/assets/img/logodef.png" alt="Descripción de la imagen" />
+          <img src="/img/logodef.png" alt="Descripción de la imagen" />
         </div>
         <div class="content">
           <div class="header">

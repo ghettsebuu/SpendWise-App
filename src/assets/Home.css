@@ -331,6 +331,51 @@ color: #4a4a50;
 
 /* Media queries */
 
+@media screen and (max-width: 490px) {
+  .margingastos{
+    margin-top: 1em;
+  }
+.card{
+  
+  flex-direction: row;
+  justify-content: center;
+  overflow: auto; /* Agrega esta línea */
+}
+.contenido{
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+.pendientesFlex {
+  margin: 1em 1em;
+  width: 100%;
+  
+}
+
+.card-top-categorias{
+  margin-top: 1em;
+  width: 96%;
+}
+.card-top-gastos{
+  margin-left: 0em;
+  width: 97%;
+
+}
+.gastosflex{
+  margin-bottom: 1em;
+  flex-direction: column;
+  
+}
+.contenedor-pendientes{
+  min-width: 10%;
+  margin:0;
+  width: 99%;
+}
+
+
+
+}
+
 /* Para pantallas pequeñas */
 @media screen and (max-width: 767px) {
     .margingastos{

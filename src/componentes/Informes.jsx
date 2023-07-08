@@ -115,7 +115,7 @@ const Informes = () => {
   const opciones = {
     options: {
       chart: {
-        width: 380,
+        width: 300,
         type: 'pie',
       },
       name: {
@@ -123,10 +123,10 @@ const Informes = () => {
       },
       labels: labels,
       responsive: [{
-        breakpoint: 380,
+        breakpoint: 300,
         options: {
           chart: {
-            width: 380
+            width: 300
           },
           legend: {
             position: 'bottom'
@@ -202,7 +202,7 @@ const Informes = () => {
                 options={opciones.options}
                 series={datosFiltrados.map((item) => item.monto)}
                 type="pie"
-                width={380}
+                width={355}
               />
             ) : (
               <div className="no-datos-mensaje">No hay datos disponibles para la gráfica</div>

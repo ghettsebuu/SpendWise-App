@@ -121,4 +121,55 @@
 
 
 
+@media (max-width: 480px) {
+    /* Estilos específicos para dispositivos móviles */
 
+    .navigat ul{
+        
+        width: 345px;
+    }
+
+    .indicator{
+        position: absolute;
+        top: -38%;
+        width: 65px;
+        height: 65px;
+        background:  #1ec87a ;
+        border-radius: 50%;
+        border: 6px solid  #191924;
+        transition: 0.5s;
+      
+    }
+
+    .navigat ul li a .text {
+        
+        font-size: 0.67em;
+       
+    }
+   
+    .navigat ul li:nth-child(1).active ~ .indicator{
+        transform: translateX(calc(50px * 0));
+    }
+    
+    .navigat ul li:nth-child(2).active ~ .indicator{
+        transform: translateX(calc(52px*1));
+    }
+    
+    .navigat ul li:nth-child(3).active ~ .indicator{
+        transform: translateX(calc(56px*2));
+    }
+    
+    .navigat ul li:nth-child(4).active ~ .indicator{
+        transform: translateX(calc(56px*3));
+    }
+    
+    .navigat ul li:nth-child(5).active ~ .indicator{
+        transform: translateX(calc(57px*4));
+    }
+    
+    .navigat ul li:nth-child(6).active ~ .indicator{
+        transform: translateX(calc(57px*5));
+    }
+    
+  }
+  
