@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {faEdit, faTrash, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { format } from 'date-fns';
 
 import Modal from 'react-modal';
@@ -20,14 +20,13 @@ const Gastos = () => {
   const [editingData, setEditingData] = useState(null);
   const [pageIndex, setPageIndex] = useState(0);
   const [presupuesto, setPresupuesto] = useState(null);
-  const presupuestoSnapshot = useMemo(() => null, []);
-  // const [currentDate, setCurrentDate] = useState('');
-  const today = new Date().toISOString().split('T')[0];
-  const [currentDate, setCurrentDate] = useState(today); // Asignar el valor de today a currentDate
+  const [currentDate, setCurrentDate] = useState(new Date().toISOString().split('T')[0]);
   const [initialDate, setInitialDate] = useState('');
   const [moneda, setMoneda] = useState('');
   const [monedaPredeterminada, setMonedaPredeterminada] = useState('');
   const [monto, setMonto] = useState('');
+  const [filtroCategoria, setFiltroCategoria] = useState('');
+  const [showFilter, setShowFilter] = useState(false);
 
 
   useEffect(() => {
@@ -62,7 +61,6 @@ const Gastos = () => {
       }
       setIsLoading(false);
     };
-    setMonedaPredeterminada(monedaPredeterminada);
 
     fetchGastos();
   }, []);
@@ -71,7 +69,10 @@ const Gastos = () => {
     setMoneda(monedaPredeterminada);
   }, [monedaPredeterminada]);
   
-  
+  const filteredGastos = useMemo(() => {
+    if (filtroCategoria === '') return gastos;
+    return gastos.filter(gasto => gasto.categoria === filtroCategoria);
+  }, [gastos, filtroCategoria]);
 
   const columns = useMemo(
     () => [
@@ -113,7 +114,7 @@ const Gastos = () => {
   } = useTable(
     {
       columns,
-      data: gastos,
+      data: filteredGastos,
       initialState: { pageIndex: pageIndex, pageSize: 4 }, // Establece el tamaño de página a 4
     },
     usePagination
@@ -135,13 +136,10 @@ const Gastos = () => {
     }
   };
   
-  
-
   const handleCloseModal = () => {
     setModalIsOpen(false);
     setEditingData(null);
   };
-
 
   const handleDelete = async (index) => {
     const gasto = page[index].original;
@@ -182,18 +180,17 @@ const Gastos = () => {
           }
         }
       }
-    } catch (error) {
+    } catch(error) {
       console.error('Error al eliminar el gasto:', error);
       toast.error('Ocurrió un error al eliminar el gasto.');
     }
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!monedaPredeterminada) {
-      toast.warning('No se puede agregar el gasto. Configura la moneda predeterminada en el panel de configuración que esta en el modulo de Usuario .');
+      toast.warning('No se puede agregar el gasto. Configura la moneda predeterminada en el panel de configuración que esta en el modulo de Usuario.');
       return;
     }
     
@@ -212,7 +209,6 @@ const Gastos = () => {
       monto,
       moneda,
       categoria,
-     
     };
   
     try {
@@ -287,7 +283,6 @@ const Gastos = () => {
     }
   };
   
-  
   const handleMontoChange = (e) => {
     const value = e.target.value;
     // Verificar si el valor es un número positivo
@@ -299,94 +294,121 @@ const Gastos = () => {
     }
   };
 
-  
-  
-  
+  const handleCategoriaChange = (e) => {
+    setFiltroCategoria(e.target.value);
+  };
+
   return (
     <div className="cont">
-  <div className="gastosflex-m">
-    <div className="agregarFlex">
-      <h2 className="title">Módulo de Gastos</h2>
-      <button className="addButton" onClick={() => handleOpenModal(null)}>
-        Agregar Gastos
-      </button>
-    </div>
-    {presupuesto && (
-      <div className="card-presupuesto">
-        <h3>Presupuesto Actual</h3>
-        <p>
-          Monto: {presupuesto.monto} {moneda}
-        </p>
+      <div className="gastosflex-m">
+        <div className="agregarFlex">
+          <h2 className="title">Módulo de Gastos</h2>
+          <button className="addButton" onClick={() => handleOpenModal(null)}>
+              Agregar Gastos
+          </button>
+        </div>
+        <div className='filtro-presu'> 
+            <div className="filter-container">
+                <FontAwesomeIcon
+                    className={`filter-icon ${showFilter ? 'active' : ''}`}
+                    icon={faFilter}
+                    onClick={() => setShowFilter(!showFilter)}
+                  />
+                  <div className={`category-filter ${showFilter ? 'show' : ''}`}>
+                    <select className="filter-select" value={filtroCategoria} onChange={handleCategoriaChange}>
+                      <option value="">Todas las categorías</option>
+                      <option value="Alimentos">Alimentos</option>
+                      <option value="Transporte">Transporte</option>
+                      <option value="Alquiler">Alquiler</option>
+                      <option value="Servicios">Servicios</option>
+                      <option value="Entretenimiento">Entretenimiento</option>
+                      <option value="Otros">Otros</option>
+                    </select>
+                  </div>
+              </div>
+         
+          
+        {presupuesto && (
+          <div className="card-presupuesto">
+            <h3>Presupuesto Actual</h3>
+            <p>
+              Monto: {presupuesto.monto} {moneda}
+            </p>
+          </div>
+        
+        )}
+        </div>
       </div>
-    )}
-  </div>
 
-  {isLoading ? (
-    <div className="loading-cont">
-      <div className="loading-bar">
-        <div className="loading-progress"></div>
-      </div>
-      <div className="loadingtext">Cargando Gastos...</div>
-    </div>
-  ) : (
-    <>
-      {noHayGastos ? (
-        <div className="no-gastos">
-          <p>No hay gastos guardados aún.</p>
+      {isLoading ? (
+        <div className="loading-cont">
+          <div className="loading-bar">
+            <div className="loading-progress"></div>
+          </div>
+          <div className="loadingtext">Cargando Gastos...</div>
         </div>
       ) : (
-        <div className="table-container">
-          <table {...getTableProps()} className="table">
-            <thead>
-              {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                  ))}
-                  <th>Acciones</th>
-                </tr>
-              ))}
-            </thead>
-
-            <tbody {...getTableBodyProps()}>
-              {page.map((row, i) => {
-                prepareRow(row);
-                return (
-                  <tr
-                    {...row.getRowProps()}
-                    onClick={() => setSelectedRow(i)}
-                    className={selectedRow === i ? 'selected' : ''}
-                  >
-                    {row.cells.map((cell) => (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+        <>
+          {noHayGastos ? (
+            <div className="no-gastos">
+              <p>No hay gastos guardados aún.</p>
+            </div>
+          ) : (
+            <div className="table-container">
+          
+              <div className="table-container" onClick={() => setShowFilter(false)}>
+                <table {...getTableProps()} className="table">
+                  <thead>
+                    {headerGroups.map((headerGroup) => (
+                      <tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map((column) => (
+                          <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                        ))}
+                        <th>Acciones</th>
+                      </tr>
                     ))}
-                    <td>
-                      <div className="actions">
-                        <FontAwesomeIcon
-                          className="edit-icon"
-                          icon={faEdit}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleOpenModal(i);
-                          }}
-                        />
-                        <FontAwesomeIcon
-                          className="delete-icon"
-                          icon={faTrash}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDelete(i);
-                          }}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                  </thead>
 
-          <div className="pagination">
+                  <tbody {...getTableBodyProps()}>
+                    {page.map((row, i) => {
+                      prepareRow(row);
+                      return (
+                        <tr
+                          {...row.getRowProps()}
+                          onClick={() => setSelectedRow(i)}
+                          className={selectedRow === i ? 'selected' : ''}
+                        >
+                          {row.cells.map((cell) => (
+                            <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                          ))}
+                          <td>
+                            <div className="actions">
+                              <FontAwesomeIcon
+                                className="edit-icon"
+                                icon={faEdit}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleOpenModal(i);
+                                }}
+                              />
+                              <FontAwesomeIcon
+                                className="delete-icon"
+                                icon={faTrash}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDelete(i);
+                                }}
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="pagination">
                 <button onClick={() => previousPage()} disabled={!canPreviousPage} className="pagination-button">
                   &lt;
                 </button>
@@ -394,36 +416,35 @@ const Gastos = () => {
                   &gt;
                 </button>
               </div>
-        </div>
+            </div>
+          )}
+        </>
       )}
-    </>
-  )}
 
-  <Modal
-    isOpen={modalIsOpen}
-    onRequestClose={handleCloseModal}
-    contentLabel="Agregar Gasto"
-    className="modal"
-    overlayClassName="overlay"
-  >
-       <h2 className='modalTitle'>{editingData ? 'Editar Gasto' : 'Agregar Gasto'}</h2>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={handleCloseModal}
+        contentLabel="Agregar Gasto"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <h2 className='modalTitle'>{editingData ? 'Editar Gasto' : 'Agregar Gasto'}</h2>
         <form onSubmit={handleSubmit}>
-        <label>
-          Fecha:
-          <input
-            type="date"
-            name="fecha"
-            className="input"
-            defaultValue={editingData ? initialDate : currentDate}
-            required
-            disabled
-          />
-        </label>
+          <label>
+            Fecha:
+            <input
+              type="date"
+              name="fecha"
+              className="input"
+              defaultValue={editingData ? initialDate : currentDate}
+              required
+              disabled
+            />
+          </label>
 
           <label>
             Descripción:
-            <input type="text" name="descripcion" className="input" defaultValue={editingData ? editingData.descripcion : ''}
-              required />
+            <input type="text" name="descripcion" className="input" defaultValue={editingData ? editingData.descripcion : ''} required />
           </label>
           <label>
             Monto:
@@ -450,29 +471,24 @@ const Gastos = () => {
           </label>
           <label>
             Categoría:
-            <select name="categoria" className="input"  defaultValue={editingData ? editingData.categoria : ''}
-              required>
-              <option>Alimentos</option>
-              <option>Transporte</option>
-              <option>Alquiler</option>
-              <option>Servicios</option>
-              <option>Entretenimiento</option>
-              <option>Otros</option>
-              {/* Agrega más opciones de categorías según tus necesidades */}
+            <select name="categoria" className="input" defaultValue={editingData ? editingData.categoria : ''} required>
+              <option value="Alimentos">Alimentos</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Alquiler">Alquiler</option>
+              <option value="Servicios">Servicios</option>
+              <option value="Entretenimiento">Entretenimiento</option>
+              <option value="Otros">Otros</option>
             </select>
           </label>
           <button className="saveButton" type="submit">
             {editingData ? 'Actualizar ' : 'Agregar '}
           </button>
-          <button  type="button" onClick={handleCloseModal} className="cancelButton">
+          <button type="button" onClick={handleCloseModal} className="cancelButton">
             Cancelar
           </button>
         </form>
-  </Modal>
-
-  
-</div>
-
+      </Modal>
+    </div>
   );
 };
 

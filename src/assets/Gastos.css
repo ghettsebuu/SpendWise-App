@@ -4,7 +4,7 @@
 .gastosflex-m {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   flex-direction: row;
 }
 
@@ -260,6 +260,30 @@ margin-left: 15px;
     animation: loadingAnimation 2s infinite;
   
   }
+
+  .filtro-presu{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .filter-container{
+    margin: 0px 10px;
+  }
+  .category-filter {
+    display: none;
+  }
+  
+  .category-filter.show {
+    display: block;
+  }
+  .filter-icon{
+    font-size: 25px;
+    color: #51e4ab;
+  }
+  .filter-icon.active {
+    color: #fdec8d; /* Cambia el color según tus necesidades */
+  }
+  
   
   @keyframes loadingAnimation {
     0% {
@@ -289,7 +313,7 @@ margin-left: 15px;
 
   .addButton {
     width: 95%;
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .table {
