@@ -118,7 +118,7 @@ font-size: 13px;
 @media (max-width: 816px) {
 
   .Informes{
-    flex-direction: column-reverse;
+    flex-direction: column;
     width: 100%;
   }
 

@@ -17,7 +17,7 @@ body {
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  height: 8.5vw;
+  height: 9.5vw;
   top: 0;
   left: 0;
   right: 0;
@@ -37,7 +37,7 @@ body {
 .navigation__link {
   text-decoration: none;
   padding: 0.8vw 1.6vw;
-  font-size: 0.9vw;
+  font-size: 1.2vw;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.2vw;
@@ -71,8 +71,8 @@ header.container {
   background-repeat: no-repeat;
   text-align: center;
   color: #fff;
-  padding: 6.7vw 0;
-  margin-top: 4vw;
+  padding: 1.7vw 0;
+  margin-top: 2vw;
 }
 
 header.container::before {
@@ -90,8 +90,8 @@ header.container::before {
 }
 
 .texts__title {
-  font-size: 6vw;
-  margin-bottom: 2vw;
+  font-size: 7.4vw;
+  margin-bottom: 4vw;
   color: #39394e;
   font-family: 'Your Friendly Font', Arial, sans-serif;
 }
@@ -105,8 +105,8 @@ header.container::before {
 }
 
 .texts__paragraph {
-  font-size: 2.5vw;
-  margin-bottom: 4vw;
+  font-size: 1.8vw;
+  margin-bottom: 2vw;
   color: #777779;
   font-family: 'Your Friendly Font', Arial, sans-serif;
 }
@@ -118,8 +118,9 @@ header.container::before {
   color: #292938;
 }
 
-.section-content {
+.section-content h2 {
   text-align: center;
+  font-size: 3vw;
 }
 
 .feature-list {
@@ -143,7 +144,7 @@ header.container::before {
 }
 
 .feature h3 {
-  font-size: 2.5vw;
+  font-size: 2vw;
   margin-bottom: 1vw;
 }
 
@@ -174,32 +175,33 @@ header.container::before {
 }
 
 .header .textcolor {
-  font-size: 2vw;
+  font-size: 1.8vw;
   margin-bottom: 1vw;
   color: #1ec87a;
 }
 
 .header h1 {
-  font-size: 4vw;
+  font-size: 3vw;
   margin-bottom: 1vw;
   color: #292938;
 }
 
 .header p {
-  font-size: 2vw;
+  font-size: 1.8vw;
   margin-bottom: 1vw;
   color: #777779;
 }
 
-.button-container {
+.button-container-l {
   margin-top: 2vw;
+  padding: 2vw;
 }
 
 .btn {
   text-decoration: none;
   display: inline-block;
   padding: 1.5vw 3vw;
-  font-size: 2.5vw;
+  font-size: 1.5vw;
   color: #fff;
   background-image: linear-gradient(to bottom, #0fdf77, #1ec87a);
   border-radius: 3vw;
@@ -225,7 +227,7 @@ header.container::before {
 
 .illustration img {
   border-radius: 50%;
-  width: 50vw;
+  width: 35vw;
   height: auto;
 }
 
@@ -244,7 +246,7 @@ header.container::before {
 .social-icons a {
   color: #7c7a83;
   margin: 0 1vw;
-  font-size: 5vw;
+  font-size: 6vw;
 }
 
 .social-icons a:hover {
@@ -265,27 +267,27 @@ header.container::before {
   }
 
   .container {
-    padding: 5vw;
+    padding: 10vw;
   }
 
   .navigation {
-    height: 12vw;
+    height: 20vw;
     padding: 2vw 4vw;
   }
 
   .navigation__link {
     padding: 1vw 2vw;
-    font-size: 2vw;
+    font-size: 3vw;
   }
 
   .logo {
-    width: 12vw;
-    height: 10vw;
+    width: 15vw;
+    height: 15vw;
     margin: 4vw 0;
   }
 
   header.container {
-    padding: 10vw 0;
+    padding: 40vw 0;
   }
 
   .texts {
@@ -293,18 +295,21 @@ header.container::before {
   }
 
   .texts__title {
-    font-size: 8vw;
+    font-size: 12vw;
+    margin-bottom: 2vw;
   }
 
   .texts__paragraph {
-    font-size: 4vw;
-    margin-bottom: 8vw;
+    font-size: 3vw;
+    margin-bottom: 1vw;
   }
 
   .section.caracteristicas {
     padding: 8vw 0;
   }
-
+  .section-content h2 {
+    font-size: 6vw;
+  }
   .feature-list {
     margin-top: 4vw;
   }
@@ -319,7 +324,7 @@ header.container::before {
   }
 
   .feature h3 {
-    font-size: 6vw;
+    font-size: 5vw;
   }
 
   .container {
@@ -331,26 +336,38 @@ header.container::before {
   }
 
   .header .textcolor {
-    font-size: 4vw;
+    font-size: 3vw;
   }
 
   .header h1 {
-    font-size: 8vw;
+    font-size: 6vw;
   }
 
   .header p {
-    font-size: 4vw;
+    font-size: 3vw;
   }
 
   .illustration img {
-    width: 80vw;
+    width: 60vw;
+  }
+
+  .button-container-l {
+    margin-top: 2vw;
+    padding: 2vw;
+  }
+  
+  .btn {
+    
+  
+    font-size: 3.5vw;
+   
   }
 
   .section.footer {
-    padding: 4vw 0;
+    padding: 8vw 0;
   }
 
   .social-icons a {
-    font-size: 10vw;
+    font-size: 13vw;
   }
 }

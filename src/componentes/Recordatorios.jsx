@@ -120,9 +120,11 @@ console.log(recordatorios);
 
   return (
     <div className="cont">
-      <h2 className="title">Módulo de Recordatorios</h2>
-
-      <button onClick={openModal} className="addButton">Agregar Recordatorio</button>
+      <div className='cabecera-R'>
+        <h2 className="title">Módulo de Recordatorios</h2>
+        <button onClick={openModal} className="addButton">Agregar Recordatorio</button>
+      </div>
+      
 
       {isLoading ? (
       <div className="loading-cont">

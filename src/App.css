@@ -129,7 +129,7 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 10px;
 }
 
@@ -419,8 +419,8 @@ body {
 @media (min-height: 901px) {
   
   .cajasection {
-    margin-top: 3%;
-    height: 83%;
+    margin-top: 2%;
+    height: 81%;
   }
 
   .cont {
@@ -430,6 +430,7 @@ body {
 
   .card {
     height: 95%;
+    flex-direction: row
   }
   .Informes{
     height: 80%;
@@ -509,6 +510,7 @@ ancho */
 
   .card {
     height: 95%;
+    flex-direction: row
   }
   .navigat{
     width: 70%;

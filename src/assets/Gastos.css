@@ -287,8 +287,8 @@ margin-left: 15px;
   
 
   .addButton {
-    width: 90%;
-    font-size: 10px;
+    width: 100%;
+    font-size: 14px;
   }
 
   .table {
@@ -307,5 +307,10 @@ margin-left: 15px;
   
   .table td {
     font-size: 12px;
+  }
+
+    .saveButton {
+      margin-right: 17px;
+      width: 40%;
   }
 }

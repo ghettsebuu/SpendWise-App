@@ -123,7 +123,7 @@ const Informes = () => {
       },
       labels: labels,
       responsive: [{
-        breakpoint: 300,
+        breakpoint: 400,
         options: {
           chart: {
             width: 300

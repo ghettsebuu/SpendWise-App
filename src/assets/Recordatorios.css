@@ -93,12 +93,37 @@
   overflow-y: auto;
 }
 
+.cabecera-R{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@media (max-width:768px){
+
+  .cabecera-R{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+    .agregar-recordatorio-btn {
+    
+      margin-right: 20px;
+      margin-left: 20px;
+  
+    }
+
+}
+
 @media (min-height: 901px) {
   
   .contenedor-recordatorios{
     height: 90%;
     overflow-y: auto;
   }
+
+
 
 }
 

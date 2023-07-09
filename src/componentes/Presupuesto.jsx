@@ -21,6 +21,7 @@ const Presupuesto = () => {
   const [presupuestoId, setPresupuestoId] = useState(null);
   const [presupuestos, setPresupuestos] = useState([]);
   const [monedaPredeterminada, setMonedaPredeterminada] = useState('');
+ 
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -113,6 +114,15 @@ const Presupuesto = () => {
     }
   };
 
+  const handleMontoChange = (e) => {
+    const value = e.target.value;
+    if (value < 0) {
+      // Valor negativo detectado, no se actualiza el estado
+      return;
+    }
+    setMonto(value);
+  };
+
   return (
     <div className="cont">
       <h2 className="title">Módulo de Presupuesto</h2>
@@ -160,17 +170,17 @@ const Presupuesto = () => {
       >
         <h2 className='modalTitle'>{presupuestos.length > 0 ? 'Editar Presupuesto' : 'Agregar Presupuesto'}</h2>
         <form onSubmit={handleSubmit}>
-          <label>
-            Monto:
-            <input
-              type="number"
-              name="monto"
-              className="input"
-              value={monto}
-              onChange={(e) => setMonto(e.target.value)}
-              required
-            />
-          </label>
+        <label>
+          Monto:
+          <input
+            type="number"
+            name="monto"
+            className="input"
+            value={monto}
+            onChange={handleMontoChange}
+            required
+          />
+        </label>
           <label>
             Moneda:
             <input
@@ -200,7 +210,7 @@ const Presupuesto = () => {
         </form>
       </Modal>
 
-      <ToastContainer />
+      
     </div>
   );
 };

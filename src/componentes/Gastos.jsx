@@ -27,6 +27,7 @@ const Gastos = () => {
   const [initialDate, setInitialDate] = useState('');
   const [moneda, setMoneda] = useState('');
   const [monedaPredeterminada, setMonedaPredeterminada] = useState('');
+  const [monto, setMonto] = useState('');
 
 
   useEffect(() => {
@@ -287,6 +288,18 @@ const Gastos = () => {
   };
   
   
+  const handleMontoChange = (e) => {
+    const value = e.target.value;
+    // Verificar si el valor es un número positivo
+    if (value >= 0 || value === '') {
+      setMonto(value);
+    } else {
+      // Si el valor es negativo, establecer el valor actual del campo "monto"
+      e.target.value = monto;
+    }
+  };
+
+  
   
   
   return (
@@ -414,9 +427,16 @@ const Gastos = () => {
           </label>
           <label>
             Monto:
-            <input type="number" name="monto" className="input" defaultValue={editingData ? editingData.monto : ''}
-              required />
+            <input
+              type="number"
+              name="monto"
+              className="input"
+              defaultValue={editingData ? editingData.monto : ''}
+              onChange={handleMontoChange}
+              required
+            />
           </label>
+          
           <label>
             Moneda:
             <input
@@ -450,7 +470,7 @@ const Gastos = () => {
         </form>
   </Modal>
 
-  <ToastContainer />
+  
 </div>
 
   );

@@ -252,7 +252,7 @@ const Home = () => {
           <div className="dropdown-menu">
             <ul>
               <li onClick={handleOpenModal}>Moneda</li>
-              <li>Color</li>
+              {/* <li>Color</li> */}
             </ul>
           </div>
         )}
@@ -363,7 +363,7 @@ const Home = () => {
         </div>
       )}
 
-      <ToastContainer />
+      
     </div>
   );
 };

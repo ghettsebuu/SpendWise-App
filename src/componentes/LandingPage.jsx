@@ -84,7 +84,7 @@ function LandingPage() {
             <p>Ten el control de tus finanzas personales de forma fácil y divertida.</p>
             
           </div>
-          <div className="button-container">
+          <div className="button-container-l">
             {auth.currentUser ? (
               <div>
                 <NavLink className="btn animation" to="/dashboard/gastos">
