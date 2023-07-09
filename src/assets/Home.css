@@ -325,6 +325,10 @@ margin-left: 0;
 color: #4a4a50;
 }
 
+.botones-c{
+  display: flex;
+  justify-content: space-between;
+}
 
 /* responsive */
 

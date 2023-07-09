@@ -354,7 +354,7 @@ const Home = () => {
             <option value="EUR">EUR</option>
             <option value="USD">USD</option>
           </select>
-          <div>
+          <div className='botones-c'>
             <button onClick={handleSetCurrency}>
               {selectedCurrency ? 'Editar' : 'Establecer'}
             </button>

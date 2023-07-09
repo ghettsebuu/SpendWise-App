@@ -27,6 +27,7 @@
   color: #4d4d57;
   border-radius: 8px;
   padding: 10px;
+  margin: 5px;
   box-shadow: 0 2px 4px rgba(185, 183, 183, 0.774);
 
 }
@@ -287,8 +288,8 @@ margin-left: 15px;
   
 
   .addButton {
-    width: 100%;
-    font-size: 14px;
+    width: 95%;
+    font-size: 12px;
   }
 
   .table {

@@ -65,21 +65,21 @@ body {
 /* Estilos de encabezado */
 header.container {
   position: relative;
+  width: 157vh;
   background-image: url('/img/banner-removebg.png');
-  background-size: contain;
+  background-size: 100% auto; /* 50% del ancho del contenedor, altura automática */
   background-position: center;
   background-repeat: no-repeat;
   text-align: center;
   color: #fff;
   padding: 1.7vw 0;
   margin-top: 2vw;
+
 }
 
 header.container::before {
   content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
+  display: flex;
   width: 100%;
   height: 100%;
   z-index: -1;
@@ -266,10 +266,7 @@ header.container::before {
     font-size: 3vw;
   }
 
-  .container {
-    padding: 10vw;
-  }
-
+  
   .navigation {
     height: 20vw;
     padding: 2vw 4vw;
@@ -287,21 +284,24 @@ header.container::before {
   }
 
   header.container {
+    
+    background-position: 50% 77%;
+    background-size: 100% 20%; /* 50% del ancho del contenedor, altura automática */
     padding: 40vw 0;
   }
 
   .texts {
-    padding:12vw;
+    padding:33vw 0vw;
   }
 
   .texts__title {
-    font-size: 12vw;
-    margin-bottom: 2vw;
+    font-size: 14vw;
+    margin-bottom: 8vw;
   }
 
   .texts__paragraph {
-    font-size: 3vw;
-    margin-bottom: 1vw;
+    font-size: 4.5vw;
+    margin-bottom: -7vw;
   }
 
   .section.caracteristicas {
@@ -328,23 +328,24 @@ header.container::before {
   }
 
   .container {
-    padding: 10vw;
+    padding: 45vw 5vw;
   }
+
 
   .header {
     padding-right: 4vw;
   }
 
   .header .textcolor {
-    font-size: 3vw;
+    font-size: 4vw;
   }
 
   .header h1 {
-    font-size: 6vw;
+    font-size: 7vw;
   }
 
   .header p {
-    font-size: 3vw;
+    font-size: 4vw;
   }
 
   .illustration img {
@@ -352,14 +353,14 @@ header.container::before {
   }
 
   .button-container-l {
-    margin-top: 2vw;
+    margin-top: 4vw;
     padding: 2vw;
   }
   
   .btn {
     
   
-    font-size: 3.5vw;
+    font-size: 4.5vw;
    
   }
 
