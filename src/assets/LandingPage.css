@@ -283,10 +283,11 @@ header.container::before {
     margin: 4vw 0;
   }
 
+
   header.container {
-    
-    background-position: 50% 77%;
-    background-size: 100% 20%; /* 50% del ancho del contenedor, altura automática */
+    background-image: url('/img/banner2.png');
+    background-position: 50% 87%;
+    background-size: 180% 40%;
     padding: 40vw 0;
   }
 
