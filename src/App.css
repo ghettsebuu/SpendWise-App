@@ -360,7 +360,7 @@ body {
   }
 
   .table-container {
-    height: 60%;
+    height: 40%;
     overflow: auto;
      /* Ajusta la altura máxima según tus necesidades */
     
@@ -399,7 +399,7 @@ body {
 
   .table-container {
     padding-top: 10px;
-    height: 79%;
+    height: 67%;
     overflow: auto;
      /* Ajusta la altura máxima según tus necesidades */
     
@@ -438,7 +438,7 @@ body {
   }
 
   .table-container {
-    padding-top: 70px;
+    padding-top: 20px;
     height: 85%;
     overflow: auto;
      /* Ajusta la altura máxima según tus necesidades */
@@ -473,7 +473,11 @@ ancho */
     height: 77%;
     
   }
-  
+
+   .table-container {
+    padding-top: 7px;
+    overflow: auto;
+  } 
 }
 
 /* Tablets en modo vertical */
@@ -491,8 +495,9 @@ ancho */
     font-size: 14px;
   }
   .table-container {
-   
+    padding-top: 7px;
    width: 100%;
+   overflow: auto;
     
   }
 
@@ -515,5 +520,9 @@ ancho */
   .navigat{
     width: 70%;
   }
+  .table-container {
+    padding-top: 20px;
+    overflow: auto;
+  } 
 
 }

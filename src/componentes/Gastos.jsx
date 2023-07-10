@@ -354,7 +354,7 @@ const Gastos = () => {
               <p>No hay gastos guardados aún.</p>
             </div>
           ) : (
-            <div className="table-container">
+            
           
               <div className="table-container" onClick={() => setShowFilter(false)}>
                 <table {...getTableProps()} className="table">
@@ -406,17 +406,15 @@ const Gastos = () => {
                     })}
                   </tbody>
                 </table>
+                <div className="pagination">
+                  <button onClick={() => previousPage()} disabled={!canPreviousPage} className="pagination-button">
+                    &lt;
+                  </button>
+                  <button onClick={() => nextPage()} disabled={!canNextPage} className="pagination-button">
+                    &gt;
+                  </button>
               </div>
-
-              <div className="pagination">
-                <button onClick={() => previousPage()} disabled={!canPreviousPage} className="pagination-button">
-                  &lt;
-                </button>
-                <button onClick={() => nextPage()} disabled={!canNextPage} className="pagination-button">
-                  &gt;
-                </button>
-              </div>
-            </div>
+              </div>    
           )}
         </>
       )}

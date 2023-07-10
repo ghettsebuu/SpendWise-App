@@ -281,7 +281,7 @@ margin-left: 15px;
     color: #51e4ab;
   }
   .filter-icon.active {
-    color: #fdec8d; /* Cambia el color según tus necesidades */
+    color: #686b6a; /* Cambia el color según tus necesidades */
   }
   
   
@@ -313,7 +313,7 @@ margin-left: 15px;
 
   .addButton {
     width: 95%;
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .table {
@@ -338,4 +338,10 @@ margin-left: 15px;
       margin-right: 17px;
       width: 40%;
   }
+
+  .filtro-presu {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
 }
